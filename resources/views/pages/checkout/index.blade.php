@@ -7,7 +7,7 @@
                 <form action="{{ route('carts.checkout.detail') }}" method="POST">
                     @csrf
                     <div class="m-3 d-flex justify-content-end align-items-center">
-                        <button class="btn btn-success">Bayar</button>
+                        <button class="btn btn-success">Buat Pesanan</button>
                     </div>
                     <div class="card-body">
                         <div class="row">

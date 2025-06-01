@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mt-5 card card-default">
+    <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">Detail Transaksi</h3>
             <div class="card-tools">
@@ -30,8 +30,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-percent"></i></span>
                                 </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{ $transaction->dicount ?? '-' }}" data-mask>
+                                <input type="text" class="form-control" readonly value="{{ $voucher ?? '-' }}" data-mask>
                             </div>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
             @if ($transaction->transaction_type == 'cash')
                 Tunjukan Kode Transaksi kepada kasir untuk konfirmasi pembayaran.
             @else
-                Tunjukan Kode Transaksi kepada kasir untuk mengambil pesanan.
+                Tunjukan Kode Transaksi kepada kasir untuk mengambil pesanan jika pembayaran berhasil.
             @endif
         </div>
     </div>

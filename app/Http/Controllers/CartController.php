@@ -64,15 +64,18 @@ class CartController extends Controller
         $data = $request->validated();
 
         $subtotal = 0;
+        $voucher = null;
 
         foreach ($carts as $key => $cart) {
             $subtotal +=  (int)$cart->product->price * (int)$cart->quantity;
         }
 
         if (!is_null($data['voucher'])) {
-            $voucher = Voucher::where('code', $data['voucher'])->first();
-            $discount = $voucher->discount;
-            $totalAmount = $subtotal - $discount;
+            $vc = Voucher::where('code', $data['voucher'])->first();
+            $data['voucher'] = $vc->id;
+            $voucher = $vc->discount;
+            $discount = (int)$vc->discount / 100;
+            $totalAmount = $subtotal * $discount;
         } else {
             $totalAmount = $subtotal;
         }
@@ -94,7 +97,7 @@ class CartController extends Controller
             Session::put('transaction', $transaction);
         }
 
-        return view('pages.checkout-detail.index', compact('carts', 'transaction'));
+        return view('pages.checkout-detail.index', compact('carts', 'transaction', 'voucher'));
     }
 
     /**

@@ -39,7 +39,7 @@
 
         <div class="content-wrapper">
             <section class="content">
-                <div class="container-fluid">
+                <div class="mt-5 container-fluid">
                     @yield('content')
                 </div>
             </section>

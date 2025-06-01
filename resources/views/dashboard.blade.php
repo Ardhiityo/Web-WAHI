@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="pt-5">Welcome, {{ Auth::user()->roles()->first()->name }}!</h3>
+    <h3 class="pt-5">Selamat Datang, {{ Auth::user()->name }}!</h3>
     <div class="mt-5 row">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
