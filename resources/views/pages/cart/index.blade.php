@@ -4,6 +4,9 @@
     <div class="mt-5 row">
         <div class="col-md-12">
             <div class="card">
+                <div class="m-3 d-flex justify-content-end align-items-center">
+                    <a href="{{ route('carts.checkout') }}" class="btn btn-success">Proses</a>
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>

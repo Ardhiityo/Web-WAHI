@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Cart\StoreCartRequest;
 use App\Models\Cart;
+use App\Models\Voucher;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Cart\StoreCartRequest;
+use App\Http\Requests\Checkout\StoreCheckoutRequest;
 
 class CartController extends Controller
 {
@@ -13,7 +17,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::paginate(perPage: 10);
+        $carts = Cart::where('user_id', Auth::user()->id)->paginate(perPage: 10);
 
         return view('pages.cart.index', compact('carts'));
     }
@@ -43,6 +47,47 @@ class CartController extends Controller
         }
 
         return redirect()->route('products.index');
+    }
+
+    public function checkout()
+    {
+        $carts = Cart::where('user_id', Auth::user()->id)->paginate(perPage: 10);
+
+        return view('pages.checkout.index', compact('carts'));
+    }
+
+    public function checkoutDetail(StoreCheckoutRequest $request)
+    {
+        $carts = Cart::where('user_id', Auth::user()->id)->paginate(perPage: 10);
+
+        $data = $request->validated();
+
+        $subtotal = 0;
+
+        foreach ($carts as $key => $cart) {
+            $subtotal +=  (int)$cart->product->price * (int)$cart->quantity;
+        }
+
+        if (!is_null($data['voucher'])) {
+            $voucher = Voucher::where('code', $data['voucher'])->first();
+            $discount = $voucher->discount;
+            $totalAmount = $subtotal - $discount;
+        } else {
+            $totalAmount = $subtotal;
+        }
+
+        $transaction = Transaction::make(
+            [
+                'transaction_code' => $data['transaction_code'],
+                'transaction_type' => $data['transaction_type'],
+                'voucher' => $data['voucher'],
+                'total_amount' => $totalAmount,
+                'transaction_status' => 'pending',
+                'user_id' => Auth::user()->id,
+            ]
+        );
+
+        return view('pages.checkout-detail.index', compact('carts', 'transaction'));
     }
 
     /**

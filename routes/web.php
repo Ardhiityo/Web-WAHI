@@ -13,6 +13,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('brands', BrandController::class);
     Route::resource('products', ProductController::class);
+
+    Route::get('/carts/checkout', [CartController::class, 'checkout'])->name('carts.checkout');
+    Route::post('/carts/checkout/detail', [CartController::class, 'checkoutDetail'])->name('carts.checkout.detail');
+
     Route::resource('carts', CartController::class);
     Route::resource('vouchers', VoucherController::class);
     Route::resource('transactions', TransactionController::class);
