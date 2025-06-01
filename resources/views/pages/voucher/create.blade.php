@@ -27,7 +27,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="discount">Persentase</label>
+                            <label for="discount">Diskon (%)</label>
                             <input type="number" name="discount" required
                                 class="form-control form-control-border border-width-2" id="discount">
                         </div>

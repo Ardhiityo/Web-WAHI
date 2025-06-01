@@ -12,7 +12,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $carts = Cart::paginate(perPage: 1);
+
+        return view('pages.cart.index', compact('carts'));
     }
 
     /**

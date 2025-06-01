@@ -4,44 +4,32 @@
     <div class="mt-5 row">
         <div class="col-md-12">
             <div class="card">
-                <div class="m-3 d-flex justify-content-end align-items-center">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah</a>
-                </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Foto</th>
-                                <th>Nama</th>
+                                <th>Produk</th>
                                 <th>Harga</th>
-                                <th>Stok</th>
-                                <th>Brand</th>
-                                <th>Keranjang</th>
+                                <th>Quantity</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($carts as $cart)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <img src="{{ asset(Storage::url($product->image)) }}" width="100" height="100"
+                                        <img src="{{ asset(Storage::url($cart->image)) }}" width="100" height="100"
                                             alt="{{ $product->name }}">
                                     </td>
                                     <td>{{ $product->name }}</td>
-                                    <td>Rp. {{ $product->price }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>{{ $product->brand->name }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->quantity }}</td>
                                     <td>
-                                        <button class="btn btn-warning">
-                                            <i class="fas fa-cart-plus"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('products.edit', $product->id) }}"
-                                            class="btn btn-primary">Edit</a>
-                                        <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                        <a href="{{ route('carts.edit', $cart->id) }}" class="btn btn-primary">Edit</a>
+                                        <form action="{{ route('carts.destroy', $cart->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf
                                             @method('DELETE')
@@ -55,7 +43,7 @@
                     </table>
                     <div class="mt-5 row">
                         <div class="col-12">
-                            {{ $products->links('pagination::bootstrap-5') }}
+                            {{ $carts->links('pagination::bootstrap-5') }}
                         </div>
                     </div>
                 </div>

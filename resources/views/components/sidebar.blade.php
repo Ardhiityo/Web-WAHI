@@ -51,6 +51,16 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('carts.index') }}"
+                        class="nav-link {{ request()->is('carts*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cart-arrow-down"></i>
+                        <p>
+                            Keranjang
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ route('vouchers.index') }}"
                         class="nav-link {{ request()->is('vouchers*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-percent"></i>
