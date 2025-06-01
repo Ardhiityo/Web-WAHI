@@ -13,7 +13,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::paginate(perPage: 1);
+        $carts = Cart::paginate(perPage: 10);
 
         return view('pages.cart.index', compact('carts'));
     }
@@ -31,7 +31,16 @@ class CartController extends Controller
      */
     public function store(StoreCartRequest $request)
     {
-        Cart::create($request->validated());
+        $data = $request->validated();
+
+        try {
+            $cart = Cart::where('product_id', $data['product_id'])->firstOrFail();
+            $cart->update([
+                'quantity' => $cart->quantity + $data['quantity'],
+            ]);
+        } catch (\Throwable $th) {
+            Cart::create($data);
+        }
 
         return redirect()->route('products.index');
     }

@@ -13,7 +13,7 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        $vouchers = Voucher::all();
+        $vouchers = Voucher::paginate(perPage: 10);
 
         return view('pages.voucher.index', compact('vouchers'));
     }
