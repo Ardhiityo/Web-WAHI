@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WAN ESA | Web Kasir</title>
+    <title>WAHI</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -32,47 +32,8 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
-                height="60" width="60">
-        </div>
-
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
-                        role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#">
-                        <i class="fas fa-sign-out-alt" id="btn-submit"></i>
-                    </a>
-                </li>
-            </ul>
-            <form id="form-logout" action="{{ route('logout') }}" method="post">
-                @csrf
-            </form>
-        </nav>
-        <!-- /.navbar -->
-
-        @include('includes.sidebar')
+        <x-header />
+        <x-sidebar />
 
         <div class="content-wrapper">
             <section class="content">
@@ -81,13 +42,8 @@
                 </div>
             </section>
         </div>
-        @include('includes.footer')
-
-        <aside class="control-sidebar control-sidebar-dark">
-        </aside>
-
+        <x-footer />
     </div>
-    <!-- ./wrapper -->
     <script>
         document.getElementById('btn-submit').addEventListener('click', function() {
             document.getElementById('form-logout').submit();
@@ -110,7 +66,6 @@
     <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.js') }}"></script>
-    {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 </body>
 

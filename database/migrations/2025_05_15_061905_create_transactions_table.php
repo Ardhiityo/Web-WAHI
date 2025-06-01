@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->integer('qty');
-            $table->integer('total_amount');
+            $table->string('transaction_code')->unique();
+            $table->unsignedBigInteger('total_amount');
+            $table->enum('transaction_status', ['pending', 'paid']);
+            $table->enum('transaction_type', ['cashless', 'cash']);
+            $table->foreignId('voucher_id')->nullable()
+                ->constrained('vouchers')->cascadeOnDelete();
+            $table->foreignId('user_id')
+                ->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

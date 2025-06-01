@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mt-5">
+    <div class="mt-5 row">
         <div class="col-md-12">
             <div class="card">
-                <div class="d-flex justify-content-end align-items-center m-3">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary">Add data</a>
+                <div class="m-3 d-flex justify-content-end align-items-center">
+                    <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Label</th>
+                                <th>Produk</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Brand</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,6 +24,8 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>Rp. {{ $product->price }}</td>
+                                    <td>{{ $product->stock }}</td>
+                                    <td>{{ $product->brand }}</td>
                                     <td>
                                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
                                         <form action="{{ route('products.destroy', $product->id) }}" method="POST"
@@ -40,7 +43,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
+                    <ul class="float-right m-0 pagination pagination-sm">
                         <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>

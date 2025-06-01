@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row pt-5">
+    <div class="pt-5 row">
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create Product</h3>
+                    <h3 class="card-title">Tambah Produk</h3>
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -20,14 +20,24 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth2">Name</label>
+                            <label for="name">Nama</label>
                             <input type="text" name="name" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2">
+                                class="form-control form-control-border border-width-2" id="name">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth2">Price</label>
+                            <label for="price">Harga</label>
                             <input type="text" name="price" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2">
+                                class="form-control form-control-border border-width-2" id="price">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stok</label>
+                            <input type="text" name="price" required
+                                class="form-control form-control-border border-width-2" id="stock">
+                        </div>
+                        <div class="form-group">
+                            <label for="brand">Brand</label>
+                            <input type="text" name="brand" required
+                                class="form-control form-control-border border-width-2" id="brand">
                         </div>
                     </div>
                     <div class="card-footer">

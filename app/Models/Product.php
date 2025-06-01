@@ -11,6 +11,7 @@ class Product extends Model
         'name',
         'price',
         'stock',
+        'brand_id',
     ];
 
     public function getPriceAttribute($value)
@@ -20,6 +21,17 @@ class Product extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsToMany(Transaction::class, 'product_transactions', 'product_id', 'transaction_id')
+            ->withPivot('qty', 'total_amount')->withTimestamps();
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row pt-5">
+    <div class="pt-5 row">
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create Product</h3>
+                    <h3 class="card-title">Edit Product</h3>
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">

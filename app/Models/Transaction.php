@@ -24,8 +24,14 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'transaction_products', 'transaction_id', 'product_id')
+            ->withPivot('qty', 'total_amount')->withTimestamps();
+    }
+
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class);
     }
 }

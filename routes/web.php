@@ -1,26 +1,17 @@
 <?php
 
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 
-Route::get('/', function () {
-    $cashier = User::role('cashier')->count();
-    $admin = User::role('admin')->count();
-    $transaction = Transaction::count();
-    $product = Product::count();
-
-    return view('dashboard', compact('cashier', 'admin', 'transaction', 'product'));
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('products', ProductController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('products', ProductController::class);
 });
 
 // Route::middleware('auth')->group(function () {
