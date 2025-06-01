@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Voucher\StoreVoucherRequest;
+use App\Http\Requests\Voucher\UpdateVoucherRequest;
 use App\Models\Voucher;
-use Illuminate\Http\Request;
 
 class VoucherController extends Controller
 {
@@ -12,7 +13,9 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        //
+        $vouchers = Voucher::all();
+
+        return view('pages.voucher.index', compact('vouchers'));
     }
 
     /**
@@ -20,15 +23,17 @@ class VoucherController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.voucher.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVoucherRequest $request)
     {
-        //
+        Voucher::create($request->validated());
+
+        return redirect()->route('vouchers.index');
     }
 
     /**
@@ -44,15 +49,17 @@ class VoucherController extends Controller
      */
     public function edit(Voucher $voucher)
     {
-        //
+        return view('pages.voucher.edit', compact('voucher'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Voucher $voucher)
+    public function update(UpdateVoucherRequest $request, Voucher $voucher)
     {
-        //
+        $voucher->update($request->validated());
+
+        return redirect()->route('vouchers.index');
     }
 
     /**
@@ -60,6 +67,8 @@ class VoucherController extends Controller
      */
     public function destroy(Voucher $voucher)
     {
-        //
+        $voucher->delete();
+
+        return redirect()->route('vouchers.index');
     }
 }

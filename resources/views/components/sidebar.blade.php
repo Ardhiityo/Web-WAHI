@@ -51,6 +51,16 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('vouchers.index') }}"
+                        class="nav-link {{ request()->is('vouchers*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Voucher
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ route('transactions.index') }}"
                         class="nav-link {{ request()->is('transactions*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book"></i>
