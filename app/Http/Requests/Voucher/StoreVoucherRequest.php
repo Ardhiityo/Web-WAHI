@@ -15,6 +15,7 @@ class StoreVoucherRequest extends FormRequest
     {
         return [
             'code' => ['required', 'string', 'min:3', 'max:255', 'unique:vouchers,code'],
+            'discount' => ['required', 'numeric', 'min:1', 'max:100'],
         ];
     }
 }

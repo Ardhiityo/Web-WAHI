@@ -25,6 +25,13 @@
                                 class="form-control form-control-border border-width-2" id="code">
                         </div>
                     </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="discount">Persentase</label>
+                            <input type="number" name="discount" required
+                                class="form-control form-control-border border-width-2" id="discount">
+                        </div>
+                    </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

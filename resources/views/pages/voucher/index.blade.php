@@ -12,7 +12,8 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
-                                <th>Nama</th>
+                                <th>Kode</th>
+                                <th>Diskon</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -21,6 +22,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $voucher->code }}</td>
+                                    <td>{{ $voucher->discount }}%</td>
                                     <td>
                                         <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-primary">Edit</a>
                                         <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"

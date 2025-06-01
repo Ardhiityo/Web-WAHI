@@ -8,6 +8,7 @@ class Voucher extends Model
 {
     protected $fillable = [
         'code',
+        'discount',
     ];
 
     public function transactions()

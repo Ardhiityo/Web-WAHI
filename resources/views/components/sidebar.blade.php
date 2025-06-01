@@ -23,7 +23,7 @@
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-home"></i>
                         <p>
                             Dashboard
                         </p>
@@ -33,7 +33,7 @@
                 <li class="nav-item">
                     <a href="{{ route('brands.index') }}"
                         class="nav-link {{ request()->is('brands*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-tags"></i>
                         <p>
                             Brand
                         </p>
@@ -43,7 +43,7 @@
                 <li class="nav-item">
                     <a href="{{ route('products.index') }}"
                         class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-shopping-bag"></i>
                         <p>
                             Produk
                         </p>
@@ -53,7 +53,7 @@
                 <li class="nav-item">
                     <a href="{{ route('vouchers.index') }}"
                         class="nav-link {{ request()->is('vouchers*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-percent"></i>
                         <p>
                             Voucher
                         </p>

@@ -21,10 +21,16 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth2">Kode</label>
+                            <label for="code">Kode</label>
                             <input type="text" name="code" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2"
+                                class="form-control form-control-border border-width-2" id="code"
                                 value="{{ old('code', $voucher->code) }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount">Diskon</label>
+                            <input type="number" name="discount" required
+                                class="form-control form-control-border border-width-2" id="discount"
+                                value="{{ old('discount', $voucher->discount) }}">
                         </div>
                     </div>
                     <div class="card-footer">
