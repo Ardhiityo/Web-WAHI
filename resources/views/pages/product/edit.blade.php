@@ -21,15 +21,31 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth2">Name</label>
+                            <label for="name">Name</label>
                             <input type="text" name="name" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2"
+                                class="form-control form-control-border border-width-2" id="name"
                                 value="{{ old('name', $product->name) }}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth2">Price</label>
+                            <label for="stock">Stock</label>
+                            <input type="text" name="stock" required
+                                class="form-control form-control-border border-width-2" id="stock"
+                                value="{{ old('stock', $product->stock) }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <select class="form-control select2" style="width: 100%;" name="brand_id">
+                                @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}"
+                                        {{ old('brand_id', $brand->id) === $brand->id ? 'selected' : '' }}>
+                                        {{ $brand->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
                             <input type="text" name="price" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2"
+                                class="form-control form-control-border border-width-2" id="price"
                                 value="{{ old('price', $product->price) }}">
                         </div>
                     </div>

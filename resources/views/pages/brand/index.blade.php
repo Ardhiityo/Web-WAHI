@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="m-3 d-flex justify-content-end align-items-center">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah</a>
+                    <a href="{{ route('brands.create') }}" class="btn btn-primary">Tambah</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
@@ -13,22 +13,17 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Nama</th>
-                                <th>Harga</th>
-                                <th>Stok</th>
-                                <th>Brand</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($brands as $brand)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>Rp. {{ $product->price }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>{{ $product->brand->name }}</td>
+                                    <td>{{ $brand->name }}</td>
                                     <td>
-                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
-                                        <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                        <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-primary">Edit</a>
+                                        <form action="{{ route('brands.destroy', $brand->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf
                                             @method('DELETE')

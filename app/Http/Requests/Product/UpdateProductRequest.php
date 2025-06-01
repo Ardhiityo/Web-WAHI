@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Product;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +15,7 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:products,name', 'min:3'],
+            'name' => ['required', 'min:3', Rule::unique('products', 'name')->ignore($this->product->id)],
             'price' => ['required', 'numeric'],
             'stock' => ['required', 'integer', 'min:0'],
             'brand_id' => ['required', 'exists:brands,id'],

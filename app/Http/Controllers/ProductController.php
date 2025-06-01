@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Product\StoreProductRequest;
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -17,7 +19,9 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('pages.product.create');
+        $brands = Brand::all();
+
+        return view('pages.product.create', compact('brands'));
     }
 
     public function store(StoreProductRequest $request)
@@ -29,20 +33,14 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('pages.product.edit', compact('product'));
+        $brands = Brand::all();
+
+        return view('pages.product.edit', compact('product', 'brands'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $request->validate([
-            'name' => 'required|unique:products,name,' . $product->id,
-            'price' => 'required|numeric',
-        ]);
-
-        $product->update([
-            'name' => $request->name,
-            'price' => $request->price,
-        ]);
+        $product->update($request->validated());
 
         return redirect()->route('products.index');
     }
@@ -50,6 +48,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+
         return redirect()->route('products.index');
     }
 }

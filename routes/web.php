@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProductController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\TransactionController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/',  [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('brands', BrandController::class);
     Route::resource('products', ProductController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('roles', RoleController::class);

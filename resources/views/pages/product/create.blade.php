@@ -31,13 +31,17 @@
                         </div>
                         <div class="form-group">
                             <label for="stock">Stok</label>
-                            <input type="text" name="price" required
+                            <input type="text" name="stock" required
                                 class="form-control form-control-border border-width-2" id="stock">
                         </div>
                         <div class="form-group">
-                            <label for="brand">Brand</label>
-                            <input type="text" name="brand" required
-                                class="form-control form-control-border border-width-2" id="brand">
+                            <label>Brand</label>
+                            <select class="form-control select2" style="width: 100%;" name="brand_id">
+                                <option selected="selected" value="">Pilih...</option>
+                                @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="card-footer">
