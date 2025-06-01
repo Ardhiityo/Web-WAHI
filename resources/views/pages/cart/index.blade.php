@@ -21,12 +21,12 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <img src="{{ asset(Storage::url($cart->image)) }}" width="100" height="100"
-                                            alt="{{ $product->name }}">
+                                        <img src="{{ asset(Storage::url($cart->product->image)) }}" width="100"
+                                            height="100" alt="{{ $cart->product->name }}">
                                     </td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->price }}</td>
-                                    <td>{{ $product->quantity }}</td>
+                                    <td>{{ $cart->product->name }}</td>
+                                    <td>{{ $cart->product->price }}</td>
+                                    <td>{{ $cart->quantity }}</td>
                                     <td>
                                         <a href="{{ route('carts.edit', $cart->id) }}" class="btn btn-primary">Edit</a>
                                         <form action="{{ route('carts.destroy', $cart->id) }}" method="POST"

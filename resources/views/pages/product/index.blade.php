@@ -34,9 +34,15 @@
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->brand->name }}</td>
                                     <td>
-                                        <button class="btn btn-warning">
-                                            <i class="fas fa-cart-plus"></i>
-                                        </button>
+                                        <form action="{{ route('carts.store') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button class="btn btn-warning">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                     <td>
                                         <a href="{{ route('products.edit', $product->id) }}"

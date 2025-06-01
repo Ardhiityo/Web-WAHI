@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Cart\StoreCartRequest;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,11 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCartRequest $request)
     {
-        //
+        Cart::create($request->validated());
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -62,6 +65,8 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $cart->delete();
+
+        return redirect()->route('carts.index');
     }
 }
