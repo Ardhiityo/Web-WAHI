@@ -12,6 +12,7 @@ class Product extends Model
         'price',
         'stock',
         'brand_id',
+        'image'
     ];
 
     public function getPriceAttribute($value)

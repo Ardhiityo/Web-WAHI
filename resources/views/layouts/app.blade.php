@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="{{ asset('plugins/dropzone/min/dropzone.min.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -44,6 +46,7 @@
         </div>
         <x-footer />
     </div>
+
     <script>
         document.getElementById('btn-submit').addEventListener('click', function() {
             document.getElementById('form-logout').submit();

@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
+                                <th>Foto</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Stok</th>
@@ -22,12 +23,17 @@
                             @foreach ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <img src="{{ asset(Storage::url($product->image)) }}" width="100" height="100"
+                                            alt="{{ $product->name }}">
+                                    </td>
                                     <td>{{ $product->name }}</td>
                                     <td>Rp. {{ $product->price }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->brand->name }}</td>
                                     <td>
-                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('products.edit', $product->id) }}"
+                                            class="btn btn-primary">Edit</a>
                                         <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf

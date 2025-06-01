@@ -16,9 +16,14 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('products.store') }}" method="POST">
+                <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="form-group">
+                            <label for="image">Foto</label>
+                            <input type="file" name="image" required
+                                class="form-control form-control-border border-width-2" id="image">
+                        </div>
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input type="text" name="name" required

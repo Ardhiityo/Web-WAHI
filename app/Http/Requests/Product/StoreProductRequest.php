@@ -15,6 +15,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'unique:products,name', 'min:3'],
+            'image' => ['required', 'mimes:jpg,png,jpeg', 'max:2048'],
             'price' => ['required', 'numeric'],
             'stock' => ['required', 'integer', 'min:0'],
             'brand_id' => ['required', 'exists:brands,id'],
