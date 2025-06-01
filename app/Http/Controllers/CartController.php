@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Checkout\StoreCheckoutRequest;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -86,6 +87,12 @@ class CartController extends Controller
                 'user_id' => Auth::user()->id,
             ]
         );
+
+        if ($transaction->transaction_type == 'cash') {
+            // $transaction->save();
+        } else {
+            Session::put('transaction', $transaction);
+        }
 
         return view('pages.checkout-detail.index', compact('carts', 'transaction'));
     }
