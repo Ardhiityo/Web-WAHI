@@ -11,9 +11,9 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row">
+            <div class="mb-4 row">
                 <div class="col-12">
-                    <div class="m-3 d-flex justify-content-end align-items-center">
+                    <div class="d-flex justify-content-end align-items-center">
                         <a href="{{ route('brands.create') }}" class="btn btn-primary">Tambah</a>
                     </div>
                 </div>

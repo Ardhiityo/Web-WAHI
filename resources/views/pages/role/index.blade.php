@@ -1,21 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mt-5 row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="m-3 d-flex justify-content-end align-items-center">
-                    <a href="{{ route('roles.create') }}" class="btn btn-primary">Add data</a>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Daftar Peran</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="mb-4 col-12">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <a href="{{ route('roles.create') }}" class="btn btn-primary">Tambah</a>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-around">
+                    <table class="table text-center table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
-                                <th>Nama Admin</th>
+                                <th>Nama</th>
                                 <th>Email</th>
-                                <th>Role</th>
-                                <th>Action</th>
+                                <th>Peran</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,21 +56,19 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer clearfix">
-                    <ul class="float-right m-0 pagination pagination-sm">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
+                    <div class="mt-5 row">
+                        <div class="col-12">
+                            {{ $users->links('pagination::bootstrap-5') }}
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </div>
+        <div class="card-footer">
+            Semua daftar peran
+        </div>
+    </div>
 
-        <!-- /.col -->
-</div @endsection
+
+    </div>
+@endsection

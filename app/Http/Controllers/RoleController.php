@@ -14,7 +14,7 @@ class RoleController extends Controller
         $users = User::with([
             'roles' =>
             fn(Builder $query) => $query->select('id', 'name')
-        ])->get();
+        ])->paginate(perPage: 5);
 
         return view('pages.role.index', compact('users'));
     }
