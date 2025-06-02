@@ -64,11 +64,5 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            Semua daftar peran
-        </div>
-    </div>
-
-
     </div>
 @endsection

@@ -1,14 +1,17 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link d-flex justify-content-center">
-        <span class="brand-text font-weight-bold">
+        <span class="brand-text font-weight-bold" style="letter-spacing: 5px">
             <i class="fas fa-store"></i>
             WAHI
         </span>
     </a>
 
     <div class="sidebar">
-        <div class="pb-3 mt-3 mb-3 user-panel d-flex">
+        <div class="py-3 user-panel d-flex justify-content-center">
+            <div class="image">
+                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            </div>
             <div class="info">
                 <a href="{{ route('dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>

@@ -19,47 +19,48 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 d-flex justify-content-around">
-                    <table class="table text-center table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">No</th>
-                                <th>Voucher</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($vouchers as $voucher)
+                @if ($vouchers->isEmpty())
+                    <p>Data belum tersedia...</p>
+                @else
+                    <div class="col-12 d-flex justify-content-around">
+                        <table class="table text-center table-bordered">
+                            <thead>
                                 <tr>
-                                    <td class="align-middle">{{ $loop->iteration }}</td>
-                                    <td class="align-middle">{{ $voucher->code }}</td>
-                                    <td class="align-middle">
-                                        <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-warning"> <i
-                                                class="fas fa-edit"></i></a>
-                                        <span class="mx-1"></span>
-                                        <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"
-                                            style="display: inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')"> <i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </form>
-                                    </td>
+                                    <th style="width: 10px">No</th>
+                                    <th>Voucher</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="mt-5 row">
-                        <div class="col-12">
-                            {{ $vouchers->links('pagination::bootstrap-5') }}
+                            </thead>
+                            <tbody>
+                                @foreach ($vouchers as $voucher)
+                                    <tr>
+                                        <td class="align-middle">{{ $loop->iteration }}</td>
+                                        <td class="align-middle">{{ $voucher->code }}</td>
+                                        <td class="align-middle">
+                                            <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-warning"> <i
+                                                    class="fas fa-edit"></i></a>
+                                            <span class="mx-1"></span>
+                                            <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"
+                                                style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"
+                                                    onclick="return confirm('Are you sure?')"> <i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="mt-5 row">
+                            <div class="col-12">
+                                {{ $vouchers->links('pagination::bootstrap-5') }}
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
-        </div>
-        <div class="card-footer">
-            Semua daftar voucher
         </div>
     </div>
 @endsection
