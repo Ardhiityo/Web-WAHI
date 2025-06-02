@@ -1,13 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mt-5 row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="m-3 d-flex justify-content-end align-items-center">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah</a>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Daftar Produk</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="m-3 d-flex justify-content-end align-items-center">
+                        <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah</a>
+                    </div>
                 </div>
-                <div class="card-body">
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-around">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -66,6 +78,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-footer">
+            Semua daftar product
         </div>
     </div>
 @endsection

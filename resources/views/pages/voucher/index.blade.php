@@ -1,19 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mt-5 row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="m-3 d-flex justify-content-end align-items-center">
-                    <a href="{{ route('vouchers.create') }}" class="btn btn-primary">Tambah</a>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Daftar Voucher</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="m-3 d-flex justify-content-end align-items-center">
+                        <a href="{{ route('vouchers.create') }}" class="btn btn-primary">Tambah</a>
+                    </div>
                 </div>
-                <div class="card-body">
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-around">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
-                                <th>Kode</th>
-                                <th>Diskon</th>
+                                <th>Voucher</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -22,9 +33,9 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $voucher->code }}</td>
-                                    <td>{{ $voucher->discount }}%</td>
                                     <td>
-                                        <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('vouchers.edit', $voucher->id) }}"
+                                            class="btn btn-primary">Edit</a>
                                         <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf
@@ -44,9 +55,9 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-        <!-- /.col -->
-</div @endsection
+        <div class="card-footer">
+            Semua daftar voucher
+        </div>
+    </div>
+@endsection

@@ -98,6 +98,7 @@ class CartController extends Controller
 
         if ($transaction->transaction_type == 'cash') {
             // $transaction->save();
+            // Cart::where('user_id', Auth::user()->id)->delete();
         } else {
             Session::put('transaction', $transaction);
         }

@@ -12,6 +12,13 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <span class="btn btn-success">Transaksi Berhasil Dibuat</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                         <div class="form-group">
@@ -25,7 +32,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="dicount">Diskon {{ $transaction->discountPercentage }}%</label>
+                            <label for="dicount">Persentase Diskon</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="rounded form-control" readonly
+                                    value="{{ $transaction->discount_percentage }}" data-mask>
+                                <span class="input-group-text font-weight-bold"><i class="fas fa-percent"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dicount">Total Diskon</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Rp.</span>
@@ -34,6 +51,7 @@
                                     data-mask>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -49,7 +67,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="total_amount">Total Harga</label>
+                            <label for="total_amount">Sub Total</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold">Rp.</span>
+                                </div>
+                                <input type="text" class="form-control" readonly value="{{ $transaction->total_amount }}"
+                                    data-mask>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="total_amount">Grand Total</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Rp.</span>
