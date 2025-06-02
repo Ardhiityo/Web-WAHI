@@ -44,7 +44,7 @@
                                                 <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                             </div>
                                             <input type="text" class="form-control" readonly
-                                                value="{{ $transaction->voucher->code ?? '-' }}">
+                                                value="{{ $transaction->transaction_code ?? '-' }}">
                                         </div>
                                     </div>
                                 </div>

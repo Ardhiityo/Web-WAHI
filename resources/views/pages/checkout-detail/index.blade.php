@@ -17,7 +17,8 @@
                     <div>
                         @if ($transaction->transaction_type == 'cash')
                             <h4>Sukses dibuat.</h4>
-                            <p>Selanjutnya datangi toko dan tunjukan kode transaksi kepada kasir untuk
+                            <p>Selanjutnya, konfirmasi ke toko dan datangi toko lalu tunjukan kode transaksi kepada kasir
+                                untuk
                                 konfirmasi pembayaran.</p>
                         @else
                             <h4>Sukses dibuat.</h4>
@@ -30,6 +31,7 @@
             <div class="row">
                 <div class="my-3 col-12">
                     @if ($transaction->transaction_type == 'cash')
+                        <a href="{{ route('transactions.index') }}" class="btn btn-primary">Lihat Transaksi</a>
                         <a href="https://wa.me/6287871111101?text=Hallo%20kak,%20saya%20mau%20datang%20ke%20toko,%20kode%20pesanan%20saya%20{{ $transaction->transaction_code }}"
                             class="btn btn-success">Konfirmasi</a>
                     @else
@@ -122,13 +124,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer">
-            @if ($transaction->transaction_type == 'cash')
-                Tunjukan Kode Transaksi kepada kasir untuk konfirmasi pembayaran.
-            @else
-                Tunjukan Kode Transaksi kepada kasir untuk mengambil pesanan jika pembayaran berhasil.
-            @endif
         </div>
     </div>
 @endsection
