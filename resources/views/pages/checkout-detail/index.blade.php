@@ -25,12 +25,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="dicount">Diskon</label>
+                            <label for="dicount">Diskon {{ $transaction->discountPercentage }}%</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-percent"></i></span>
+                                    <span class="input-group-text font-weight-bold">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" readonly value="{{ $voucher ?? '-' }}" data-mask>
+                                <input type="text" class="form-control" readonly value="{{ $transaction->total_amount }}"
+                                    data-mask>
                             </div>
                         </div>
                     </div>

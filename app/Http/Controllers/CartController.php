@@ -64,24 +64,29 @@ class CartController extends Controller
         $data = $request->validated();
 
         $subtotal = 0;
-        $voucher = null;
+        $totalAmount = $subtotal;
+        $discount = null;
+        $totalDiscount = 0;
+        $discountPercentage = null;
 
         foreach ($carts as $key => $cart) {
             $subtotal +=  (int)$cart->product->price * (int)$cart->quantity;
         }
 
         if (!is_null($data['voucher'])) {
-            $vc = Voucher::where('code', $data['voucher'])->first();
-            $data['voucher'] = $vc->id;
-            $voucher = $vc->discount;
-            $discount = (int)$vc->discount / 100;
-            $totalAmount = $subtotal * $discount;
-        } else {
-            $totalAmount = $subtotal;
+            $voucher = Voucher::where('code', $data['voucher'])->first();
+            $data['voucher'] = $voucher->id;
+            $discount = (int)$voucher->discount / 100;
+            $discountPercentage = $voucher->discount;
+            $totalDiscount = $subtotal * $discount;
+            $totalAmount = $subtotal - $totalDiscount;
         }
 
         $transaction = Transaction::make(
             [
+                'discount' => $totalDiscount,
+                'discount_percentage' => $discountPercentage,
+                'subtotal_amount' => $subtotal,
                 'transaction_code' => $data['transaction_code'],
                 'transaction_type' => $data['transaction_type'],
                 'voucher' => $data['voucher'],
@@ -97,7 +102,10 @@ class CartController extends Controller
             Session::put('transaction', $transaction);
         }
 
-        return view('pages.checkout-detail.index', compact('carts', 'transaction', 'voucher'));
+        return view('pages.checkout-detail.index', compact(
+            'carts',
+            'transaction',
+        ));
     }
 
     /**

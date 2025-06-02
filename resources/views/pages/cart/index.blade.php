@@ -1,13 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mt-5 row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="m-3 d-flex justify-content-end align-items-center">
-                    <a href="{{ route('carts.checkout') }}" class="btn btn-success">Proses Pesanan</a>
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Proses Pesanan</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-around">
+                    <p class="font-weight-bold">Lanjutkan Proses Pesanan?</p>
+                    <a href="{{ route('carts.checkout') }}" class="btn btn-success">Lanjutkan</a>
                 </div>
-                <div class="card-body">
+            </div>
+        </div>
+        <div class="card-footer">
+            Proses Pesanan akan dilanjutkan ke halaman selanjutnya.
+        </div>
+    </div>
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Detail Product</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -51,6 +78,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-footer">
+            Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information
+            about
+            the plugin.
         </div>
     </div>
 @endsection

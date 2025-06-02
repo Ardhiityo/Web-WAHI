@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $fillable = [
+        'discount_percentage',
         'transaction_code',
         'voucher_id',
         'transaction_type',
         'total_amount',
         'transaction_status',
         'user_id',
+        'subtotal_amount',
+        'discount',
     ];
 
     public static function getTotalAmount($value)
