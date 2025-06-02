@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mt-5">
+    <div class="mt-5 row">
         <div class="col-md-12">
             <div class="card">
-                <div class="d-flex justify-content-end align-items-center m-3">
+                <div class="m-3 d-flex justify-content-end align-items-center">
                     <a href="{{ route('roles.create') }}" class="btn btn-primary">Add data</a>
                 </div>
                 <div class="card-body">
@@ -26,14 +26,18 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->roles->pluck('name')->implode(', ') }}</td>
                                     <td>
-                                        <a href="{{ route('roles.show', $user->id) }}" class="btn btn-warning">Show</a>
-                                        <a href="{{ route('roles.edit', $user->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('roles.edit', $user->id) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <span class="mx-1"></span>
                                         <form action="{{ route('roles.destroy', $user->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                onclick="return confirm('Are you sure?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -43,7 +47,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
+                    <ul class="float-right m-0 pagination pagination-sm">
                         <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>

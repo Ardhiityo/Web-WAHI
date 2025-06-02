@@ -34,13 +34,18 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $brand->name }}</td>
                                     <td>
-                                        <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <span class="mx-1"></span>
                                         <form action="{{ route('brands.destroy', $brand->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                onclick="return confirm('Are you sure?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

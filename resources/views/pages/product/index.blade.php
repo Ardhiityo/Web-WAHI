@@ -52,25 +52,29 @@
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                             <input type="hidden" name="quantity" value="1">
                                             @if ($product->stock < 1)
-                                                <button disabled class="btn btn-warning">
+                                                <button disabled class="btn btn-success">
                                                     <i class="fas fa-cart-plus"></i>
                                                 </button>
                                             @else
                                                 <button class="btn btn-warning">
-                                                    <i class="fas fa-cart-plus"></i>
+                                                    <i class="fas fa-plus"></i>
                                                 </button>
                                             @endif
                                         </form>
                                     </td>
                                     <td>
-                                        <a href="{{ route('products.edit', $product->id) }}"
-                                            class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <span class="mx-1"></span>
                                         <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                             style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                onclick="return confirm('Are you sure?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
