@@ -14,7 +14,7 @@
             <div class="mb-4 row">
                 <div class="col-12">
                     <div class="d-flex justify-content-end align-items-center">
-                        <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah</a>
+                        <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                                                 </button>
                                             @else
                                                 <button class="btn btn-warning">
-                                                    <i class="fas fa-plus"></i>
+                                                    <i class="fas fa-cart-plus"></i>
                                                 </button>
                                             @endif
                                         </form>

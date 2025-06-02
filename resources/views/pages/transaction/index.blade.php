@@ -18,9 +18,15 @@
                             <h5>{{ $transaction->created_at }}</h5>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <button class="btn btn-primary">Produk</button>
-                            <button class="mx-1 btn btn-warning">Edit</button>
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="mx-3 btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="row">

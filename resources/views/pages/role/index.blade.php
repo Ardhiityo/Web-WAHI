@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="mb-4 col-12">
                     <div class="d-flex justify-content-end align-items-center">
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary">Tambah</a>
+                        <a href="{{ route('roles.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                     </div>
                 </div>
             </div>
