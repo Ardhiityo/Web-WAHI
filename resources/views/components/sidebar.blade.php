@@ -1,12 +1,4 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{{ route('dashboard') }}" class="brand-link d-flex justify-content-center">
-        <span class="brand-text font-weight-bold" style="letter-spacing: 5px">
-            <i class="fas fa-store"></i>
-            WAHI
-        </span>
-    </a>
-
     <div class="sidebar">
         <div class="py-3 user-panel d-flex justify-content-center">
             <div class="image">
@@ -20,7 +12,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
@@ -30,7 +22,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('brands.index') }}"
                         class="nav-link {{ request()->is('brands*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tags"></i>
@@ -40,7 +32,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('products.index') }}"
                         class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-bag"></i>
@@ -50,7 +42,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('carts.index') }}"
                         class="nav-link {{ request()->is('carts*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cart-arrow-down"></i>
@@ -60,7 +52,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('vouchers.index') }}"
                         class="nav-link {{ request()->is('vouchers*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-percent"></i>
@@ -70,7 +62,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('transactions.index') }}"
                         class="nav-link {{ request()->is('transactions*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-money-bill-wave"></i>
@@ -80,7 +72,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="my-2 nav-item">
                     <a href="{{ route('roles.index') }}"
                         class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
@@ -89,7 +81,6 @@
                         </p>
                     </a>
                 </li>
-
             </ul>
         </nav>
     </div>
