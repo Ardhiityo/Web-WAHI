@@ -41,7 +41,7 @@ class CartController extends Controller
     public function store(StoreCartRequest $request)
     {
         $data = $request->validated();
-
+        // dd($data);
         try {
             $cart = Cart::where('product_id', $data['product_id'])->firstOrFail();
             $cart->update([

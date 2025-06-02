@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Cart;
 
+use App\Rules\AddCartRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCartRequest extends FormRequest
@@ -15,7 +16,7 @@ class StoreCartRequest extends FormRequest
     {
         return [
             'product_id' => ['required', 'exists:products,id'],
-            'quantity' => ['required', 'integer', 'min:1'],
+            'quantity' => ['required', 'integer', 'min:1', new AddCartRule],
             'user_id' => ['required', 'exists:users,id']
         ];
     }
