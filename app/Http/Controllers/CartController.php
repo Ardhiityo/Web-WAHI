@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\ProductTransaction;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Checkout\StoreCheckoutRequest;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -52,14 +56,12 @@ class CartController extends Controller
 
     public function checkout()
     {
-        $carts = Cart::where('user_id', Auth::user()->id)->paginate(perPage: 10);
-
-        return view('pages.checkout.index', compact('carts'));
+        return view('pages.checkout.index');
     }
 
     public function checkoutDetail(StoreCheckoutRequest $request)
     {
-        $carts = Cart::where('user_id', Auth::user()->id)->paginate(perPage: 10);
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
 
         $data = $request->validated();
 
@@ -82,14 +84,14 @@ class CartController extends Controller
             $totalAmount = $subtotal - $totalDiscount;
         }
 
-        $transaction = Transaction::make(
+        $transaction = Transaction::create(
             [
                 'discount' => $totalDiscount,
                 'discount_percentage' => $discountPercentage,
                 'subtotal_amount' => $subtotal,
                 'transaction_code' => $data['transaction_code'],
                 'transaction_type' => $data['transaction_type'],
-                'voucher' => $data['voucher'],
+                'voucher_id' => $data['voucher'],
                 'total_amount' => $totalAmount,
                 'transaction_status' => 'pending',
                 'user_id' => Auth::user()->id,
@@ -97,14 +99,40 @@ class CartController extends Controller
         );
 
         if ($transaction->transaction_type == 'cash') {
-            // $transaction->save();
-            // Cart::where('user_id', Auth::user()->id)->delete();
+            DB::beginTransaction();
+            try {
+                foreach ($carts as $key => $cart) {
+                    $product = ProductTransaction::where('product_id', $cart->product_id)
+                        ->where('transaction_id', $transaction->id)->first();
+                    if ($product) {
+                        $product->update(['quantity' => $product->quantity]);
+                    } else {
+                        ProductTransaction::create([
+                            'product_id' => $cart->product_id,
+                            'transaction_id' => $transaction->id,
+                            'price' => $cart->product->price,
+                            'quantity' => $cart->quantity
+                        ]);
+                    }
+                    $product = Product::findOrFail($cart->product_id);
+                    if ($product) {
+                        $product->stock -= $cart->quantity;
+                        $product->save();
+                    }
+                };
+                Cart::where('user_id', Auth::user()->id)->delete();
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                return view('pages.checkout-detail.index', compact(
+                    'transaction',
+                ))->with('error', $th->getMessage());
+            }
         } else {
             Session::put('transaction', $transaction);
         }
 
         return view('pages.checkout-detail.index', compact(
-            'carts',
             'transaction',
         ));
     }

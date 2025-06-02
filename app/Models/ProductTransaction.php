@@ -11,7 +11,10 @@ class ProductTransaction extends Pivot
         'transaction_id',
         'quantity',
         'sub_total',
+        'price'
     ];
+
+    protected $table = 'product_transactions';
 
     public function product()
     {

@@ -15,11 +15,6 @@ class Product extends Model
         'image'
     ];
 
-    // public function getPriceAttribute($value)
-    // {
-    //     return Number::format($value, locale: 'id-ID');
-    // }
-
     public function transactions()
     {
         return $this->belongsToMany(Transaction::class, 'product_transactions', 'product_id', 'transaction_id')

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->integer('price');
-            $table->integer('stock');
+            $table->unsignedBigInteger('price');
+            $table->unsignedInteger('stock');
             $table->foreignId('brand_id')
                 ->constrained('brands')
                 ->cascadeOnDelete();
