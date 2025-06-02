@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-around">
-                    <table class="table table-bordered">
+                    <table class="table text-center table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>

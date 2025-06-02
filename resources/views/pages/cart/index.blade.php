@@ -35,7 +35,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <table class="table table-bordered">
+                    <table class="table text-center table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 10px">No</th>
