@@ -36,16 +36,17 @@
                         <tbody>
                             @foreach ($products as $product)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">
                                         <img src="{{ asset(Storage::url($product->image)) }}" width="100" height="100"
                                             alt="{{ $product->name }}">
                                     </td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>Rp. {{ number_format($product->price, thousands_separator: '.') }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>{{ $product->brand->name }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $product->name }}</td>
+                                    <td class="align-middle">Rp.
+                                        {{ number_format($product->price, thousands_separator: '.') }}</td>
+                                    <td class="align-middle">{{ $product->stock }}</td>
+                                    <td class="align-middle">{{ $product->brand->name }}</td>
+                                    <td class="align-middle">
                                         <form action="{{ route('carts.store') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -62,7 +63,7 @@
                                             @endif
                                         </form>
                                     </td>
-                                    <td>
+                                    <td class="align-middle">
                                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>

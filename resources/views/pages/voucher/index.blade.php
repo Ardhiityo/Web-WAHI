@@ -31,9 +31,9 @@
                         <tbody>
                             @foreach ($vouchers as $voucher)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $voucher->code }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">{{ $voucher->code }}</td>
+                                    <td class="align-middle">
                                         <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-warning"> <i
                                                 class="fas fa-edit"></i></a>
                                         <span class="mx-1"></span>

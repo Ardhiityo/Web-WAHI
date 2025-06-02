@@ -49,15 +49,16 @@
                         <tbody>
                             @foreach ($carts as $cart)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">
                                         <img src="{{ asset(Storage::url($cart->product->image)) }}" width="100"
                                             height="100" alt="{{ $cart->product->name }}">
                                     </td>
-                                    <td>{{ $cart->product->name }}</td>
-                                    <td>Rp. {{ number_format($cart->product->price, thousands_separator: '.') }}</td>
-                                    <td>{{ $cart->quantity }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $cart->product->name }}</td>
+                                    <td class="align-middle">Rp.
+                                        {{ number_format($cart->product->price, thousands_separator: '.') }}</td>
+                                    <td class="align-middle">{{ $cart->quantity }}</td>
+                                    <td class="align-middle">
                                         <a href="{{ route('carts.edit', $cart->id) }}" class="btn btn-warning"> <i
                                                 class="fas fa-edit"></i></a>
                                         <span class="mx-1"></span>

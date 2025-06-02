@@ -31,9 +31,9 @@
                         <tbody>
                             @foreach ($brands as $brand)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $brand->name }}</td>
-                                    <td>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">{{ $brand->name }}</td>
+                                    <td class="align-middle">
                                         <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </a>
