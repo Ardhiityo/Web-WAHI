@@ -73,7 +73,7 @@
                 <li class="nav-item">
                     <a href="{{ route('transactions.index') }}"
                         class="nav-link {{ request()->is('transactions*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>
                             Transaksi
                         </p>
@@ -83,9 +83,9 @@
                 <li class="nav-item">
                     <a href="{{ route('roles.index') }}"
                         class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
-                            Roles
+                            Peran
                         </p>
                     </a>
                 </li>

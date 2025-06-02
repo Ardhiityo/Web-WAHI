@@ -11,8 +11,9 @@ class TransactionController extends Controller
 {
     public function index()
     {
+        $transactions = Transaction::paginate(perPage: 5);
 
-        return view('pages.transaction.index');
+        return view('pages.transaction.index', compact('transactions'));
     }
 
     public function create()

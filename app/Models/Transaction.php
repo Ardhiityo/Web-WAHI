@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Number;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,9 +20,10 @@ class Transaction extends Model
         'discount',
     ];
 
-    public static function getTotalAmount($value)
+
+    public function getCreatedAtAttribute($value)
     {
-        return Number::format($value, locale: 'id-ID');
+        return Carbon::parse($value)->format('d/m/Y');
     }
 
     public function user()
