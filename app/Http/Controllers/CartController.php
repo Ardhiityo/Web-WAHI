@@ -41,7 +41,7 @@ class CartController extends Controller
     public function store(StoreCartRequest $request)
     {
         $data = $request->validated();
-        // dd($data);
+
         try {
             $cart = Cart::where('product_id', $data['product_id'])->firstOrFail();
             $cart->update([
@@ -66,7 +66,6 @@ class CartController extends Controller
         $data = $request->validated();
 
         $subtotal = 0;
-        $totalAmount = $subtotal;
         $discount = null;
         $totalDiscount = 0;
         $discountPercentage = null;
@@ -74,6 +73,7 @@ class CartController extends Controller
         foreach ($carts as $key => $cart) {
             $subtotal +=  (int)$cart->product->price * (int)$cart->quantity;
         }
+        $totalAmount = $subtotal;
 
         if (!is_null($data['voucher'])) {
             $voucher = Voucher::where('code', $data['voucher'])->first();
@@ -131,7 +131,8 @@ class CartController extends Controller
         } else {
             Session::put('transaction', $transaction);
         }
-
+        Log::info('Masuk');
+        Log::info(json_encode($transaction, JSON_PRETTY_PRINT));
         return view('pages.checkout-detail.index', compact(
             'transaction',
         ));

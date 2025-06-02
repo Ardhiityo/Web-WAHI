@@ -70,7 +70,7 @@
                                 <div class="input-group-prepend">
                                 </div>
                                 <input type="text" class="rounded form-control" readonly
-                                    value="{{ $transaction->discount_percentage }}" data-mask>
+                                    value="{{ $transaction->discount_percentage ?? '0' }}" data-mask>
                                 <span class="input-group-text font-weight-bold"><i class="fas fa-percent"></i></span>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" readonly value="{{ $transaction->total_amount }}"
+                                <input type="text" class="form-control" readonly value="{{ $transaction->discount }}"
                                     data-mask>
                             </div>
                         </div>
@@ -105,8 +105,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold">Rp.</span>
                                 </div>
-                                <input type="text" class="form-control" readonly value="{{ $transaction->total_amount }}"
-                                    data-mask>
+                                <input type="text" class="form-control" readonly
+                                    value="{{ $transaction->subtotal_amount }}" data-mask>
                             </div>
                         </div>
                         <div class="form-group">

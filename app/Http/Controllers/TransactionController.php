@@ -11,9 +11,8 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('product')->get();
 
-        return view('pages.transaction.index', compact('transactions'));
+        return view('pages.transaction.index');
     }
 
     public function create()

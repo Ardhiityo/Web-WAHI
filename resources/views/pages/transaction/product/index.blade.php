@@ -42,7 +42,7 @@
                                             alt="{{ $product->name }}">
                                     </td>
                                     <td>{{ $product->name }}</td>
-                                    <td>Rp. {{ number_format($product->price, thousands_separator: '.') }}</td>
+                                    <td>Rp. {{ $product->price }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->brand->name }}</td>
                                     <td>

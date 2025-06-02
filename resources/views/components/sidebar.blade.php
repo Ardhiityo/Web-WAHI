@@ -75,7 +75,7 @@
                         class="nav-link {{ request()->is('transactions*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
-                            Transactions
+                            Transaksi
                         </p>
                     </a>
                 </li>

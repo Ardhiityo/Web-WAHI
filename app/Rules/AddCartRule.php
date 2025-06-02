@@ -5,7 +5,6 @@ namespace App\Rules;
 use Closure;
 use App\Models\Cart;
 use App\Models\Product;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class AddCartRule implements ValidationRule
@@ -20,9 +19,10 @@ class AddCartRule implements ValidationRule
         $productId = request('product_id');
         $product = Product::find($productId);
         $cartProduct = Cart::where('product_id', $productId)->first();
-
-        if ($cartProduct->quantity >= $product->stock) {
-            $fail('Tidak bisa menambahkan product melebihi stock produk');
+        if ($cartProduct) {
+            if ($cartProduct->quantity >= $product->stock) {
+                $fail('Tidak bisa menambahkan product melebihi stock produk');
+            }
         }
     }
 }

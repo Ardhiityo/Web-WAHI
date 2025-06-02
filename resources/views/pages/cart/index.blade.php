@@ -55,7 +55,7 @@
                                             height="100" alt="{{ $cart->product->name }}">
                                     </td>
                                     <td>{{ $cart->product->name }}</td>
-                                    <td>{{ $cart->product->price }}</td>
+                                    <td>Rp. {{ number_format($cart->product->price, thousands_separator: '.') }}</td>
                                     <td>{{ $cart->quantity }}</td>
                                     <td>
                                         <a href="{{ route('carts.edit', $cart->id) }}" class="btn btn-primary">Edit</a>
