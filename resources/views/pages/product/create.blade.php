@@ -7,15 +7,6 @@
                 <div class="card-header">
                     <h3 class="card-title">Tambah Produk</h3>
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
@@ -41,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label>Brand</label>
-                            <select class="form-control select2" style="width: 100%;" name="brand_id">
+                            <select class="form-control select2" style="width: 100%;" name="brand_id" required>
                                 <option selected="selected" value="">Pilih...</option>
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>

@@ -23,9 +23,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="image">Foto</label>
-                            <input type="file" name="image" required
-                                class="form-control form-control-border border-width-2" id="image"
-                                value="{{ old('image', $product->image) }}">
+                            <input type="file" name="image" class="form-control form-control-border border-width-2"
+                                id="image" value="{{ old('image', $product->image) }}">
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>

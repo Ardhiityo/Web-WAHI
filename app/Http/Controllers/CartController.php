@@ -51,7 +51,7 @@ class CartController extends Controller
             Cart::create($data);
         }
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->withSuccess('Berhasil ditambahkan');
     }
 
     public function checkout()
@@ -131,8 +131,7 @@ class CartController extends Controller
         } else {
             Session::put('transaction', $transaction);
         }
-        Log::info('Masuk');
-        Log::info(json_encode($transaction, JSON_PRETTY_PRINT));
+
         return view('pages.checkout-detail.index', compact(
             'transaction',
         ));
@@ -169,6 +168,6 @@ class CartController extends Controller
     {
         $cart->delete();
 
-        return redirect()->route('carts.index');
+        return redirect()->route('carts.index')->withSuccess('Berhasil dihapus');
     }
 }

@@ -33,7 +33,7 @@ class BrandController extends Controller
     {
         Brand::create($request->validated());
 
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->withSuccess('Berhasil ditambahkan');
     }
 
     /**
@@ -59,7 +59,7 @@ class BrandController extends Controller
     {
         $brand->update($request->validated());
 
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->withSuccess('Berhasil diubah');;
     }
 
     /**
@@ -69,6 +69,6 @@ class BrandController extends Controller
     {
         $brand->delete();
 
-        return redirect()->route('brands.index');
+        return redirect()->route('brands.index')->withSuccess('Berhasil dihapus');;
     }
 }

@@ -32,7 +32,7 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->withSuccess('Berhasil ditambahkan');
     }
 
     public function edit(Product $product)
@@ -53,13 +53,13 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->withSuccess('Berhasil diubah');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->withSuccess('Berhasil dihapus');
     }
 }

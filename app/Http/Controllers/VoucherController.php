@@ -33,7 +33,7 @@ class VoucherController extends Controller
     {
         Voucher::create($request->validated());
 
-        return redirect()->route('vouchers.index');
+        return redirect()->route('vouchers.index')->withSuccess('Berhasil ditambahkan');
     }
 
     /**
@@ -59,7 +59,7 @@ class VoucherController extends Controller
     {
         $voucher->update($request->validated());
 
-        return redirect()->route('vouchers.index');
+        return redirect()->route('vouchers.index')->withSuccess('Berhasil diubah');
     }
 
     /**
@@ -69,6 +69,6 @@ class VoucherController extends Controller
     {
         $voucher->delete();
 
-        return redirect()->route('vouchers.index');
+        return redirect()->route('vouchers.index')->withSuccess('Berhasil dihapus');
     }
 }
