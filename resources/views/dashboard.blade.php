@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="pt-5">Selamat Datang, {{ Auth::user()->name }}!</h3>
-    <div class="mt-5 row">
+    <div class="row">
+        <div class="col-12">
+            <h3>Selamat Datang, {{ Auth::user()->name }}!</h3>
+        </div>
+    </div>
+    <div class="mt-3 row">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
                 <div class="inner">
