@@ -51,9 +51,15 @@
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                             <input type="hidden" name="quantity" value="1">
-                                            <button class="btn btn-warning">
-                                                <i class="fas fa-cart-plus"></i>
-                                            </button>
+                                            @if ($product->stock < 1)
+                                                <button disabled class="btn btn-warning">
+                                                    <i class="fas fa-cart-plus"></i>
+                                                </button>
+                                            @else
+                                                <button class="btn btn-warning">
+                                                    <i class="fas fa-cart-plus"></i>
+                                                </button>
+                                            @endif
                                         </form>
                                     </td>
                                     <td>
