@@ -20,8 +20,21 @@ class DashboardController extends Controller
         $products = Product::count();
         $carts = Cart::where('user_id', Auth::user()->id)->count();
         $vouchers = Voucher::count();
-        $transactions = Transaction::count();
+        $pendingTransactions = Transaction::where('transaction_status', 'pending')->count();
+        $paidTransactions = Transaction::where('transaction_status', 'paid')->count();
 
-        return view('dashboard', compact('customers', 'cashiers', 'brands', 'products', 'carts', 'vouchers', 'transactions'));
+        return view(
+            'dashboard',
+            compact(
+                'customers',
+                'cashiers',
+                'brands',
+                'products',
+                'carts',
+                'vouchers',
+                'pendingTransactions',
+                'paidTransactions'
+            )
+        );
     }
 }
