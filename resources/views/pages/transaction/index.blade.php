@@ -55,7 +55,7 @@
                                         <label for="voucher">Pemesan</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
                                             </div>
                                             <input type="text" class="form-control" readonly
                                                 value="{{ $transaction->user->name }}" name="voucher">
@@ -71,7 +71,7 @@
                                         <label for="voucher">Persentase Diskon</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                             </div>
                                             <input type="text" class="form-control" readonly name="voucher"
                                                 value="{{ $transaction->discount_percentage ?? '0' }}">
@@ -85,10 +85,11 @@
                                         <label for="voucher">Diskon</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <span class="input-group-text">Rp</span>
                                             </div>
                                             <input type="text" class="form-control" readonly
-                                                value="{{ $transaction->discount ?? '0' }}" name="voucher">
+                                                value="{{ number_format($transaction->discount, thousands_separator: '.') ?? '0' }}"
+                                                name="voucher">
                                         </div>
                                     </div>
                                 </div>
@@ -101,25 +102,25 @@
                                         <label for="voucher">Sub total</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <span class="input-group-text">Rp</span>
                                             </div>
                                             <input type="text" class="form-control" name="voucher" readonly
-                                                value="{{ $transaction->subtotal_amount }}">
+                                                value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
+                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
                                         <label for="voucher">Grand total</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <span class="input-group-text">Rp</span>
                                             </div>
                                             <input type="text" class="form-control" name="voucher"
-                                                value="{{ $transaction->total_amount }}" readonly>
+                                                value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -162,10 +163,12 @@
                                         <label for="voucher">Jenis Pembayaran</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-money-bill-wave"></i></span>
                                             </div>
                                             <input type="text" class="form-control"
-                                                value="{{ $transaction->transaction_type }}" name="voucher" readonly>
+                                                value="{{ ucfirst($transaction->transaction_type) }}" name="voucher"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>

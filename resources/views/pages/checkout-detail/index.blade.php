@@ -71,17 +71,17 @@
                             <label for="dicount">Persentase Diskon</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                 </div>
                                 <input type="text" class="rounded form-control" readonly
                                     value="{{ $transaction->discount_percentage ?? '0' }}" data-mask>
-                                <span class="input-group-text font-weight-bold"><i class="fas fa-percent"></i></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dicount">Total Diskon</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-bold">Rp.</span>
+                                    <span class="input-group-text">Rp</span>
                                 </div>
                                 <input type="text" class="form-control" readonly value="{{ $transaction->discount }}"
                                     data-mask>
@@ -96,7 +96,7 @@
                             <label for="total_amount">Jenis Pembayaran</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-money-check-alt"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                                 </div>
                                 <input type="text" class="form-control" readonly
                                     value="{{ ucfirst($transaction->transaction_type) }}" data-mask>
@@ -106,7 +106,7 @@
                             <label for="total_amount">Sub Total</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-bold">Rp.</span>
+                                    <span class="input-group-text">Rp</span>
                                 </div>
                                 <input type="text" class="form-control" readonly
                                     value="{{ $transaction->subtotal_amount }}" data-mask>
@@ -116,7 +116,7 @@
                             <label for="total_amount">Grand Total</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-bold">Rp.</span>
+                                    <span class="input-group-text">Rp</span>
                                 </div>
                                 <input type="text" class="form-control" readonly value="{{ $transaction->total_amount }}"
                                     data-mask>
