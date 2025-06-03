@@ -5,55 +5,17 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Edit Product</h3>
+                    <h3 class="card-title">Edit Keranjang</h3>
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <form action="{{ route('products.update', ['product' => $product->id]) }}" method="POST"
-                    enctype="multipart/form-data">
+                <form action="{{ route('carts.update', ['cart' => $cart->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="image">Foto</label>
-                            <input type="file" name="image" required
-                                class="form-control form-control-border border-width-2" id="image"
-                                value="{{ old('image', $product->image) }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" required
-                                class="form-control form-control-border border-width-2" id="name"
-                                value="{{ old('name', $product->name) }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="stock">Stock</label>
-                            <input type="text" name="stock" required
-                                class="form-control form-control-border border-width-2" id="stock"
-                                value="{{ old('stock', $product->stock) }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Brand</label>
-                            <select class="form-control select2" style="width: 100%;" name="brand_id">
-                                @foreach ($brands as $brand)
-                                    <option value="{{ $brand->id }}"
-                                        {{ old('brand_id', $brand->id) === $brand->id ? 'selected' : '' }}>
-                                        {{ $brand->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="text" name="price" required
-                                class="form-control form-control-border border-width-2" id="price"
-                                value="{{ old('price', $product->price) }}">
+                            <label for="quantity">Quantity</label>
+                            <input type="text" name="quantity" required
+                                class="form-control form-control-border border-width-2" id="quantity"
+                                value="{{ old('quantity', $cart->quantity) }}">
                         </div>
                     </div>
                     <div class="card-footer">

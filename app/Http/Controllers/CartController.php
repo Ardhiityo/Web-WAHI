@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Cart\StoreCartRequest;
+use App\Http\Requests\Cart\UpdateCartRequest;
 use App\Http\Requests\Checkout\StoreCheckoutRequest;
 
 class CartController extends Controller
@@ -150,15 +151,17 @@ class CartController extends Controller
      */
     public function edit(Cart $cart)
     {
-        //
+        return view('pages.cart.edit', compact('cart'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cart $cart)
+    public function update(UpdateCartRequest $request, Cart $cart)
     {
-        //
+        $cart->update($request->validated());
+
+        return redirect()->route('carts.index')->withSuccess('Berhasil diubah');
     }
 
     /**
