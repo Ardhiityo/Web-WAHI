@@ -1,27 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row pt-5">
+    <div class="pt-5 row">
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Edit Role</h3>
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <form action="{{ route('roles.update', ['role' => $role->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth2">Name</label>
+                            <label for="exampleInputBorderWidth2">Nama</label>
                             <input type="text" name="name" required
                                 class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2"
                                 value="{{ old('name', $role->name) }}">
@@ -33,7 +24,7 @@
                                 value="{{ old('email', $role->email) }}">
                         </div>
                         <div class="form-group">
-                            <label for="exampleSelectBorder">Role</label>
+                            <label for="exampleSelectBorder">Peran</label>
                             <select name="role" required class="custom-select form-control-border"
                                 id="exampleSelectBorder">
                                 <option value="admin"

@@ -39,7 +39,7 @@ class RoleController extends Controller
             'password' => $request->password,
         ])->assignRole($request->role);
 
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->withSuccess('Berhasil ditambahkan');
     }
 
     public function edit(User $role)
@@ -69,12 +69,13 @@ class RoleController extends Controller
         $role->removeRole($role->roles->first()->name);
         $role->assignRole($request->role);
 
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->withSuccess('Berhasil diubah');
     }
 
     public function destroy(User $role)
     {
         $role->delete();
-        return redirect()->route('roles.index');
+
+        return redirect()->route('roles.index')->withSuccess('Berhasil dihapus');
     }
 }
