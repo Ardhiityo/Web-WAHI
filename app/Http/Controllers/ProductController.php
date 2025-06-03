@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -52,6 +53,10 @@ class ProductController extends Controller
         }
 
         $product->update($data);
+
+        Cart::where('product_id', $product->id)
+            ->where('quantity', '>', $product->stock)
+            ->update(['quantity' => $product->stock]);
 
         return redirect()->route('products.index')->withSuccess('Berhasil diubah');
     }
