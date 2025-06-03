@@ -75,6 +75,14 @@ class TransactionController extends Controller
 
         return redirect()->route('transactions.index');
     }
+
+    public function updateStatus(Request $request, Transaction $transaction)
+    {
+        $transaction->update($request->all());
+
+        return redirect()->route('transactions.index')->withSuccess('Berhasil diubah');
+    }
+
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();

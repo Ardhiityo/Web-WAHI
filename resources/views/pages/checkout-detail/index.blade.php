@@ -22,8 +22,9 @@
                                 konfirmasi pembayaran.</p>
                         @else
                             <h4>Sukses dibuat.</h4>
-                            <p>Tunjukan Kode Transaksi kepada kasir untuk mengambil pesanan jika pembayaran
-                                sukses.</p>
+                            <p>Selanjutnya, lanjutkan pembayaran dengan metode cashless yang tersedia, jika pembayaran
+                                sukses silahkan datang ke toko untuk mengambil pesanan dengan menunjukan kode transaksi
+                                .</p>
                         @endif
                     </div>
                 </div>
