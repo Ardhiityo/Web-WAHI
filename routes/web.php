@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/carts/checkout', [CartController::class, 'checkout'])->name('carts.checkout');
     Route::post('/carts/checkout/detail', [CartController::class, 'checkoutDetail'])->name('carts.checkout.detail');
+    Route::post('/carts/checkout/cashless', [CartController::class, 'getSnapToken'])->name('carts.checkout.snaptoken');
 
     Route::resource('carts', CartController::class);
     Route::resource('vouchers', VoucherController::class);

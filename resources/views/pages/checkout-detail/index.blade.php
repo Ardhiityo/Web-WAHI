@@ -36,7 +36,7 @@
                         <a href="https://wa.me/6287871111101?text=Hallo%20kak,%20saya%20mau%20datang%20ke%20toko,%20kode%20pesanan%20saya%20{{ $transaction->transaction_code }}"
                             class="btn btn-success">Konfirmasi</a>
                     @else
-                        <button class="btn btn-success">Bayar</button>
+                        <button class="btn btn-success" id="pay-button">Bayar</button>
                     @endif
                 </div>
             </div>
@@ -130,3 +130,48 @@
         </div>
     </div>
 @endsection
+
+@if ($transaction->transaction_type === 'cashless')
+    @push('scripts')
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+        </script>
+        <script type="text/javascript">
+            const payButton = document.getElementById('pay-button');
+
+            function handlePayment(token) {
+                snap.pay(token, {
+                    onSuccess: function(result) {
+                        window.location.href = '{{ route('transactions.index') }}'
+                    },
+                    onPending: function(result) {
+                        alert('pending')
+                    },
+                    onError: function(result) {
+                        alert('error')
+                    }
+                });
+            }
+
+            payButton.addEventListener('click', async () => {
+                try {
+                    const url = "{{ route('carts.checkout.snaptoken') }}";
+                    const getSnapToken = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            transaction_code: "{{ $transaction->transaction_code }}"
+                        })
+                    });
+                    const responseSnapToken = await getSnapToken.json();
+                    handlePayment(responseSnapToken.token);
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+        </script>
+    @endpush
+@endif
