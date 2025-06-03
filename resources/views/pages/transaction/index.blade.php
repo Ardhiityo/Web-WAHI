@@ -23,15 +23,18 @@
                                 <h5>{{ $transaction->created_at }}</h5>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
-                                <button class="btn btn-primary">
+                                <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"
+                                    role="button" class="mx-3 btn btn-warning">
                                     <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="mx-3 btn btn-warning">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
+                                </a>
+                                <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
+                                    method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <div class="row">
@@ -111,7 +114,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
                                         <label for="voucher">Grand total</label>
                                         <div class="input-group">
@@ -136,7 +140,7 @@
                                     <div id="logins-part" class="content" role="tabpanel"
                                         aria-labelledby="logins-part-trigger">
                                         <div class="form-group">
-                                            <label for="voucher">Status Transaksi</label>
+                                            <label for="transaction_status">Status Transaksi</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend w-100">
                                                     <span class="input-group-text"><i class="far fa-file-alt"></i></span>
@@ -160,15 +164,15 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="voucher">Jenis Pembayaran</label>
+                                        <label for="transaction_type">Jenis Pembayaran</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i
                                                         class="fas fa-money-bill-wave"></i></span>
                                             </div>
                                             <input type="text" class="form-control"
-                                                value="{{ ucfirst($transaction->transaction_type) }}" name="voucher"
-                                                readonly>
+                                                value="{{ ucfirst($transaction->transaction_type) }}"
+                                                name="transaction_type" readonly>
                                         </div>
                                     </div>
                                 </div>

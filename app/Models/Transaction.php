@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Number;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -33,8 +32,8 @@ class Transaction extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'transaction_products', 'transaction_id', 'product_id')
-            ->withPivot('qty', 'total_amount')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'product_transactions', 'transaction_id', 'product_id')
+            ->withPivot('quantity', 'price')->withTimestamps();
     }
 
     public function voucher()

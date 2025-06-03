@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -54,32 +55,29 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
-        $cashiers = User::role('cashier')->get();
-        $products = Product::all();
-
-        return view('pages.transaction.edit', compact('transaction', 'cashiers', 'products'));
+        return view('pages.transaction.edit', compact('transaction'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'user_id' => 'required|exists:users,id',
-            'qty' => 'required|integer|min:1',
-        ]);
-
-        $product = Product::findOrFail($validatedData['product_id']);
-
-        $transaction = Transaction::findOrFail($id);
-
-        $transaction->update([
-            'product_id' => $request->product_id,
-            'user_id' => $request->user_id,
-            'qty' => $request->qty,
-            'total_amount' => $product->price * $request->qty,
-        ]);
-
-        return redirect()->route('transactions.index');
+        try {
+            DB::beginTransaction();
+            $transaction->update($request->validated());
+            $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
+            foreach ($productTransactions as $key => $productTransaction) {
+                $quantity = $productTransaction->quantity;
+                $productTransaction->product->stock -= $quantity;
+                $productTransaction->product->save();
+            }
+            $transaction->update($request->all());
+            DB::commit();
+            return redirect()->route('transactions.edit', ['transaction' => $transaction->id])
+                ->withSuccess('Berhasil diubah');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('transactions.edit', ['transaction' => $transaction->id])
+                ->with('error', 'Gagal diubah');
+        }
     }
 
     public function updateStatus(Request $request, Transaction $transaction)
@@ -105,6 +103,6 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index')->withSuccess('Berhasil dihapus');
     }
 }
