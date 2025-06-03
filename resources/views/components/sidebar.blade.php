@@ -4,14 +4,13 @@
             <div class="image">
                 @if (Auth::user()->avatar)
                     <img src="{{ asset(Storage::url(Auth::user()->avatar)) }}" class="img-circle elevation-2"
-                        alt="{{ Auth::user()->name }}" width="100" height="100">
+                        alt="{{ explode(' ', Auth::user()->name)[0] }}">
                 @else
-                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                        alt="User Image">;
+                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">;
                 @endif
             </div>
             <div class="info">
-                <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('profile.edit') }}" class="d-block">{{ explode(' ', Auth::user()->name)[0] }}</a>
             </div>
         </div>
 
