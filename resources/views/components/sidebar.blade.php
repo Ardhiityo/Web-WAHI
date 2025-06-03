@@ -2,14 +2,20 @@
     <div class="sidebar">
         <div class="py-3 user-panel d-flex justify-content-center">
             <div class="image">
-                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">;
+                @if (Auth::user()->avatar)
+                    <img src="{{ asset(Storage::url(Auth::user()->avatar)) }}" class="img-circle elevation-2"
+                        alt="{{ Auth::user()->name }}" width="100" height="100">
+                @else
+                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                        alt="User Image">;
+                @endif
             </div>
             <div class="info">
-                <a href="{{ route('dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
-        <nav class="mt-2">
+        <nav class="mt-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="my-2 nav-item">
