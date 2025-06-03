@@ -2,12 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Cart;
+use App\Models\User;
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Voucher;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $customers = User::role('customer')->count();
+        $cashiers = User::role('cashier')->count();
+        $brands = Brand::count();
+        $products = Product::count();
+        $carts = Cart::where('user_id', Auth::user()->id)->count();
+        $vouchers = Voucher::count();
+        $transactions = Transaction::count();
+
+        return view('dashboard', compact('customers', 'cashiers', 'brands', 'products', 'carts', 'vouchers', 'transactions'));
     }
 }
