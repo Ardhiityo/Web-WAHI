@@ -115,11 +115,6 @@ class CartController extends Controller
                             'quantity' => $cart->quantity
                         ]);
                     }
-                    $product = Product::findOrFail($cart->product_id);
-                    if ($product) {
-                        $product->stock -= $cart->quantity;
-                        $product->save();
-                    }
                 };
                 Cart::where('user_id', Auth::user()->id)->delete();
                 DB::commit();

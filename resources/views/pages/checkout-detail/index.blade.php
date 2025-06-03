@@ -83,8 +83,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp</span>
                                 </div>
-                                <input type="text" class="form-control" readonly value="{{ $transaction->discount }}"
-                                    data-mask>
+                                <input type="text" class="form-control" readonly
+                                    value="{{ number_format($transaction->discount, thousands_separator: '.') }}" data-mask>
                             </div>
                         </div>
 
@@ -109,7 +109,8 @@
                                     <span class="input-group-text">Rp</span>
                                 </div>
                                 <input type="text" class="form-control" readonly
-                                    value="{{ $transaction->subtotal_amount }}" data-mask>
+                                    value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}"
+                                    data-mask>
                             </div>
                         </div>
                         <div class="form-group">
@@ -118,7 +119,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp</span>
                                 </div>
-                                <input type="text" class="form-control" readonly value="{{ $transaction->total_amount }}"
+                                <input type="text" class="form-control" readonly
+                                    value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}"
                                     data-mask>
                             </div>
                         </div>

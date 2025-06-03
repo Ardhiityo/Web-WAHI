@@ -6,12 +6,15 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\ProductTransaction;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::paginate(perPage: 5);
+        $transactions = Transaction::latest()->paginate(perPage: 5);
 
         return view('pages.transaction.index', compact('transactions'));
     }
@@ -23,6 +26,7 @@ class TransactionController extends Controller
 
         return view('pages.transaction.create', compact('cashiers', 'products'));
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -47,6 +51,7 @@ class TransactionController extends Controller
     {
         //
     }
+
     public function edit(Transaction $transaction)
     {
         $cashiers = User::role('cashier')->get();
@@ -54,6 +59,7 @@ class TransactionController extends Controller
 
         return view('pages.transaction.edit', compact('transaction', 'cashiers', 'products'));
     }
+
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -78,9 +84,21 @@ class TransactionController extends Controller
 
     public function updateStatus(Request $request, Transaction $transaction)
     {
-        $transaction->update($request->all());
-
-        return redirect()->route('transactions.index')->withSuccess('Berhasil diubah');
+        try {
+            DB::beginTransaction();
+            $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
+            foreach ($productTransactions as $key => $productTransaction) {
+                $quantity = $productTransaction->quantity;
+                $productTransaction->product->stock -= $quantity;
+                $productTransaction->product->save();
+            }
+            $transaction->update($request->all());
+            DB::commit();
+            return redirect()->route('transactions.index')->withSuccess('Berhasil diubah');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('transactions.index')->with('error', 'Terjadi kesalahan');
+        }
     }
 
     public function destroy(Transaction $transaction)
