@@ -42,7 +42,7 @@
                                         <td class="align-middle">{{ $loop->iteration }}</td>
                                         <td class="align-middle">
                                             <img src="{{ asset(Storage::url($product->image)) }}" width="100"
-                                                height="100" alt="{{ $product->name }}">
+                                                height="100" alt="{{ $product->name }}" class="rounded">
                                         </td>
                                         <td class="align-middle">{{ $product->name }}</td>
                                         <td class="align-middle">Rp.

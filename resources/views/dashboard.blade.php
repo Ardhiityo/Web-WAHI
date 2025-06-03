@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <h3>Selamat Datang, {{ Auth::user()->name }}!</h3>
+            <h3>Selamat datang, {{ Auth::user()->name }}!</h3>
         </div>
     </div>
     <div class="mt-3 row">
