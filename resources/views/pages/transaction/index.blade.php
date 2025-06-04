@@ -10,6 +10,58 @@
             </div>
         </div>
     </div>
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Cari transaksi</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('transactions.index') }}" method="get">
+                <div class="mb-4 row">
+                    <div class="col-6">
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="form-group">
+                                <label for="voucher">Kategori</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend w-100">
+                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                        <select class="form-control select2" name="category" required id="category">
+                                            <option value="transaction_code">Kode transaksi</option>
+                                            <option value="customer">Pemesan</option>
+                                            <option value="transactoon_type">Jenis pembayaran</option>
+                                            <option value="transaction_status">Status Transaksi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="form-group">
+                                <label for="keyword">Kata kunci</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="keyword">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-3 ml-2 btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="p-2 card card-default">
         <div class="card-header">
             <h3 class="card-title">Detail Transaksi</h3>
@@ -78,7 +130,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
                                         <label for="voucher">Persentase Diskon</label>
                                         <div class="input-group">
@@ -92,7 +145,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
                                         <label for="voucher">Diskon</label>
                                         <div class="input-group">
@@ -109,7 +163,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
                                         <label for="voucher">Sub total</label>
                                         <div class="input-group">

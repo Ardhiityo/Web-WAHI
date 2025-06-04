@@ -9,13 +9,32 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = Transaction::latest()->paginate(perPage: 5);
+        if ($request->query('category') && $request->query('keyword')) {
+            $category = $request->query('category');
+            $keyword = $request->query('keyword');
+            if ($category == 'transaction_code') {
+                $transactions = Transaction::where('transaction_code', $keyword)
+                    ->latest()->paginate(perPage: 5);
+            } else if ($category === 'customer') {
+                $transactions = Transaction::whereHas('user', function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                })
+                    ->latest()->paginate(perPage: 5);
+            } else if ($category === 'cash' || 'cashless') {
+                $transactions = Transaction::where('transaction_type', $keyword)
+                    ->latest()->paginate(perPage: 5);
+            } else if ($category === 'transaction_status') {
+                $transactions = Transaction::where('transaction_status', $keyword)
+                    ->latest()->paginate(perPage: 5);
+            }
+        } else {
+            $transactions = Transaction::latest()->paginate(perPage: 5);
+        }
 
         return view('pages.transaction.index', compact('transactions'));
     }
