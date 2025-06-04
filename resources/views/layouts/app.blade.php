@@ -46,11 +46,6 @@
 
     @stack('scripts')
 
-    <script>
-        document.getElementById('btn-submit').addEventListener('click', function() {
-            document.getElementById('form-logout').submit();
-        });
-    </script>
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script>
