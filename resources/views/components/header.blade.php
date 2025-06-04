@@ -1,4 +1,5 @@
-<nav class="px-4 main-header d-flex justify-content-between navbar navbar-expand navbar-white navbar-light">
+<nav
+    class="px-4 main-header d-flex justify-content-between align-items-center navbar navbar-expand navbar-white navbar-light">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i>
