@@ -6,9 +6,19 @@
         </li>
     </ul>
 
-    <ul class="navbar-nav">
-        <li class="nav-item" role="button">
-            <i class="fas fa-sign-out-alt" id="btn-submit"></i>
+    <ul class="navbar-nav d-flex align-items-center">
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-user"></i>
+            </a>
+            <div class="dropdown-menu">
+                <a role="button" href="{{ route('profile.edit') }}" class="mb-3 dropdown-item" id="btn-submit">
+                    <i class="fas fa-user-cog"></i></i> Akun
+                </a>
+                <a role="button" href="#" class="dropdown-item" id="btn-submit">
+                    <i class="fas fa-sign-out-alt" id="btn-submit"></i> Keluar
+                </a>
+            </div>
         </li>
     </ul>
 </nav>

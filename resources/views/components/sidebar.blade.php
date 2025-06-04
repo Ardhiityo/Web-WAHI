@@ -1,22 +1,14 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <div class="sidebar">
         <div class="py-3 user-panel d-flex justify-content-center">
-            <div class="image">
-                @if (Auth::user()->avatar)
-                    <img src="{{ asset(Storage::url(Auth::user()->avatar)) }}" class="img-circle elevation-2"
-                        alt="{{ explode(' ', Auth::user()->name)[0] }}">
-                @else
-                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">;
-                @endif
-            </div>
-            <div class="info">
-                <a href="{{ route('profile.edit') }}" class="d-block">{{ explode(' ', Auth::user()->name)[0] }}</a>
+            <div class="text-center text-white info">
+                <i class="fas fa-store"></i> <br>
+                <span class="d-block lead font-weight-bold">WAHI MART</span>
             </div>
         </div>
 
         <nav class="mt-3">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="my-2 nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -48,8 +40,7 @@
                 </li>
 
                 <li class="my-2 nav-item">
-                    <a href="{{ route('carts.index') }}"
-                        class="nav-link {{ request()->is('carts*') ? 'active' : '' }}">
+                    <a href="{{ route('carts.index') }}" class="nav-link {{ request()->is('carts*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cart-arrow-down"></i>
                         <p>
                             Keranjang

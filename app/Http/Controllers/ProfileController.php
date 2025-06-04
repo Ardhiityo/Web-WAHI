@@ -31,13 +31,6 @@ class ProfileController extends Controller
     {
         $data = $request->validated();
 
-        if ($request->hasFile('avatar')) {
-            if ($request->user()->avatar) {
-                Storage::disk('public')->delete($request->user()->avatar);
-                $data['avatar'] = $data['avatar']->store('profiles', 'public');
-            }
-        }
-
         is_null($data['password']) ? $data['password'] = $request->user()->password :
             $data['password'] = Hash::make($data['password']);
 

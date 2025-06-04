@@ -12,11 +12,6 @@
                     @method('PATCH')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="avatar">Foto</label>
-                            <input type="file" name="avatar" class="form-control form-control-border border-width-2"
-                                id="avatar">
-                        </div>
-                        <div class="form-group">
                             <label for="name">Nama</label>
                             <input type="text" name="name" required
                                 class="form-control form-control-border border-width-2" id="name"

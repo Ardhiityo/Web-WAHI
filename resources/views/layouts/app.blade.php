@@ -38,9 +38,7 @@
 
         <div class="content-wrapper">
             <section class="content">
-                <div class="my-5 container-fluid">
-                    @yield('content')
-                </div>
+                @yield('content')
             </section>
         </div>
         <x-footer />

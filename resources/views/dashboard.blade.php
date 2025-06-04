@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <h3>Selamat datang, {{ Auth::user()->name }}!</h3>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="mb-2 row">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Selamat datang, {{ Auth::user()->name }}!</h1>
+                </div>
+            </div>
         </div>
     </div>
+
     <div class="mt-3 row">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
