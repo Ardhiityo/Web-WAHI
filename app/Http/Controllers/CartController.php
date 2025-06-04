@@ -127,10 +127,10 @@ class CartController extends Controller
                     ]);
                 }
             };
-
-            Cart::where('user_id', Auth::user()->id)->delete();
+            if ($transaction->transaction_type == 'cash') {
+                Cart::where('user_id', Auth::user()->id)->delete();
+            }
             DB::commit();
-
             return view('pages.checkout-detail.index', compact(
                 'transaction',
             ));
