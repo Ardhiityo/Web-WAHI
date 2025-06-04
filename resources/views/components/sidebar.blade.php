@@ -69,6 +69,16 @@
                 </li>
 
                 <li class="my-2 nav-item">
+                    <a href="{{ route('profits.index') }}"
+                        class="nav-link {{ request()->is('profits*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-funnel-dollar"></i>
+                        <p>
+                            Pendapatan
+                        </p>
+                    </a>
+                </li>
+
+                <li class="my-2 nav-item">
                     <a href="{{ route('roles.index') }}"
                         class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>

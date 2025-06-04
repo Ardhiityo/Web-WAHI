@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\TransactionController;
 
 Route::middleware('auth')->group(function () {
@@ -21,10 +22,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('carts', CartController::class);
     Route::resource('vouchers', VoucherController::class);
-    Route::patch('/transactions/{transaction}/status', [TransactionController::class, 'updateStatus'])
-        ->name('transactions.update.status');
+    Route::patch('/transactions/{transaction}/status', [TransactionController::class, 'updateStatus'])->name('transactions.update.status');
     Route::resource('transactions', TransactionController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('profits', ProfitController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -19,11 +19,9 @@ class Transaction extends Model
         'discount',
     ];
 
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d/m/Y');
-    }
+    protected $casts = [
+        'created_at' => 'date'
+    ];
 
     public function user()
     {
