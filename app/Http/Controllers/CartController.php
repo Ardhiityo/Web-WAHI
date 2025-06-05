@@ -75,6 +75,8 @@ class CartController extends Controller
         foreach ($carts as $key => $cart) {
             if ($cart->quantity > $cart->product->stock) {
                 return redirect()->route('carts.index')->with('error', 'Produk yang dibeli melebihi stok produk');
+            } else if ($cart->quantity == 0) {
+                return redirect()->route('carts.index')->with('error', 'Quantity produk minimal 1');
             }
         }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductTransactionController;
 use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\TransactionController;
 
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('carts', CartController::class);
     Route::resource('vouchers', VoucherController::class);
     Route::resource('transactions', TransactionController::class);
+    Route::resource('product-transactions', ProductTransactionController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('profits', ProfitController::class);
 

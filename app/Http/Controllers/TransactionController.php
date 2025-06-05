@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Transaction\UpdateTransactionRequest;
-use App\Models\Transaction;
 use Exception;
+use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
 
 use function Laravel\Prompts\error;
+use App\Http\Requests\Transaction\UpdateTransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -52,21 +53,26 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
-        return view('pages.transaction.show', compact('transaction'));
+        $customers = User::role('customer')->get();
+
+        return view('pages.transaction.show', compact('transaction', 'customers'));
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
+        $data = $request->validated();
         try {
             DB::beginTransaction();
-            $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
-            foreach ($productTransactions as $key => $productTransaction) {
-                if ($productTransaction->quantity > $productTransaction->product->stock) {
-                    throw new Exception('Produk yang dibeli melebihi stok produk');
-                } else {
-                    $productTransaction->product()->update([
-                        'stock' => $productTransaction->product->stock - $productTransaction->quantity
-                    ]);
+            if ($data['transaction_status'] === 'paid') {
+                $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
+                foreach ($productTransactions as $key => $productTransaction) {
+                    if ($productTransaction->quantity > $productTransaction->product->stock) {
+                        throw new Exception('Produk yang dibeli melebihi stok produk');
+                    } else {
+                        $productTransaction->product()->update([
+                            'stock' => $productTransaction->product->stock - $productTransaction->quantity
+                        ]);
+                    }
                 }
             }
             $transaction->update($request->all());

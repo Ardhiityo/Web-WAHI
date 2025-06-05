@@ -15,7 +15,10 @@ class UpdateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transaction_status' => ['required', 'in:paid,pending', new UpdateStatusTransactionRule(request('transaction'))]
+            'subtotal_amount' => ['required', 'integer', 'min:0'],
+            'transaction_type' => ['required', 'in:cashless,cash'],
+            'total_amount' => ['required', 'integer', 'min:0'],
+            'transaction_status' => ['required', 'in:paid,pending']
         ];
     }
 }

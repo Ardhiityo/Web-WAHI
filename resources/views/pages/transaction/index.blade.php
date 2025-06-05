@@ -196,32 +196,19 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <form action="{{ route('transactions.update', ['transaction' => $transaction->id]) }}"
-                                    method="post">
-                                    @method('PATCH')
-                                    @csrf
-                                    <div id="logins-part" class="content" role="tabpanel"
-                                        aria-labelledby="logins-part-trigger">
-                                        <div class="form-group">
-                                            <label for="transaction_status">Status Transaksi</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend w-100">
-                                                    <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                                    <select class="form-control select2" style="width: 100%;"
-                                                        name="transaction_status" required>
-                                                        <option value="pending"
-                                                            {{ $transaction->transaction_status == 'pending' ? 'selected' : '' }}>
-                                                            Pending</option>
-                                                        <option value="paid"
-                                                            {{ $transaction->transaction_status == 'paid' ? 'selected' : '' }}>
-                                                            Paid</option>
-                                                    </select>
-                                                    <button class="rounded btn btn-primary">Ubah</button>
-                                                </div>
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
+                                    <div class="form-group">
+                                        <label for="transaction_status">Status Transaksi</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend w-100">
+                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                                <input type="text" class="form-control" name="transaction_status"
+                                                    readonly value="{{ $transaction->transaction_status }}">
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div id="logins-part" class="content" role="tabpanel"
