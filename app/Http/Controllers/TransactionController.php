@@ -77,7 +77,8 @@ class TransactionController extends Controller
             }
             $transaction->update($request->all());
             DB::commit();
-            return redirect()->route('transactions.index')->withSuccess('Berhasil diubah');
+            return redirect()->route('transactions.show', ['transaction' => $transaction->id])
+                ->withSuccess('Berhasil diubah');
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('transactions.index')->with('error', $exception->getMessage());

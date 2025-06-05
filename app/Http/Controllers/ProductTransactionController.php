@@ -53,7 +53,7 @@ class ProductTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductTransactionRequest $request, ProductTransaction $productTransaction)
+    public function update(UpdateProductTransactionRequest $request)
     {
         $data = $request->validated();
 
