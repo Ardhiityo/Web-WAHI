@@ -42,7 +42,8 @@
             <div class="row">
                 <div class="my-3 col-12">
                     @if ($transaction->transaction_type == 'cash')
-                        <a href="{{ route('transactions.index') }}" class="btn btn-primary">Lihat Transaksi</a>
+                        <a href="{{ route('transactions.index', ['category' => 'transaction_code', 'keyword' => $transaction->transaction_code]) }}"
+                            class="btn btn-primary">Lihat Transaksi</a>
                         <a href="https://wa.me/6287871111101?text=Hallo%20kak,%20saya%20mau%20datang%20ke%20toko,%20kode%20pesanan%20saya%20{{ $transaction->transaction_code }}"
                             class="btn btn-success">Konfirmasi</a>
                     @else
@@ -151,7 +152,8 @@
             function handlePayment(token) {
                 snap.pay(token, {
                     onSuccess: function(result) {
-                        window.location.href = '{{ route('transactions.index') }}'
+                        window.location.href =
+                            '{!! route('transactions.index', ['category' => 'transaction_code', 'keyword' => $transaction->transaction_code]) !!}'
                     },
                     onPending: function(result) {
                         alert('pending')

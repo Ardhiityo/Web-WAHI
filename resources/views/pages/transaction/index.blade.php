@@ -48,7 +48,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="far fa-file-alt"></i>
+                                            <i class="fas fa-search"></i>
                                         </span>
                                     </div>
                                     <input type="text" class="form-control" name="keyword">
@@ -81,7 +81,7 @@
                     <div class="my-4">
                         <div class="mb-3 row">
                             <div class="col-6">
-                                <h5>{{ $transaction->created_at }}</h5>
+                                <h5>{{ $transaction->created_at->format('d/m/Y') }}</h5>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
                                 <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"
