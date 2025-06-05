@@ -19,7 +19,7 @@
 <body class="font-sans antialiased text-gray-900">
     <div class="flex flex-col items-center pt-6 min-h-screen bg-gray-100 sm:justify-center sm:pt-0">
         <div class="text-center">
-            <h1 class="text-4xl font-bold">WAHI</h1>
+            <h1 class="text-4xl font-bold">WAHI MART</h1>
             <p>Warung Ayam Hj. Imas</p>
         </div>
 

@@ -82,9 +82,9 @@ class CartController extends Controller
 
     public function checkoutDetail(StoreCheckoutRequest $request)
     {
-        $carts = Cart::where('user_id', Auth::user()->id)->get();
-
         $data = $request->validated();
+
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
 
         $subtotal = 0;
         $discount = null;
@@ -123,18 +123,12 @@ class CartController extends Controller
             );
 
             foreach ($carts as $key => $cart) {
-                $product = ProductTransaction::where('product_id', $cart->product_id)
-                    ->where('transaction_id', $transaction->id)->first();
-                if ($product) {
-                    $product->update(['quantity' => $product->quantity]);
-                } else {
-                    ProductTransaction::create([
-                        'product_id' => $cart->product_id,
-                        'transaction_id' => $transaction->id,
-                        'price' => $cart->product->price,
-                        'quantity' => $cart->quantity
-                    ]);
-                }
+                ProductTransaction::create([
+                    'product_id' => $cart->product_id,
+                    'transaction_id' => $transaction->id,
+                    'price' => $cart->product->price,
+                    'quantity' => $cart->quantity
+                ]);
             };
             if ($transaction->transaction_type == 'cash') {
                 Cart::where('user_id', Auth::user()->id)->delete();
