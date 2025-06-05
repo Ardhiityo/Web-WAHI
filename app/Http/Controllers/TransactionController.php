@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Models\Transaction;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
+
+use function Laravel\Prompts\error;
 
 class TransactionController extends Controller
 {
@@ -58,16 +61,20 @@ class TransactionController extends Controller
             DB::beginTransaction();
             $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
             foreach ($productTransactions as $key => $productTransaction) {
-                $quantity = $productTransaction->quantity;
-                $productTransaction->product->stock -= $quantity;
-                $productTransaction->product->save();
+                if ($productTransaction->quantity > $productTransaction->product->stock) {
+                    throw new Exception('Produk yang dibeli melebihi stok produk');
+                } else {
+                    $productTransaction->product()->update([
+                        'stock' => $productTransaction->product->stock - $productTransaction->quantity
+                    ]);
+                }
             }
             $transaction->update($request->all());
             DB::commit();
             return redirect()->route('transactions.index')->withSuccess('Berhasil diubah');
-        } catch (\Throwable $th) {
+        } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->route('transactions.index')->with('error', 'Terjadi kesalahan');
+            return redirect()->route('transactions.index')->with('error', $exception->getMessage());
         }
     }
 

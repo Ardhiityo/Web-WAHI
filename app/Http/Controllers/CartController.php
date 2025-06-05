@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Midtrans\Snap;
 use App\Models\Cart;
 use App\Models\Voucher;
@@ -108,6 +109,12 @@ class CartController extends Controller
         try {
             DB::beginTransaction();
 
+            foreach ($carts as $key => $cart) {
+                if ($cart->quantity > $cart->product->stock) {
+                    throw new Exception('Produk yang dibeli melebihi stok produk');
+                }
+            }
+
             $transaction = Transaction::create(
                 [
                     'discount' => $totalDiscount,
@@ -137,10 +144,10 @@ class CartController extends Controller
             return view('pages.checkout-detail.index', compact(
                 'transaction',
             ));
-        } catch (\Throwable $th) {
+        } catch (Exception $exception) {
             DB::rollBack();
 
-            return redirect()->route('carts.index')->with('error', $th->getMessage());
+            return redirect()->route('carts.index')->with('error', $exception->getMessage());
         }
     }
 
