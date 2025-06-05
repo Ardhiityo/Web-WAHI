@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Transaction;
 
+use App\Rules\UpdateStatusTransactionRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTransactionRequest extends FormRequest
@@ -14,8 +15,7 @@ class UpdateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transaction_type' => ['required', 'in:cash,cashless'],
-            'transaction_status' => ['required', 'in:paid,pending']
+            'transaction_status' => ['required', 'in:paid,pending', new UpdateStatusTransactionRule(request('transaction'))]
         ];
     }
 }

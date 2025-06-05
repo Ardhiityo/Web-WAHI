@@ -5,8 +5,10 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class UpdateCartRule implements ValidationRule
+class UpdateStatusTransactionRule implements ValidationRule
 {
+    public function __construct(private $transaction) {}
+
     /**
      * Run the validation rule.
      *
@@ -14,10 +16,10 @@ class UpdateCartRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $productStock = request('cart')->product->stock;
-
-        if ($value > $productStock) {
-            $fail('Tidak bisa ubah quantity melebihi stock produk');
+        foreach ($this->transaction->products as $key => $product) {
+            if ($product->pivot->quantity > $product->stock) {
+                $fail('Produk yang dibeli melebihi stock product');
+            }
         }
     }
 }

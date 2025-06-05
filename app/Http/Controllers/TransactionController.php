@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
-use App\Models\User;
-use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\ProductTransaction;
@@ -41,30 +39,12 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $cashiers = User::role('cashier')->get();
-        $products = Product::all();
-
-        return view('pages.transaction.create', compact('cashiers', 'products'));
+        //
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'user_id' => 'required|exists:users,id',
-            'qty' => 'required|integer|min:1',
-        ]);
-
-        $product = Product::findOrFail($validatedData['product_id']);
-
-        Transaction::create([
-            'product_id' => $request->product_id,
-            'user_id' => $request->user_id,
-            'qty' => $request->qty,
-            'total_amount' => $product->price * $request->qty,
-        ]);
-
-        return redirect()->route('transactions.index');
+        //
     }
 
     public function show(Transaction $transaction)
