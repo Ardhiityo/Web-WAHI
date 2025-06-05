@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use Exception;
 use Midtrans\Notification;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class MidtransController extends Controller
     {
         try {
             $notification = new Notification();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             exit($e->getMessage());
         }
 
@@ -40,9 +41,13 @@ class MidtransController extends Controller
                 $user = Transaction::where('transaction_code', $order_id)->first();
                 $carts = Cart::where('user_id', $user->user_id)->get();
                 foreach ($carts as $cart) {
-                    $cart->product->update([
-                        'stock' => $cart->product->stock - $cart->quantity
-                    ]);
+                    if ($cart->quantity > $cart->product->stock) {
+                        throw new Exception('Produk yang dibeli melebihi stok produk');
+                    } else {
+                        $cart->product->update([
+                            'stock' => $cart->product->stock - $cart->quantity
+                        ]);
+                    }
                 }
                 Transaction::where('transaction_code', $order_id)->update([
                     'transaction_status' => 'paid'
@@ -50,8 +55,8 @@ class MidtransController extends Controller
 
                 $cart->delete();
                 DB::commit();
-            } catch (\Throwable $th) {
-                Log::info($th->getMessage());
+            } catch (Exception $exception) {
+                Log::info($exception->getMessage());
                 DB::rollBack();
             }
         }

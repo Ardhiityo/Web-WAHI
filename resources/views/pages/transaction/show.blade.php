@@ -130,7 +130,7 @@
                                     <div class="input-group-prepend w-100">
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         <input type="text" class="form-control" readonly
-                                            value="{{ $transaction->transaction_status }}">
+                                            value="{{ ucfirst($transaction->transaction_status) }}">
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                                     </div>
                                     <input type="text" class="form-control" readonly
-                                        value="{{ $transaction->transaction_type }}">
+                                        value="{{ ucfirst($transaction->transaction_type) }}">
                                 </div>
                             </div>
                         </div>
