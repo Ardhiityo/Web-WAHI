@@ -109,6 +109,11 @@ class CartController extends Controller
         try {
             DB::beginTransaction();
 
+            $cart = Cart::where('user_id', Auth::user()->id)->get();
+            if ($cart->isEmpty()) {
+                return redirect()->route('transactions.index');
+            }
+
             foreach ($carts as $key => $cart) {
                 if ($cart->quantity > $cart->product->stock) {
                     throw new Exception('Produk yang dibeli melebihi stok produk');
