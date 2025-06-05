@@ -22,7 +22,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('carts', CartController::class);
     Route::resource('vouchers', VoucherController::class);
-    Route::patch('/transactions/{transaction}/status', [TransactionController::class, 'updateStatus'])->name('transactions.update.status');
     Route::resource('transactions', TransactionController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('profits', ProfitController::class);

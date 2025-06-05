@@ -84,7 +84,7 @@
                                 <h5>{{ $transaction->created_at->format('d/m/Y') }}</h5>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
-                                <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"
+                                <a href="{{ route('transactions.show', ['transaction' => $transaction->id]) }}"
                                     role="button" class="mx-3 btn btn-warning">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -196,8 +196,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <form
-                                    action="{{ route('transactions.update.status', ['transaction' => $transaction->id]) }}"
+                                <form action="{{ route('transactions.update', ['transaction' => $transaction->id]) }}"
                                     method="post">
                                     @method('PATCH')
                                     @csrf

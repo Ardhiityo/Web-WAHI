@@ -67,39 +67,12 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index');
     }
 
-    public function show($id)
+    public function show(Transaction $transaction)
     {
-        //
-    }
-
-    public function edit(Transaction $transaction)
-    {
-        return view('pages.transaction.edit', compact('transaction'));
+        return view('pages.transaction.show', compact('transaction'));
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
-    {
-        try {
-            DB::beginTransaction();
-            $transaction->update($request->validated());
-            $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
-            foreach ($productTransactions as $key => $productTransaction) {
-                $quantity = $productTransaction->quantity;
-                $productTransaction->product->stock -= $quantity;
-                $productTransaction->product->save();
-            }
-            $transaction->update($request->all());
-            DB::commit();
-            return redirect()->route('transactions.edit', ['transaction' => $transaction->id])
-                ->withSuccess('Berhasil diubah');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return redirect()->route('transactions.edit', ['transaction' => $transaction->id])
-                ->with('error', 'Gagal diubah');
-        }
-    }
-
-    public function updateStatus(Request $request, Transaction $transaction)
     {
         try {
             DB::beginTransaction();
