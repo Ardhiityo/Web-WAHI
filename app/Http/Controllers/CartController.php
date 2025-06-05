@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
 use App\Http\Requests\Checkout\StoreCheckoutRequest;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -68,6 +69,14 @@ class CartController extends Controller
 
     public function checkout()
     {
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
+
+        foreach ($carts as $key => $cart) {
+            if ($cart->quantity > $cart->product->stock) {
+                return redirect()->route('carts.index')->with('error', 'Produk yang dibeli melebihi stok produk');
+            }
+        }
+
         return view('pages.checkout.index');
     }
 
