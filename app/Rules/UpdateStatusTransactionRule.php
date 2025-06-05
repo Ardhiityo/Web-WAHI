@@ -20,7 +20,7 @@ class UpdateStatusTransactionRule implements ValidationRule
         $transaction = Transaction::find($this->transactionId);
 
         foreach ($transaction->products as $key => $product) {
-            if ($product->pivot->quantity > $product->stock) {
+            if ($value > $product->stock) {
                 $fail('Produk yang dibeli melebihi stock product');
             }
         }
