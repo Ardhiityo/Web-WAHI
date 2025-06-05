@@ -72,7 +72,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" readonly
+                                        <input type="text" class="form-control" name="disccount_percentage"
                                             value="{{ $transaction->discount_percentage ?? '0' }}">
                                     </div>
                                 </div>
@@ -86,8 +86,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp</span>
                                         </div>
-                                        <input type="text" class="form-control" readonly
-                                            value="{{ number_format($transaction->discount, thousands_separator: '.') ?? '0' }}">
+                                        <input type="text" class="form-control" name="discount"
+                                            value="{{ $transaction->discount }}">
                                     </div>
                                 </div>
                             </div>
@@ -188,8 +188,25 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="my-2">
-                @foreach ($transaction->products as $product)
+            @foreach ($transaction->products as $product)
+                <div class="row">
+                    <div class="col-12 d-flex align-items-center">
+                        <h5>#{{ $loop->iteration }}</h5>
+                        <span class="mx-2"></span>
+                        <form
+                            action="{{ route('product-transactions.destroy', ['product_transaction' => $transaction->id]) }}"
+                            method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-4 mb-5">
                     <form action="{{ route('product-transactions.update', ['product_transaction' => $transaction->id]) }}"
                         method="post">
                         @csrf
@@ -246,13 +263,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="mt-4 col-12 d-flex justify-content-end">
+                            <div class="mt-3 col-12 d-flex justify-content-end">
                                 <button class="btn btn-warning">Submit</button>
                             </div>
                         </div>
                     </form>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
             <hr>
         </div>
     </div>

@@ -14,6 +14,8 @@ class UpdateProductTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'discount' => ['nullable'],
+            'discount_percentage' => ['nullable'],
             'price' => ['required'],
             'quantity' => ['required', 'integer', 'min:1'],
             'transaction_id' => ['required', 'exists:transactions,id'],
