@@ -25,10 +25,10 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $keyword . '%');
                 })
                     ->latest()->paginate(perPage: 5);
-            } else if ($category === 'cash' || 'cashless') {
+            } else if ($category === 'cash' || $category === 'cashless') {
                 $transactions = Transaction::where('transaction_type', $keyword)
                     ->latest()->paginate(perPage: 5);
-            } else if ($category === 'transaction_status') {
+            } else if ($category == 'transaction_status') {
                 $transactions = Transaction::where('transaction_status', $keyword)
                     ->latest()->paginate(perPage: 5);
             }
