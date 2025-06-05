@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ProductTransaction;
 
+use App\Rules\UpdateStatusTransactionRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProductTransactionRequest extends FormRequest
@@ -14,12 +15,9 @@ class UpdateProductTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount' => ['nullable'],
-            'discount_percentage' => ['nullable'],
-            'price' => ['required'],
-            'quantity' => ['required', 'integer', 'min:1'],
             'transaction_id' => ['required', 'exists:transactions,id'],
-            'product_id' => ['required', 'exists:products,id']
+            'product_id' => ['required', 'exists:products,id'],
+            'quantity' => ['required', 'integer', 'min:1', new UpdateStatusTransactionRule($this->transaction_id)]
         ];
     }
 }

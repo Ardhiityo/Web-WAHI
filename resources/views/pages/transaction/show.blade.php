@@ -72,7 +72,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="disccount_percentage"
+                                        <input type="text" class="form-control" name="disccount_percentage" readonly
                                             value="{{ $transaction->discount_percentage ?? '0' }}">
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp</span>
                                         </div>
-                                        <input type="text" class="form-control" name="discount"
+                                        <input type="text" class="form-control" name="discount" readonly
                                             value="{{ $transaction->discount }}">
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp</span>
                                         </div>
-                                        <input type="text" class="form-control" name="subtotal_amount"
+                                        <input type="text" class="form-control" name="subtotal_amount" readonly
                                             value="{{ $transaction->subtotal_amount }}">
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp</span>
                                         </div>
-                                        <input type="text" class="form-control" name="total_amount"
+                                        <input type="text" class="form-control" name="total_amount" readonly
                                             value="{{ $transaction->total_amount }}">
                                     </div>
                                 </div>
