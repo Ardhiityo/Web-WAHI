@@ -91,17 +91,17 @@
 <table>
     <thead>
         <tr>
-            <th colspan="12"></th>
-            <th style="border: 1px solid black; text-align: center;" colspan="2">Total
+            <th colspan="11"></th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Total
                 Transaksi</th>
-            <th style="border: 1px solid black; text-align: center;" colspan="2">Pendapatan
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Pendapatan
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td colspan="12"></td>
-            <td style="border: 1px solid black; text-align: center;" colspan="2">
+            <td colspan="11"></td>
+            <td style="border: 1px solid black; text-align: center;" colspan="3">
                 {{ $totalTransaction }}</td>
             <td style="border: 1px solid black; text-align: center;" colspan="2">
                 Rp. {{ $profit }}</td>
