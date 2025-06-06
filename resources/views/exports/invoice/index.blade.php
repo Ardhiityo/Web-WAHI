@@ -84,15 +84,15 @@
 <table>
     <thead>
         <tr>
-            <th colspan="7"></th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold" colspan="9">
+            <th colspan="6"></th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold" colspan="10">
                 Rincian Produk
             </th>
         </tr>
         <tr>
-            <th colspan="7"></th>
+            <th colspan="6"></th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;">No</th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Nama Produk</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Nama Produk</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Brand</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Quantity</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Harga</th>
@@ -101,11 +101,11 @@
     <tbody>
         @foreach ($transaction->products as $index => $product)
             <tr>
-                <td colspan="7"></td>
+                <td colspan="6"></td>
                 <td style="border: 1px solid black; text-align: center;">
                     {{ $loop->iteration }}
                 </td>
-                <td style="border: 1px solid black; text-align: center;" colspan="2">
+                <td style="border: 1px solid black; text-align: center;" colspan="3">
                     {{ $product->name }}
                 </td>
                 <td style="border: 1px solid black; text-align: center;" colspan="2">
