@@ -27,9 +27,10 @@ class TransactionController extends Controller
                         ->where('user_id', $user->id)
                         ->latest()
                         ->paginate(perPage: 5);
+                } else {
+                    $transactions = Transaction::where('transaction_code', $keyword)
+                        ->latest()->paginate(perPage: 5);
                 }
-                $transactions = Transaction::where('transaction_code', $keyword)
-                    ->latest()->paginate(perPage: 5);
             } else if ($category === 'customer') {
                 if ($user->hasRole('customer')) {
                     return abort(403, 'Unauthorized action.');
@@ -42,22 +43,25 @@ class TransactionController extends Controller
                     $transactions = Transaction::where('transaction_type', $keyword)
                         ->where('user_id', $user->id)
                         ->latest()->paginate(perPage: 5);
+                } else {
+                    $transactions = Transaction::where('transaction_type', $keyword)
+                        ->latest()->paginate(perPage: 5);
                 }
-                $transactions = Transaction::where('transaction_type', $keyword)
-                    ->latest()->paginate(perPage: 5);
             } else if ($category == 'transaction_status') {
                 if ($user->hasRole('customer')) {
                     $transactions = Transaction::where('transaction_status', $keyword)->where('user_id', $user->id)
                         ->latest()->paginate(perPage: 5);
+                } else {
+                    $transactions = Transaction::where('transaction_status', $keyword)
+                        ->latest()->paginate(perPage: 5);
                 }
-                $transactions = Transaction::where('transaction_status', $keyword)
-                    ->latest()->paginate(perPage: 5);
             }
         } else {
             if ($user->hasRole('customer')) {
                 $transactions = Transaction::where('user_id', $user->id)->latest()->paginate(perPage: 5);
+            } else {
+                $transactions = Transaction::latest()->paginate(perPage: 5);
             }
-            $transactions = Transaction::latest()->paginate(perPage: 5);
         }
 
         return view('pages.transaction.index', compact('transactions'));
