@@ -27,8 +27,8 @@ class DashboardController extends Controller
             $paidTransactions = Transaction::where('user_id', Auth::user()->id)
                 ->where('transaction_status', 'paid')->count();
         } else {
-            $pendingTransactions = Transaction::where('status', 'pending')->count();
-            $paidTransactions = Transaction::where('status', 'paid')->count();
+            $pendingTransactions = Transaction::where('transaction_status', 'pending')->count();
+            $paidTransactions = Transaction::where('transaction_status', 'paid')->count();
         }
 
         return view(
