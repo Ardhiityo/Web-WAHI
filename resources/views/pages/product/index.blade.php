@@ -79,7 +79,7 @@
                                                 @endif
                                             </form>
                                         </td>
-                                        @role('admin')
+                                        @role('owner')
                                             <td class="align-middle">
                                                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
                                                     <i class="fas fa-edit"></i>

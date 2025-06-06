@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Brand\StoreBrandRequest;
 use App\Http\Requests\Brand\UpdateBrandRequest;
-use App\Models\Brand;
 
 class BrandController extends Controller
 {
@@ -23,6 +24,9 @@ class BrandController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return abort(403, 'Unauthorized action.');
+        }
         return view('pages.brand.create');
     }
 
@@ -37,18 +41,14 @@ class BrandController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Brand $brand)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Brand $brand)
     {
+        if (!Auth::user()->hasRole('admin')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         return view('pages.brand.edit', compact('brand'));
     }
 
