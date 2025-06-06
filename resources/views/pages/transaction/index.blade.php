@@ -32,9 +32,9 @@
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         <select class="form-control select2" name="category" required id="category">
                                             <option value="transaction_code">Kode transaksi</option>
-                                            @if (auth()->user()->hasRole('owner') || auth()->user()->hasRole('cashier'))
+                                            @hasrole('owner|cashier')
                                                 <option value="customer">Pemesan</option>
-                                            @endif
+                                            @endhasrole
                                             <option value="transaction_type">Jenis pembayaran</option>
                                             <option value="transaction_status">Status Transaksi</option>
                                         </select>
@@ -94,14 +94,16 @@
                                     role="button" class="mx-3 btn btn-warning">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
-                                    method="post">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
+                                @hasrole('owner|cashier')
+                                    <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
+                                        method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                @endhasrole
                             </div>
                         </div>
                         <div class="row">

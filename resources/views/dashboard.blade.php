@@ -12,20 +12,22 @@
     </div>
 
     <div class="mt-3 row">
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>{{ $customers }}</h3>
-                    <p>Pelanggan</p>
+        @hasrole('owner|cashier')
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ $customers }}</h3>
+                        <p>Pelanggan</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <a href="{{ route('roles.index') }}" class="small-box-footer">Selengkapnya <i
+                            class="fas fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <a href="{{ route('roles.index') }}" class="small-box-footer">Selengkapnya <i
-                        class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
-        </div>
+        @endhasrole
         @role('owner')
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
@@ -84,20 +86,22 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{ $vouchers }}</h3>
-                    <p>Voucher</p>
+        @hasrole('owner|cashier')
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ $vouchers }}</h3>
+                        <p>Voucher</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <a href="{{ route('vouchers.index') }}" class="small-box-footer">Selengkapnya <i
+                            class="fas fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-percentage"></i>
-                </div>
-                <a href="{{ route('vouchers.index') }}" class="small-box-footer">Selengkapnya <i
-                        class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
-        </div>
+        @endhasrole
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
                 <div class="inner">

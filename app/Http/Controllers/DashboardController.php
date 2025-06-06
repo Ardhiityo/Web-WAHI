@@ -20,8 +20,16 @@ class DashboardController extends Controller
         $products = Product::count();
         $carts = Cart::where('user_id', Auth::user()->id)->count();
         $vouchers = Voucher::count();
-        $pendingTransactions = Transaction::where('transaction_status', 'pending')->count();
-        $paidTransactions = Transaction::where('transaction_status', 'paid')->count();
+
+        if (Auth::user()->hasRole('customer')) {
+            $pendingTransactions = Transaction::where('user_id', Auth::user()->id)
+                ->where('transaction_status', 'pending')->count();
+            $paidTransactions = Transaction::where('user_id', Auth::user()->id)
+                ->where('transaction_status', 'paid')->count();
+        } else {
+            $pendingTransactions = Transaction::where('status', 'pending')->count();
+            $paidTransactions = Transaction::where('status', 'paid')->count();
+        }
 
         return view(
             'dashboard',

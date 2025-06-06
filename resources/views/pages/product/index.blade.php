@@ -20,13 +20,15 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="mb-4 row">
-                <div class="col-12">
-                    <div class="d-flex justify-content-end align-items-center">
-                        <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            @role('owner')
+                <div class="mb-4 row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endrole
             <div class="row">
                 <div class="col-12 d-flex">
                     @if ($products->isEmpty())
