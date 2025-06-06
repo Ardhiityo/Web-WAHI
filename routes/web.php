@@ -10,6 +10,7 @@ use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductTransactionController;
 use App\Http\Controllers\ProfitController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 
 Route::middleware('auth')->group(function () {
@@ -27,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('product-transactions', ProductTransactionController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('profits', ProfitController::class);
+
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -79,6 +79,16 @@
                 </li>
 
                 <li class="my-2 nav-item">
+                    <a href="{{ route('reports.index') }}"
+                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tasks"></i>
+                        <p>
+                            Laporan
+                        </p>
+                    </a>
+                </li>
+
+                <li class="my-2 nav-item">
                     <a href="{{ route('roles.index') }}"
                         class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>

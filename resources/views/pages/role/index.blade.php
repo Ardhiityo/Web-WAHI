@@ -45,7 +45,7 @@
                                     <td class="align-middle">{{ $loop->iteration }}</td>
                                     <td class="align-middle">{{ $user->name }}</td>
                                     <td class="align-middle">{{ $user->email }}</td>
-                                    <td class="align-middle">{{ $user->roles->pluck('name')->implode(', ') }}</td>
+                                    <td class="align-middle">{{ ucfirst($user->roles->pluck('name')->implode(', ')) }}</td>
                                     <td class="align-middle">
                                         <a href="{{ route('roles.edit', $user->id) }}" class="btn btn-warning">
                                             <i class="fas fa-edit"></i>
