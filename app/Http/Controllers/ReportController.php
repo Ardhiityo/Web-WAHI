@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoiceExport;
 use App\Exports\TransactionExport;
 use App\Http\Requests\Report\StoreReportRequest;
 use App\Models\Transaction;
@@ -33,13 +34,20 @@ class ReportController extends Controller
         return view('pages.report.index', compact('dates'));
     }
 
-    public function export(StoreReportRequest $request)
+    public function exportByDate(StoreReportRequest $request)
     {
         $data = $request->validated();
 
         return Excel::download(new TransactionExport(
             $data['start_date'],
             $data['end_date']
+        ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
+    }
+
+    public function exportByTransaction(Transaction $transaction)
+    {
+        return Excel::download(new InvoiceExport(
+            $transaction
         ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
 }

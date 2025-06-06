@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('reports.export') }}" method="get">
+            <form action="{{ route('reports.export.date') }}" method="get">
                 <div class="mb-4 row">
                     <div class="col-6">
                         <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">

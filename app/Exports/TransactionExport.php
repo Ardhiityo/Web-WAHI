@@ -26,6 +26,6 @@ class TransactionExport implements FromView
             $profit += $transaction->total_amount;
         }
 
-        return view('export.index', compact('transactions', 'start_date', 'end_date', 'totalTransaction', 'profit'));
+        return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransaction', 'profit'));
     }
 }

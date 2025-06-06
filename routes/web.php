@@ -30,7 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('profits', ProfitController::class);
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
+    Route::get('/reports/export', [ReportController::class, 'exportByDate'])->name('reports.export.date');
+    Route::get('/reports/export/{transaction}', [ReportController::class, 'exportByTransaction'])->name('reports.export.transaction');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
