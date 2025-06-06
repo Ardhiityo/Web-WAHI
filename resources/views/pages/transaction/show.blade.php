@@ -23,10 +23,14 @@
         <div class="card-body">
             <div class="my-2">
                 <div class="mb-5 row">
-                    <div class="col-6">
+                    <div class="col-6 d-flex align-items-center">
                         <a href="{{ route('transactions.index') }}" class="btn btn-primary" role="button">Kembali</a>
                     </div>
-                    <div class="col-6 d-flex justify-content-end">
+                    <div class="col-6 d-flex align-items-center justify-content-end">
+                        <a href="{{ route('reports.export.transaction', ['transaction' => $transaction->id]) }}"
+                            role="button" class="mx-2 btn btn-warning">
+                            <i class="fas fa-file-download"></i>
+                        </a>
                         <h5>{{ $transaction->created_at->format('d/m/Y') }}</h5>
                     </div>
                 </div>

@@ -91,11 +91,11 @@
         </tr>
         <tr>
             <th colspan="7"></th>
-            <th style="border: 1px solid black; text-align: center;">No</th>
-            <th style="border: 1px solid black; text-align: center;" colspan="2">Nama Produk</th>
-            <th style="border: 1px solid black; text-align: center;" colspan="2">Brand</th>
-            <th style="border: 1px solid black; text-align: center;" colspan="2">Quantity</th>
-            <th style="border: 1px solid black; text-align: center;" colspan="2">Harga</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;">No</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Nama Produk</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Brand</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Quantity</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Harga</th>
         </tr>
     </thead>
     <tbody>
