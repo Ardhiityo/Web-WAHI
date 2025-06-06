@@ -70,7 +70,7 @@
                     </a>
                 </li>
 
-                @role('admin')
+                @role('owner')
                     <li class="my-2 nav-item">
                         <a href="{{ route('profits.index') }}"
                             class="nav-link {{ request()->is('profits*') ? 'active' : '' }}">
