@@ -12,11 +12,20 @@ class TransactionExport implements FromView
 
     public function view(): View
     {
-        $transactions = Transaction::where('transaction_status', 'paid')
-            ->whereDate('created_at', '>=', $this->start_date)
-            ->whereDate('created_at', '<=', $this->end_date)
+        $start_date = $this->start_date;
+        $end_date = $this->end_date;
+
+        $transactions = Transaction::whereDate('created_at', '>=', $start_date)
+            ->whereDate('created_at', '<=', $end_date)
             ->get();
 
-        return view('export.index', compact('dates'));
+        $totalTransaction = $transactions->count();
+        $profit = 0;
+
+        foreach ($transactions as $transaction) {
+            $profit += $transaction->total_amount;
+        }
+
+        return view('export.index', compact('transactions', 'start_date', 'end_date', 'totalTransaction', 'profit'));
     }
 }

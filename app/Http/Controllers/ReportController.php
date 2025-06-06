@@ -37,12 +37,9 @@ class ReportController extends Controller
     {
         $data = $request->validated();
 
-        return Excel::download(
-            new TransactionExport(
-                $data['start_date'],
-                $data['end_date']
-            ),
-            "WAHI-" . $data['start_date'] . '-' . $data['end_date'] . 'xlsx'
-        );
+        return Excel::download(new TransactionExport(
+            $data['start_date'],
+            $data['end_date']
+        ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
 }
