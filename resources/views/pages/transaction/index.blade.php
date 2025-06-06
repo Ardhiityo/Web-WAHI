@@ -204,7 +204,7 @@
                                             <div class="input-group-prepend w-100">
                                                 <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                                 <input type="text" class="form-control" name="transaction_status"
-                                                    readonly value="{{ $transaction->transaction_status }}">
+                                                    readonly value="{{ ucfirst($transaction->transaction_status) }}">
                                             </div>
                                         </div>
                                     </div>

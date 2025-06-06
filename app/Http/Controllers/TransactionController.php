@@ -60,28 +60,27 @@ class TransactionController extends Controller
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
-        $data = $request->validated();
         try {
             DB::beginTransaction();
-            if ($data['transaction_status'] === 'paid') {
-                $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
-                foreach ($productTransactions as $key => $productTransaction) {
-                    if ($productTransaction->quantity > $productTransaction->product->stock) {
-                        throw new Exception('Produk yang dibeli melebihi stok produk');
-                    } else {
-                        $productTransaction->product()->update([
-                            'stock' => $productTransaction->product->stock - $productTransaction->quantity
-                        ]);
-                    }
+            $data = $request->validated();
+            $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
+            foreach ($productTransactions as $key => $productTransaction) {
+                if ($productTransaction->quantity > $productTransaction->product->stock) {
+                    throw new Exception('Produk yang dibeli melebihi stok produk');
+                } else {
+                    $productTransaction->product()->update([
+                        'stock' => $productTransaction->product->stock - $productTransaction->quantity
+                    ]);
                 }
             }
-            $transaction->update($request->all());
+            $transaction->update($data);
             DB::commit();
             return redirect()->route('transactions.show', ['transaction' => $transaction->id])
                 ->withSuccess('Berhasil diubah');
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->route('transactions.index')->with('error', $exception->getMessage());
+            return redirect()->route('transactions.show', ['transaction' => $transaction->id])
+                ->with('error', $exception->getMessage());
         }
     }
 

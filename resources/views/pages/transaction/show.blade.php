@@ -131,15 +131,22 @@
                                     <div class="input-group">
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                            <select class="form-control select2" style="width: 100%;"
-                                                name="transaction_status" required>
-                                                <option value="pending"
-                                                    {{ $transaction->transaction_status == 'pending' ? 'selected' : '' }}>
-                                                    Pending</option>
-                                                <option value="paid"
-                                                    {{ $transaction->transaction_status == 'paid' ? 'selected' : '' }}>
-                                                    Paid</option>
-                                            </select>
+                                            @if ($transaction->transaction_status === 'pending')
+                                                <select class="form-control select2" style="width: 100%;"
+                                                    name="transaction_status" required>
+                                                    <option value="pending"
+                                                        {{ $transaction->transaction_status == 'pending' ? 'selected' : '' }}>
+                                                        Pending</option>
+                                                    <option value="paid"
+                                                        {{ $transaction->transaction_status == 'paid' ? 'selected' : '' }}>
+                                                        Paid</option>
+                                                </select>
+                                            @else
+                                                <input type="hidden" class="form-control" name="transaction_status"
+                                                    readonly value="{{ $transaction->transaction_status }}">
+                                                <input type="text" class="form-control" readonly
+                                                    value="{{ ucfirst($transaction->transaction_status) }}">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -152,26 +159,35 @@
                                     <div class="input-group">
                                         <div class="input-group-prepend w-100">
                                             <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                            <select class="form-control select2" style="width: 100%;"
-                                                name="transaction_type" required>
-                                                <option value="cash"
-                                                    {{ $transaction->transaction_type == 'cash' ? 'selected' : '' }}>
-                                                    Cash</option>
-                                                <option value="cashless"
-                                                    {{ $transaction->transaction_type == 'cashless' ? 'selected' : '' }}>
-                                                    Cashless</option>
-                                            </select>
+                                            @if ($transaction->transaction_status === 'pending')
+                                                <select class="form-control select2" style="width: 100%;"
+                                                    name="transaction_type" required>
+                                                    <option value="cash"
+                                                        {{ $transaction->transaction_type == 'cash' ? 'selected' : '' }}>
+                                                        Cash</option>
+                                                    <option value="cashless"
+                                                        {{ $transaction->transaction_type == 'cashless' ? 'selected' : '' }}>
+                                                        Cashless</option>
+                                                </select>
+                                            @else
+                                                <input type="hidden" class="form-control" name="transaction_type"
+                                                    readonly value="{{ $transaction->transaction_type }}">
+                                                <input type="text" class="form-control" readonly
+                                                    value="{{ ucfirst($transaction->transaction_type) }}">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="mt-4 col-12 d-flex justify-content-end">
-                            <button class="btn btn-warning">Submit</button>
+                    @if ($transaction->transaction_status === 'pending')
+                        <div class="row">
+                            <div class="mt-3 col-12 d-flex justify-content-end">
+                                <button class="btn btn-warning">Submit</button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </form>
             </div>
             <hr>
@@ -192,18 +208,20 @@
                 <div class="row">
                     <div class="col-12 d-flex align-items-center">
                         <h5>#{{ $loop->iteration }}</h5>
-                        <span class="mx-2"></span>
-                        <form
-                            action="{{ route('product-transactions.destroy', ['product_transaction' => $transaction->id]) }}"
-                            method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
+                        @if ($transaction->transaction_status === 'pending')
+                            <span class="mx-2"></span>
+                            <form
+                                action="{{ route('product-transactions.destroy', ['product_transaction' => $transaction->id]) }}"
+                                method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
                 <div class="mt-4 mb-5">
@@ -256,17 +274,20 @@
                                                 <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                             </div>
                                             <input type="text" class="form-control" name="quantity"
-                                                value="{{ $product->pivot->quantity }}">
+                                                value="{{ $product->pivot->quantity }}"
+                                                {{ $transaction->transaction_status === 'paid' ? 'readonly' : '' }}>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="mt-3 col-12 d-flex justify-content-end">
-                                <button class="btn btn-warning">Submit</button>
+                        @if ($transaction->transaction_status === 'pending')
+                            <div class="row">
+                                <div class="mt-3 col-12 d-flex justify-content-end">
+                                    <button class="btn btn-warning">Submit</button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </form>
                 </div>
             @endforeach
