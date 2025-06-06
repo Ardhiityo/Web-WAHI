@@ -6,7 +6,7 @@ use App\Models\Transaction;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class UpdateStatusTransactionRule implements ValidationRule
+class UpdateQuantityTransactionRule implements ValidationRule
 {
     public function __construct(private $transactionId) {}
 

@@ -72,7 +72,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-percentage"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="disccount_percentage" readonly
+                                        <input type="text" class="form-control" readonly
                                             value="{{ $transaction->discount_percentage ?? '0' }}">
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                             <span class="input-group-text">Rp</span>
                                         </div>
                                         <input type="text" class="form-control" name="discount" readonly
-                                            value="{{ $transaction->discount }}">
+                                            value="{{ number_format($transaction->discount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                             <span class="input-group-text">Rp</span>
                                         </div>
                                         <input type="text" class="form-control" name="subtotal_amount" readonly
-                                            value="{{ $transaction->subtotal_amount }}">
+                                            value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                                             <span class="input-group-text">Rp</span>
                                         </div>
                                         <input type="text" class="form-control" name="total_amount" readonly
-                                            value="{{ $transaction->total_amount }}">
+                                            value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
                                                 <span class="input-group-text">Rp</i></span>
                                             </div>
                                             <input type="text" name="price" class="form-control" readonly
-                                                value="{{ $product->pivot->price }}">
+                                                value="{{ number_format($product->pivot->price, thousands_separator: '.') }}">
                                         </div>
                                     </div>
                                 </div>
