@@ -19,15 +19,17 @@
                     </a>
                 </li>
 
-                <li class="my-2 nav-item">
-                    <a href="{{ route('brands.index') }}"
-                        class="nav-link {{ request()->is('brands*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
-                            Brand
-                        </p>
-                    </a>
-                </li>
+                @role('owner')
+                    <li class="my-2 nav-item">
+                        <a href="{{ route('brands.index') }}"
+                            class="nav-link {{ request()->is('brands*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>
+                                Brand
+                            </p>
+                        </a>
+                    </li>
+                @endrole
 
                 <li class="my-2 nav-item">
                     <a href="{{ route('products.index') }}"
@@ -68,15 +70,17 @@
                     </a>
                 </li>
 
-                <li class="my-2 nav-item">
-                    <a href="{{ route('profits.index') }}"
-                        class="nav-link {{ request()->is('profits*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-funnel-dollar"></i>
-                        <p>
-                            Pendapatan
-                        </p>
-                    </a>
-                </li>
+                @role('admin')
+                    <li class="my-2 nav-item">
+                        <a href="{{ route('profits.index') }}"
+                            class="nav-link {{ request()->is('profits*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-funnel-dollar"></i>
+                            <p>
+                                Pendapatan
+                            </p>
+                        </a>
+                    </li>
+                @endrole
 
                 <li class="my-2 nav-item">
                     <a href="{{ route('reports.index') }}"
@@ -88,15 +92,17 @@
                     </a>
                 </li>
 
-                <li class="my-2 nav-item">
-                    <a href="{{ route('roles.index') }}"
-                        class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Peran
-                        </p>
-                    </a>
-                </li>
+                @role('owner')
+                    <li class="my-2 nav-item">
+                        <a href="{{ route('roles.index') }}"
+                            class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Peran
+                            </p>
+                        </a>
+                    </li>
+                @endrole
             </ul>
         </nav>
     </div>

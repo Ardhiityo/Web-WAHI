@@ -26,20 +26,22 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{ $cashiers }}</h3>
-                    <p>Kasir</p>
+        @role('owner')
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ $cashiers }}</h3>
+                        <p>Kasir</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <a href="{{ route('roles.index') }}" class="small-box-footer">Selengkapnya <i
+                            class="fas fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <a href="{{ route('roles.index') }}" class="small-box-footer">Selengkapnya <i
-                        class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
-        </div>
+        @endrole
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
                 <div class="inner">

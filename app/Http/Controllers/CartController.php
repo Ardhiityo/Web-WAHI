@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
 use App\Http\Requests\Checkout\StoreCheckoutRequest;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CartController extends Controller

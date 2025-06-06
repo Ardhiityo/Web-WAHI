@@ -9,32 +9,54 @@ use Illuminate\Http\Request;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
 
-use function Laravel\Prompts\error;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 
 class TransactionController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         if ($request->query('category') && $request->query('keyword')) {
             $category = $request->query('category');
             $keyword = $request->query('keyword');
             if ($category == 'transaction_code') {
+                if ($user->hasRole('customer')) {
+                    $transactions = Transaction::where('transaction_code', $keyword)
+                        ->where('user_id', $user->id)
+                        ->latest()
+                        ->paginate(perPage: 5);
+                }
                 $transactions = Transaction::where('transaction_code', $keyword)
                     ->latest()->paginate(perPage: 5);
             } else if ($category === 'customer') {
+                if ($user->hasRole('customer')) {
+                    return abort(403, 'Unauthorized action.');
+                }
                 $transactions = Transaction::whereHas('user', function ($query) use ($keyword) {
                     $query->where('name', 'like', '%' . $keyword . '%');
-                })
-                    ->latest()->paginate(perPage: 5);
-            } else if ($category === 'cash' || $category === 'cashless') {
+                })->latest()->paginate(perPage: 5);
+            } else if ($category === 'transaction_type') {
+                if ($user->hasRole('customer')) {
+                    $transactions = Transaction::where('transaction_type', $keyword)
+                        ->where('user_id', $user->id)
+                        ->latest()->paginate(perPage: 5);
+                }
                 $transactions = Transaction::where('transaction_type', $keyword)
                     ->latest()->paginate(perPage: 5);
             } else if ($category == 'transaction_status') {
+                if ($user->hasRole('customer')) {
+                    $transactions = Transaction::where('transaction_status', $keyword)->where('user_id', $user->id)
+                        ->latest()->paginate(perPage: 5);
+                }
                 $transactions = Transaction::where('transaction_status', $keyword)
                     ->latest()->paginate(perPage: 5);
             }
         } else {
+            if ($user->hasRole('customer')) {
+                $transactions = Transaction::where('user_id', $user->id)->latest()->paginate(perPage: 5);
+            }
             $transactions = Transaction::latest()->paginate(perPage: 5);
         }
 

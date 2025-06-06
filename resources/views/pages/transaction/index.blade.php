@@ -32,8 +32,10 @@
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         <select class="form-control select2" name="category" required id="category">
                                             <option value="transaction_code">Kode transaksi</option>
-                                            <option value="customer">Pemesan</option>
-                                            <option value="transactoon_type">Jenis pembayaran</option>
+                                            @if (auth()->user()->hasRole('owner') || auth()->user()->hasRole('cashier'))
+                                                <option value="customer">Pemesan</option>
+                                            @endif
+                                            <option value="transaction_type">Jenis pembayaran</option>
                                             <option value="transaction_status">Status Transaksi</option>
                                         </select>
                                     </div>

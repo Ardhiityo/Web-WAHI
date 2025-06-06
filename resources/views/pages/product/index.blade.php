@@ -42,7 +42,9 @@
                                     <th>Stok</th>
                                     <th>Brand</th>
                                     <th>Keranjang</th>
-                                    <th>Aksi</th>
+                                    @role('owner')
+                                        <th>Aksi</th>
+                                    @endrole
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,21 +77,23 @@
                                                 @endif
                                             </form>
                                         </td>
-                                        <td class="align-middle">
-                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <span class="mx-1"></span>
-                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
-                                                style="display: inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure?')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                        @role('admin')
+                                            <td class="align-middle">
+                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <span class="mx-1"></span>
+                                                <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                                    style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        @endrole
                                     </tr>
                                 @endforeach
                             </tbody>
