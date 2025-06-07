@@ -18,7 +18,7 @@ class BrandSeeder extends Seeder
                 'name' => 'Fiesta',
             ],
             [
-                'name' => 'So Good',
+                'name' => 'So-Good',
             ],
             [
                 'name' => 'Belfoods',

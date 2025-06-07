@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,11 @@ class ProductSeeder extends Seeder
         return $destinationPath; // This will be accessible via the public URL
     }
 
+    public function getBrandId($brandName): int
+    {
+        return Brand::where('name', $brandName)->first()->id;
+    }
+
     /**
      * Run the database seeds.
      */
@@ -27,39 +33,60 @@ class ProductSeeder extends Seeder
     {
         Product::insert([
             [
-                'name' => 'Sosis Ayam',
-                'image' => $this->generateImagePath('dist/img/prod-1.jpg'),
+                'name' => 'Crispy Chicken',
+                'image' => $this->generateImagePath('dist/img/belfoods.png'),
                 'price' => 23000,
                 'stock' => 28,
-                'brand_id' => 1,
+                'brand_id' => $this->getBrandId('Belfoods')
             ],
             [
-                'name' => 'Chicken Nugget',
-                'image' => $this->generateImagePath('dist/img/prod-2.jpg'),
+                'name' => 'Naget Ayam',
+                'image' => $this->generateImagePath('dist/img/fiesta.jpeg'),
+                'price' => 23000,
+                'stock' => 28,
+                'brand_id' => $this->getBrandId('Fiesta')
+            ],
+            [
+                'name' => 'Chicken Meatball',
+                'image' => $this->generateImagePath('dist/img/so-good.jpeg'),
                 'price' => 35000,
                 'stock' => 27,
-                'brand_id' => 2,
+                'brand_id' => $this->getBrandId('So-Good')
             ],
             [
-                'name' => 'Kornet Ayam',
-                'image' => $this->generateImagePath('dist/img/prod-3.jpg'),
+                'name' => 'Bola Lobster',
+                'image' => $this->generateImagePath('dist/img/minaku.jpeg'),
                 'price' => 33000,
                 'stock' => 26,
-                'brand_id' => 3,
+                'brand_id' => $this->getBrandId('Minaku')
             ],
             [
-                'name' => 'Kornet Sapi',
-                'image' => $this->generateImagePath('dist/img/prod-4.jpg'),
+                'name' => 'Otak-otak Ikan',
+                'image' => $this->generateImagePath('dist/img/sakana1.png'),
                 'price' => 35000,
                 'stock' => 25,
-                'brand_id' => 4,
+                'brand_id' => $this->getBrandId('Sakana')
             ],
             [
-                'name' => 'Sosis Sapi',
-                'image' => $this->generateImagePath('dist/img/prod-5.jpg'),
+                'name' => 'Empek-empek Ikan',
+                'image' => $this->generateImagePath('dist/img/sakana2.png'),
                 'price' => 25000,
                 'stock' => 22,
-                'brand_id' => 5,
+                'brand_id' => $this->getBrandId('Sakana')
+            ],
+            [
+                'name' => 'Bakso Ikan Super',
+                'image' => $this->generateImagePath('dist/img/sakana3.png'),
+                'price' => 25000,
+                'stock' => 22,
+                'brand_id' => $this->getBrandId('Sakana')
+            ],
+            [
+                'name' => 'Siomay Ikan',
+                'image' => $this->generateImagePath('dist/img/sakana4.png'),
+                'price' => 25000,
+                'stock' => 22,
+                'brand_id' => $this->getBrandId('Sakana')
             ]
         ]);
     }
