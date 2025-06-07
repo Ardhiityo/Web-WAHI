@@ -6,15 +6,18 @@ use App\Models\Brand;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Brand\StoreBrandRequest;
 use App\Http\Requests\Brand\UpdateBrandRequest;
+use App\Services\Interfaces\BrandInterface;
 
 class BrandController extends Controller
 {
+    public function __construct(private BrandInterface $brandRepository) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $brands = Brand::paginate(perPage: 10);
+        $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.brand.index', compact('brands'));
     }
@@ -35,7 +38,7 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        Brand::create($request->validated());
+        $this->brandRepository->createBrand($request->validated());
 
         return redirect()->route('brands.index')->withSuccess('Berhasil ditambahkan');
     }
@@ -59,7 +62,7 @@ class BrandController extends Controller
     {
         $brand->update($request->validated());
 
-        return redirect()->route('brands.index')->withSuccess('Berhasil diubah');;
+        return redirect()->route('brands.index')->withSuccess('Berhasil diubah');
     }
 
     /**
