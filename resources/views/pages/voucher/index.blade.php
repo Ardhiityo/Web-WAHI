@@ -39,6 +39,7 @@
                                 <tr>
                                     <th style="width: 10px">No</th>
                                     <th>Voucher</th>
+                                    <th>Persentase Diskon (%)</th>
                                     @role('owner')
                                         <th>Aksi</th>
                                     @endrole
@@ -49,6 +50,7 @@
                                     <tr>
                                         <td class="align-middle">{{ $loop->iteration }}</td>
                                         <td class="align-middle">{{ $voucher->code }}</td>
+                                        <td class="align-middle">{{ $voucher->discount }}</td>
                                         @role('owner')
                                             <td class="align-middle">
                                                 <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-warning"> <i

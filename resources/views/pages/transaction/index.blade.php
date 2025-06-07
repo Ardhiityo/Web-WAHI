@@ -94,7 +94,7 @@
                                     role="button" class="mx-3 btn btn-warning">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                @hasrole('owner|cashier')
+                                @if ($transaction->transaction_status === 'pending')
                                     <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
                                         method="post">
                                         @method('DELETE')
@@ -103,7 +103,7 @@
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
-                                @endhasrole
+                                @endif
                             </div>
                         </div>
                         <div class="row">
