@@ -2,35 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Services\Interfaces\BrandInterface;
+use App\Services\Interfaces\ProductInterface;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        private ProductInterface $productRepository,
+        private BrandInterface $brandRepository
+    ) {}
+
     public function index(Request $request)
     {
         if ($request->query('category') && $request->query('keyword')) {
             $category = $request->query('category');
             $keyword = $request->query('keyword');
             if ($category === 'product') {
-                $products = Product::whereLike('name', '%' . $keyword . '%')
-                    ->paginate(perPage: 10);
+                $products = $this->productRepository->getProductByName($keyword);
             } elseif ($category === 'brand') {
-                $products = Product::whereHas('brand', function ($query) use ($keyword) {
-                    $query->whereLike('name', '%' . $keyword . '%');
-                })->paginate(perPage: 10);
+                $products = $this->productRepository->getALlProductByBrand($keyword);
             }
         } else if ($request->query('start_price') && $request->query('end_price')) {
-            $products = Product::whereBetween('price', [
-                $request->query('start_price'),
-                $request->query('end_price')
-            ])->paginate(perPage: 10);
+            $startPrice = $request->query('start_price');
+            $endPrice = $request->query('end_price');
+            $products = $this->productRepository->getAllProductsByPrice($startPrice, $endPrice);
         } else {
-            $products = Product::paginate(perPage: 10);
+            $products = $this->productRepository->getAllProducts();
         }
 
         return view('pages.product.index', compact('products'));
@@ -38,7 +39,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $brands = Brand::all();
+        $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.product.create', compact('brands'));
     }
@@ -47,16 +48,14 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
-        $data['image'] = $request->file('image')->store('products', 'public');
-
-        Product::create($data);
+        $this->productRepository->createProduct($data);
 
         return redirect()->route('products.index')->withSuccess('Berhasil ditambahkan');
     }
 
     public function edit(Product $product)
     {
-        $brands = Brand::all();
+        $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.product.edit', compact('product', 'brands'));
     }
@@ -65,21 +64,14 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($product->image);
-            $data['image'] = $request->file('image')->store('products', 'public');
-        }
-
-        $product->update($data);
+        $this->productRepository->updateProduct($product, $data);
 
         return redirect()->route('products.index')->withSuccess('Berhasil diubah');
     }
 
     public function destroy(Product $product)
     {
-        Storage::disk('public')->delete($product->image);
-
-        $product->delete();
+        $this->productRepository->deleteProduct($product);
 
         return redirect()->route('products.index')->withSuccess('Berhasil dihapus');
     }

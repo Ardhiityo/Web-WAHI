@@ -19,6 +19,7 @@ class UpdateProductRequest extends FormRequest
             'price' => ['required', 'numeric'],
             'stock' => ['required', 'integer', 'min:0'],
             'brand_id' => ['required', 'exists:brands,id'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ];
     }
 }
