@@ -7,12 +7,31 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(perPage: 10);
+        if ($request->query('category') && $request->query('keyword')) {
+            $category = $request->query('category');
+            $keyword = $request->query('keyword');
+            if ($category === 'product') {
+                $products = Product::whereLike('name', '%' . $keyword . '%')
+                    ->paginate(perPage: 10);
+            } elseif ($category === 'brand') {
+                $products = Product::whereHas('brand', function ($query) use ($keyword) {
+                    $query->whereLike('name', '%' . $keyword . '%');
+                })->paginate(perPage: 10);
+            }
+        } else if ($request->query('start_price') && $request->query('end_price')) {
+            $products = Product::whereBetween('price', [
+                $request->query('start_price'),
+                $request->query('end_price')
+            ])->paginate(perPage: 10);
+        } else {
+            $products = Product::paginate(perPage: 10);
+        }
 
         return view('pages.product.index', compact('products'));
     }

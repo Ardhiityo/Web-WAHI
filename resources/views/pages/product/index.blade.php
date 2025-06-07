@@ -10,6 +10,105 @@
             </div>
         </div>
     </div>
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Cari produk</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('products.index') }}" method="get">
+                <div class="mb-4 row">
+                    <div class="col-6">
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="form-group">
+                                <label for="voucher">Kategori</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend w-100">
+                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                        <select class="form-control select2" name="category" required id="category">
+                                            <option value="product">Produk</option>
+                                            <option value="brand">Brand</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="form-group">
+                                <label for="keyword">Kata kunci</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="keyword">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-3 ml-2 btn btn-primary">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-default collapsed-card">
+        <div class="card-header">
+            <h3 class="card-title">Cari harga</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('products.index') }}" method="get">
+                <div class="mb-4 row">
+                    <div class="col-6">
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="form-group">
+                                <label for="start_price">Minimum</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend w-100">
+                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                        <input type="number" name="start_price" required
+                                            class="form-control form-control-border border-width-2" id="start_price"
+                                            value="{{ old('start_price') }}" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                            <div class="form-group">
+                                <label for="end_price">Maximum</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend w-100">
+                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                        <input type="number" name="end_price" required
+                                            class="form-control form-control-border border-width-2" id="end_price"
+                                            value="{{ old('end_price') }}" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-3 ml-2 btn btn-primary">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">Semua produk</h3>
@@ -39,7 +138,7 @@
                                 <tr>
                                     <th style="width: 10px">No</th>
                                     <th>Foto</th>
-                                    <th>Nama</th>
+                                    <th>Produk</th>
                                     <th>Harga</th>
                                     <th>Stok</th>
                                     <th>Brand</th>
