@@ -95,14 +95,16 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if ($transaction->transaction_status === 'pending')
-                                    <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
-                                        method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button class="btn btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    @hasrole('owner|cashier')
+                                        <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
+                                            method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    @endhasrole
                                 @endif
                             </div>
                         </div>
