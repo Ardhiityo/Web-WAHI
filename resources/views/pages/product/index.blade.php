@@ -78,7 +78,7 @@
                                 <label for="start_price">Minimum</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend w-100">
-                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                         <input type="number" name="start_price" required
                                             class="form-control form-control-border border-width-2" id="start_price"
                                             value="{{ old('start_price') }}" min="1">
@@ -93,7 +93,7 @@
                                 <label for="end_price">Maximum</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend w-100">
-                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                                         <input type="number" name="end_price" required
                                             class="form-control form-control-border border-width-2" id="end_price"
                                             value="{{ old('end_price') }}" min="1">

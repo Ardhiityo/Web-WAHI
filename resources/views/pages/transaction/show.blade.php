@@ -167,7 +167,7 @@
                                     <label for="transaction_type">Jenis Pembayaran</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend w-100">
-                                            <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                                             @if ($transaction->transaction_status === 'pending')
                                                 @if (Auth::user()->hasRole('owner|cashier'))
                                                     <select class="form-control select2" style="width: 100%;"
@@ -292,7 +292,8 @@
                                         <label for="quantity">Quantity</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-percentage"></i></span>
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-shopping-cart"></i></i></span>
                                             </div>
                                             @if (Auth::user()->hasRole('owner|cashier'))
                                                 <input type="text" class="form-control" name="quantity"
