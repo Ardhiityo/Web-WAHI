@@ -19,13 +19,22 @@ class TransactionExport implements FromView
             ->whereDate('created_at', '<=', $end_date)
             ->get();
 
-        $totalTransaction = $transactions->count();
+        $totalTransactionSuccess = $transactions->toQuery()
+            ->where('transaction_status', 'paid')
+            ->count();
+
+        $totalTransactionPending = $transactions->toQuery()
+            ->where('transaction_status', 'pending')
+            ->count();
+
         $profit = 0;
 
         foreach ($transactions as $transaction) {
-            $profit += $transaction->total_amount;
+            if ($transaction->transaction_status === 'paid') {
+                $profit += $transaction->total_amount;
+            }
         }
 
-        return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransaction', 'profit'));
+        return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransactionSuccess', 'totalTransactionPending', 'profit'));
     }
 }

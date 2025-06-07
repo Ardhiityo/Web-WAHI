@@ -67,9 +67,14 @@
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                     colspan="2">
                     Rp. {{ $transaction->subtotal_amount }}</td>
-                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">
-                    Rp. {{ $transaction->discount }}</td>
+                @if ($transaction->discount > 0)
+                    <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
+                        colspan="2">
+                        Rp. {{ $transaction->discount }}</td>
+                @else
+                    <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
+                        colspan="2">-</td>
+                @endif
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                     colspan="2">
                     Rp. {{ $transaction->total_amount }}</td>
@@ -82,29 +87,31 @@
             </tr>
         @endforeach
         <tr></tr>
-        <tr></tr>
-        <tr></tr>
-        <tr></tr>
     </tbody>
 </table>
 
 <table>
     <thead>
         <tr>
-            <th colspan="11"></th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Total
-                Transaksi</th>
+            <th colspan="8"></th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Traksaksi Sukses
+            </th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Traksaksi Pending
+            </th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Pendapatan
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td colspan="11"></td>
+            <td colspan="8"></td>
             <td style="border: 1px solid black; text-align: center;" colspan="3">
-                {{ $totalTransaction }}</td>
+                {{ $totalTransactionSuccess }}</td>
+            <td style="border: 1px solid black; text-align: center;" colspan="3">
+                {{ $totalTransactionPending }}</td>
             <td style="border: 1px solid black; text-align: center;" colspan="2">
                 Rp. {{ $profit }}</td>
         </tr>
+        <tr></tr>
     </tbody>
 </table>
