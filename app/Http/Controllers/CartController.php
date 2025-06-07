@@ -56,7 +56,8 @@ class CartController extends Controller
         $data = $request->validated();
 
         try {
-            $cart = Cart::where('product_id', $data['product_id'])->firstOrFail();
+            $cart = Cart::where('user_id', $data['user_id'])
+                ->where('product_id', $data['product_id'])->firstOrFail();
             $cart->update([
                 'quantity' => $cart->quantity + $data['quantity'],
             ]);

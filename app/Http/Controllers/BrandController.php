@@ -24,7 +24,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasRole('owner')) {
             return abort(403, 'Unauthorized action.');
         }
         return view('pages.brand.create');
@@ -45,7 +45,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->hasRole('owner')) {
             return abort(403, 'Unauthorized action.');
         }
 
