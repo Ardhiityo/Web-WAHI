@@ -34,4 +34,16 @@ class CartRepository implements CartInterface
     {
         return Cart::where('user_id', Auth::user()->id)->count();
     }
+
+    public function getCartsByUserId(int $userId)
+    {
+        return Cart::with('product:id,stock')->select('id', 'product_id', 'quantity')
+            ->where('user_id', $userId)
+            ->get();
+    }
+
+    public function deleteCartsByUserId(int $userId)
+    {
+        return Cart::where('user_id', $userId)->delete();
+    }
 }
