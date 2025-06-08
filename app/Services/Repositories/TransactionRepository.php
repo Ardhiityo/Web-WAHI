@@ -189,4 +189,57 @@ class TransactionRepository implements TransactionInterface
             throw $exception;
         }
     }
+
+    public function getTransactionsByCode($keyword)
+    {
+        if (Auth::user()->hasRole('customer')) {
+            return Transaction::where('transaction_code', $keyword)
+                ->where('user_id', Auth::user()->id)
+                ->latest()
+                ->paginate(perPage: 5);
+        } else {
+            return Transaction::where('transaction_code', $keyword)
+                ->latest()
+                ->paginate(perPage: 5);
+        }
+    }
+
+    public function getTransactionsByName($keyword)
+    {
+        return Transaction::whereHas('user', function ($query) use ($keyword) {
+            $query->whereLike('name', '%' . $keyword . '%');
+        })->latest()->paginate(perPage: 5);
+    }
+
+    public function getTransactionsByType($keyword)
+    {
+        if (Auth::user()->hasRole('customer')) {
+            return Transaction::where('transaction_type', $keyword)
+                ->where('user_id', Auth::user()->id)
+                ->latest()->paginate(perPage: 5);
+        } else {
+            return Transaction::where('transaction_type', $keyword)
+                ->latest()->paginate(perPage: 5);
+        }
+    }
+
+    public function getTransactionsByStatus($keyword)
+    {
+        if (Auth::user()->hasRole('customer')) {
+            return Transaction::where('transaction_status', $keyword)->where('user_id', $user->id)
+                ->latest()->paginate(perPage: 5);
+        } else {
+            return Transaction::where('transaction_status', $keyword)->latest()->paginate(perPage: 5);
+        }
+    }
+
+    public function getAllTransactions()
+    {
+        if (Auth::user()->hasRole('customer')) {
+            return Transaction::where('user_id', Auth::user()->id)
+                ->latest()->paginate(perPage: 5);
+        } else {
+            return Transaction::latest()->paginate(perPage: 5);
+        }
+    }
 }

@@ -27,46 +27,19 @@ class TransactionController extends Controller
             $category = $request->query('category');
             $keyword = $request->query('keyword');
             if ($category == 'transaction_code') {
-                if ($user->hasRole('customer')) {
-                    $transactions = Transaction::where('transaction_code', $keyword)
-                        ->where('user_id', $user->id)
-                        ->latest()
-                        ->paginate(perPage: 5);
-                } else {
-                    $transactions = Transaction::where('transaction_code', $keyword)
-                        ->latest()->paginate(perPage: 5);
-                }
+                $transactions = $this->transactionRepository->getTransactionsByCode($keyword);
             } else if ($category === 'customer') {
                 if ($user->hasRole('customer')) {
                     return abort(403, 'Unauthorized action.');
                 }
-                $transactions = Transaction::whereHas('user', function ($query) use ($keyword) {
-                    $query->where('name', 'like', '%' . $keyword . '%');
-                })->latest()->paginate(perPage: 5);
+                $transactions = $this->transactionRepository->getTransactionsByName($keyword);
             } else if ($category === 'transaction_type') {
-                if ($user->hasRole('customer')) {
-                    $transactions = Transaction::where('transaction_type', $keyword)
-                        ->where('user_id', $user->id)
-                        ->latest()->paginate(perPage: 5);
-                } else {
-                    $transactions = Transaction::where('transaction_type', $keyword)
-                        ->latest()->paginate(perPage: 5);
-                }
+                $transactions = $this->transactionRepository->getTransactionsByType($keyword);
             } else if ($category == 'transaction_status') {
-                if ($user->hasRole('customer')) {
-                    $transactions = Transaction::where('transaction_status', $keyword)->where('user_id', $user->id)
-                        ->latest()->paginate(perPage: 5);
-                } else {
-                    $transactions = Transaction::where('transaction_status', $keyword)
-                        ->latest()->paginate(perPage: 5);
-                }
+                $transactions = $this->transactionRepository->getTransactionsByStatus($keyword);
             }
         } else {
-            if ($user->hasRole('customer')) {
-                $transactions = Transaction::where('user_id', $user->id)->latest()->paginate(perPage: 5);
-            } else {
-                $transactions = Transaction::latest()->paginate(perPage: 5);
-            }
+            $transactions = $this->transactionRepository->getAllTransactions();
         }
 
         return view('pages.transaction.index', compact('transactions'));

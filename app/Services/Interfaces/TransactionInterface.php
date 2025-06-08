@@ -15,4 +15,9 @@ interface TransactionInterface
     public function updateTransactionStatus(int $id, array $data);
     public function updateTransaction(array $data);
     public function getTransactionById(int $id);
+    public function getTransactionsByCode($keyword);
+    public function getTransactionsByName($keyword);
+    public function getTransactionsByType($keyword);
+    public function getTransactionsByStatus($keyword);
+    public function getAllTransactions();
 }
