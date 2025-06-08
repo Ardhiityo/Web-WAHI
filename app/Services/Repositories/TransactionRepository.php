@@ -97,12 +97,17 @@ class TransactionRepository implements TransactionInterface
             ->unique('created_at');
     }
 
-    public function getTransactionByDateRange(string $startDate, string $endDate)
+    public function getTransactionProfitByDateRange(string $startDate, string $endDate)
     {
         return Transaction::where('transaction_status', 'paid')
             ->whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
             ->sum('total_amount');
+    }
+
+    public function getTotalTransactionProfit()
+    {
+        return Transaction::where('transaction_status', 'paid')->sum('total_amount');
     }
 
     public function getTotalTransactionsByUser($status): int

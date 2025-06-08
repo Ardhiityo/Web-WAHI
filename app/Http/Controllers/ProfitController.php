@@ -22,9 +22,9 @@ class ProfitController extends Controller
         if ($request->query('start_date') && $request->query('end_date')) {
             $start_date = $request->query('start_date');
             $end_date = $request->query('end_date');
-            $profit = $this->transactionRepository->getTransactionByDateRange($start_date, $end_date);
+            $profit = $this->transactionRepository->getTransactionProfitByDateRange($start_date, $end_date);
         } else {
-            $profit = Transaction::where('transaction_status', 'paid')->sum('total_amount');
+            $profit = $this->transactionRepository->getTotalTransactionProfit();
         }
 
         return view('pages.profit.index', compact('profit', 'dates'));
