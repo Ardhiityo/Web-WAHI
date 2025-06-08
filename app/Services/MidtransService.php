@@ -26,16 +26,11 @@ class MidtransService
     {
         try {
             $notification = new Notification();
-        } catch (Exception $e) {
-            exit($e->getMessage());
-        }
+            $notification = $notification->getResponse();
+            $transaction = $notification->transaction_status;
+            $order_id = $notification->order_id;
 
-        $notification = $notification->getResponse();
-        $transaction = $notification->transaction_status;
-        $order_id = $notification->order_id;
-
-        if ($transaction == 'settlement') {
-            try {
+            if ($transaction == 'settlement') {
                 DB::beginTransaction();
 
                 $transaction = $this->transactionRepository->getTransactionByCode($order_id);
@@ -58,12 +53,11 @@ class MidtransService
                 $this->cartRepository->deleteCartsByUserId($transaction->user_id);
 
                 DB::commit();
-            } catch (Exception $exception) {
-                Log::info($exception->getMessage());
-                DB::rollBack();
-
-                throw new Exception('Transaction failed: ' . $exception->getMessage());
             }
+        } catch (Exception $exception) {
+            DB::rollBack();
+            Log::info($exception->getMessage());
+            throw new Exception($exception->getMessage());
         }
     }
 }
