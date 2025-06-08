@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use App\Models\ProductTransaction;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\TransactionInterface;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
+use App\Services\Interfaces\ProductTransactionInterface;
 
 class TransactionController extends Controller
 {
-    public function __construct(private TransactionInterface $transactionRepository) {}
+    public function __construct(
+        private TransactionInterface $transactionRepository,
+        private ProductTransactionInterface $productTransactionRepository
+    ) {}
 
     public function index(Request $request)
     {
@@ -98,24 +100,13 @@ class TransactionController extends Controller
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
         try {
-            DB::beginTransaction();
             $data = $request->validated();
-            $productTransactions = ProductTransaction::where('transaction_id', $transaction->id)->get();
-            foreach ($productTransactions as $key => $productTransaction) {
-                if ($productTransaction->quantity > $productTransaction->product->stock) {
-                    throw new Exception('Produk yang dibeli melebihi stok produk');
-                } else {
-                    $productTransaction->product()->update([
-                        'stock' => $productTransaction->product->stock - $productTransaction->quantity
-                    ]);
-                }
-            }
-            $transaction->update($data);
-            DB::commit();
+
+            $this->productTransactionRepository->updateProductTransaction($transaction->id, $data);
+
             return redirect()->route('transactions.show', ['transaction' => $transaction->id])
                 ->withSuccess('Berhasil diubah');
         } catch (Exception $exception) {
-            DB::rollBack();
             return redirect()->route('transactions.show', ['transaction' => $transaction->id])
                 ->with('error', $exception->getMessage());
         }

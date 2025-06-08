@@ -13,6 +13,8 @@ use App\Services\Repositories\ProductRepository;
 use App\Services\Repositories\VoucherRepository;
 use App\Services\Interfaces\TransactionInterface;
 use App\Services\Repositories\TransactionRepository;
+use App\Services\Interfaces\ProductTransactionInterface;
+use App\Services\Repositories\ProductTransactionRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CartInterface::class, CartRepository::class);
         $this->app->singleton(TransactionInterface::class, TransactionRepository::class);
         $this->app->singleton(VoucherInterface::class, VoucherRepository::class);
+        $this->app->bind(ProductTransactionInterface::class, ProductTransactionRepository::class);
     }
 
     /**
