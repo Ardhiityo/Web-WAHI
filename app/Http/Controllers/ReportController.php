@@ -2,33 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\InvoiceExport;
-use App\Exports\TransactionExport;
-use App\Http\Requests\Report\StoreReportRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Exports\InvoiceExport;
+use App\Exports\TransactionExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Interfaces\TransactionInterface;
+use App\Http\Requests\Report\StoreReportRequest;
 
 class ReportController extends Controller
 {
+    public function __construct(private TransactionInterface $transactionRepository) {}
+
     public function index(Request $request)
     {
-        $transactionDates = Transaction::select('created_at')->where('transaction_status', 'paid')->orderBy('id', 'desc')->get();
-        $dates = [];
-
-        foreach ($transactionDates as $transactionDate) {
-            $date = $transactionDate->created_at;
-            if (!in_array($date, $dates)) {
-                $dates[] = $date;
-            }
-        }
+        $dates = $this->transactionRepository->getTransactionDates();
 
         if ($request->query('start_date') && $request->query('end_date')) {
             $start_date = $request->query('start_date');
             $end_date = $request->query('end_date');
-
-            $profit = Transaction::where('transaction_status', 'paid')
-                ->whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->sum('total_amount');
+            $profit = $this->transactionRepository->getTransactionByDateRange($start_date, $end_date);
         }
 
         return view('pages.report.index', compact('dates'));
