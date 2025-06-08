@@ -166,7 +166,7 @@
 
             payButton.addEventListener('click', async () => {
                 try {
-                    const url = "{{ route('carts.checkout.snaptoken') }}";
+                    const url = "{{ route('checkout.snaptoken') }}";
                     const getSnapToken = await fetch(url, {
                         method: "POST",
                         headers: {

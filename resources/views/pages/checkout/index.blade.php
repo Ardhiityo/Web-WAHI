@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('carts.checkout.detail') }}" method="post">
+            <form action="{{ route('transactions.store') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">

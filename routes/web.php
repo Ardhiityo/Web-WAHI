@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoucherController;
@@ -18,11 +19,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('products', ProductController::class);
 
-    Route::get('/carts/checkout', [CartController::class, 'checkout'])->name('carts.checkout');
-    Route::post('/carts/checkout/detail', [CartController::class, 'checkoutDetail'])->name('carts.checkout.detail');
-    Route::post('/carts/checkout/cashless', [CartController::class, 'getSnapToken'])->name('carts.checkout.snaptoken');
-
     Route::resource('carts', CartController::class);
+
+    Route::get('/checkouts', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkouts/cashless', [CheckoutController::class, 'snapToken'])->name('checkout.snaptoken');
+
     Route::resource('vouchers', VoucherController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('product-transactions', ProductTransactionController::class);

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Checkout;
+namespace App\Http\Requests\Transaction;
 
+use App\Rules\CheckoutRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Ulid\Ulid;
 
-class StoreCheckoutRequest extends FormRequest
+class StoreTransactionRequest extends FormRequest
 {
     public function prepareForValidation()
     {
@@ -22,7 +23,7 @@ class StoreCheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transaction_code' => ['required', 'unique:transactions,transaction_code'],
+            'transaction_code' => ['required', new CheckoutRule, 'unique:transactions,transaction_code'],
             'voucher' => ['nullable', 'exists:vouchers,code'],
             'transaction_type' => ['required', 'in:cashless,cash'],
         ];

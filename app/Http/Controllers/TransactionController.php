@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Services\Interfaces\TransactionInterface;
+use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 
 class TransactionController extends Controller
 {
+    public function __construct(private TransactionInterface $transactionRepository) {}
+
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -67,21 +70,28 @@ class TransactionController extends Controller
         return view('pages.transaction.index', compact('transactions'));
     }
 
-    public function create()
+    public function store(StoreTransactionRequest $request)
     {
-        //
-    }
+        try {
+            $data = $request->validated();
 
-    public function store(Request $request)
-    {
-        //
+            if ($transactionCode = Session::get('transaction_code')) {
+                $transaction = Transaction::where('transaction_code', $transactionCode)->first();
+                return redirect()->route('transactions.show', ['transaction' => $transaction->id]);
+            }
+            $transaction = $this->transactionRepository->createTransaction($data);
+
+            return view('pages.checkout.detail', compact('transaction'));
+        } catch (Exception $exception) {
+            return redirect()->route('carts.index')->with('error', $exception->getMessage());
+        }
     }
 
     public function show(Transaction $transaction)
     {
-        $customers = User::role('customer')->get();
+        Session::forget('transaction_code');
 
-        return view('pages.transaction.show', compact('transaction', 'customers'));
+        return view('pages.transaction.show', compact('transaction'));
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction)

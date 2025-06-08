@@ -10,6 +10,7 @@
             </div>
         </div>
     </div>
+
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">Proses Pesanan</h3>
@@ -26,7 +27,7 @@
                 @else
                     <div class="col-12 d-flex justify-content-around">
                         <p class="font-weight-bold">Lanjutkan Proses Pesanan?</p>
-                        <a href="{{ route('carts.checkout') }}" class="btn btn-success">Lanjutkan</a>
+                        <a href="{{ route('checkout') }}" class="btn btn-success">Lanjutkan</a>
                     </div>
                 @endif
             </div>
