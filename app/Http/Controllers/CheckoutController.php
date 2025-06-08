@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Midtrans\Snap;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use App\Services\Interfaces\CartInterface;
+use App\Services\Interfaces\TransactionInterface;
 
 class CheckoutController extends Controller
 {
     public function __construct(
         private MidtransService $midtransService,
-        private CartInterface $cartRepository
+        private CartInterface $cartRepository,
+        private TransactionInterface $transactionRepository
     ) {}
 
     public function index()
@@ -22,7 +23,7 @@ class CheckoutController extends Controller
 
     public function snapToken(Request $request)
     {
-        $transaction = Transaction::where('transaction_code', $request->transaction_code)->first();
+        $transaction = $this->transactionRepository->getTransactionByCode($request->transaction_code);
 
         $params = [
             'transaction_details' => [
