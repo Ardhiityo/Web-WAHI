@@ -111,8 +111,8 @@
                 <div class="icon">
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
-                <a href="{{ route('transactions.index') }}" class="small-box-footer">Selengkapnya <i
-                        class="fas fa-arrow-circle-right"></i>
+                <a href="{{ route('transactions.index', ['category' => 'transaction_status', 'keyword' => 'pending']) }}"
+                    class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
@@ -125,7 +125,8 @@
                 <div class="icon">
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
-                <a href="{{ route('transactions.index') }}" class="small-box-footer">
+                <a href="{{ route('transactions.index', ['category' => 'transaction_status', 'keyword' => 'paid']) }}"
+                    class="small-box-footer">
                     Selengkapnya <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>

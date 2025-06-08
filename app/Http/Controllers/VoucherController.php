@@ -14,10 +14,6 @@ class VoucherController extends Controller
 
     public function index()
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
-
         $vouchers = $this->voucherRepository->getAllVouchers();
 
         return view('pages.voucher.index', compact('vouchers'));
