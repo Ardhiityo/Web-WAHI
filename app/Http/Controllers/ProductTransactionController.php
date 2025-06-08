@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
-use App\Models\ProductTransaction;
-use App\Http\Requests\ProductTransaction\UpdateProductTransactionRequest;
 use App\Services\Interfaces\TransactionInterface;
+use App\Http\Requests\ProductTransacion\DeleteProductTransactionRequest;
+use App\Http\Requests\ProductTransaction\UpdateProductTransactionRequest;
+use App\Services\Interfaces\ProductTransactionInterface;
 
 class ProductTransactionController extends Controller
 {
-    public function __construct(private TransactionInterface $transactionRepository) {}
+    public function __construct(
+        private TransactionInterface $transactionRepository,
+        private ProductTransactionInterface $productTransactionRepository
+    ) {}
 
     public function update(UpdateProductTransactionRequest $request)
     {
@@ -28,13 +31,16 @@ class ProductTransactionController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Transaction $transaction, Request $request)
+    public function destroy(Transaction $transaction, DeleteProductTransactionRequest $request)
     {
-        ProductTransaction::where('product_id', $request->product_id)
-            ->where('transaction_id', $request->transaction_id)->delete();
-        return redirect()->route('transactions.show', ['transaction' => $request->transaction_id])->withSuccess('Berhasil dihapus');
+        $data = $request->validated();
+
+        $productId = $data['product_id'];
+        $transactionId = $data['transaction_id'];
+
+        $this->productTransactionRepository->deleteProductTransaction($productId, $transactionId);
+
+        return redirect()->route('transactions.show', ['transaction' => $transactionId])
+            ->withSuccess('Berhasil dihapus');
     }
 }
