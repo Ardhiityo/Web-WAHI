@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Http\Requests\Product\StoreProductRequest;
-use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Services\Interfaces\BrandInterface;
 use App\Services\Interfaces\ProductInterface;
-use Illuminate\Http\Request;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -39,6 +40,10 @@ class ProductController extends Controller
 
     public function create()
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.product.create', compact('brands'));
@@ -55,6 +60,10 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.product.edit', compact('product', 'brands'));

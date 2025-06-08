@@ -24,6 +24,7 @@ class BrandController extends Controller
         if (!Auth::user()->hasRole('owner')) {
             return abort(403, 'Unauthorized action.');
         }
+
         return view('pages.brand.create');
     }
 

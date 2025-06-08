@@ -16,6 +16,10 @@ class RoleController extends Controller
 
     public function index()
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $users = $this->roleRepository->getAllRoles();
 
         return view('pages.role.index', compact('users'));
@@ -23,6 +27,10 @@ class RoleController extends Controller
 
     public function create()
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         return view('pages.role.create');
     }
 

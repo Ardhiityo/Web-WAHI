@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Voucher;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Interfaces\VoucherInterface;
 use App\Http\Requests\Voucher\StoreVoucherRequest;
 use App\Http\Requests\Voucher\UpdateVoucherRequest;
-use App\Models\Voucher;
-use App\Services\Interfaces\VoucherInterface;
 
 class VoucherController extends Controller
 {
@@ -13,6 +14,10 @@ class VoucherController extends Controller
 
     public function index()
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $vouchers = $this->voucherRepository->getAllVouchers();
 
         return view('pages.voucher.index', compact('vouchers'));
@@ -20,6 +25,10 @@ class VoucherController extends Controller
 
     public function create()
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         return view('pages.voucher.create');
     }
 
@@ -32,6 +41,10 @@ class VoucherController extends Controller
 
     public function edit(Voucher $voucher)
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         return view('pages.voucher.edit', compact('voucher'));
     }
 

@@ -94,6 +94,14 @@ class TransactionController extends Controller
     {
         Session::forget('transaction_code');
 
+        if (Auth::user()->hasRole('customer')) {
+            if ($transaction->user_id === Auth::user()->id) {
+                return view('pages.transaction.show', compact('transaction'));
+            } else {
+                return abort(403, 'Unauthorized action.');
+            }
+        }
+
         return view('pages.transaction.show', compact('transaction'));
     }
 
