@@ -103,4 +103,15 @@ class TransactionRepository implements TransactionInterface
             ->whereDate('created_at', '<=', $endDate)
             ->sum('total_amount');
     }
+
+    public function getTotalTransactionsByUser($status): int
+    {
+        return Transaction::where('user_id', Auth::user()->id)
+            ->where('transaction_status', $status)->count();
+    }
+
+    public function getTotalTransactionsByStatus($status): int
+    {
+        return Transaction::where('transaction_status', $status)->count();
+    }
 }

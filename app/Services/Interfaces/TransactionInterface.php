@@ -10,4 +10,6 @@ interface TransactionInterface
     public function getTransactionByCode(string $code);
     public function getTransactionDates();
     public function getTransactionByDateRange(string $startDate, string $endDate);
+    public function getTotalTransactionsByUser($status): int;
+    public function getTotalTransactionsByStatus($status): int;
 }

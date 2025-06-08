@@ -2,18 +2,13 @@
 
 namespace App\Services;
 
-use App\Models\Cart;
-use App\Models\User;
-use App\Models\Brand;
-use App\Models\Product;
-use App\Models\Voucher;
-use App\Models\Transaction;
-use App\Services\Interfaces\BrandInterface;
-use App\Services\Interfaces\CartInterface;
-use App\Services\Interfaces\ProductInterface;
-use App\Services\Interfaces\RoleInterface;
-use App\Services\Interfaces\VoucherInterface;
 use Illuminate\Support\Facades\Auth;
+use App\Services\Interfaces\CartInterface;
+use App\Services\Interfaces\RoleInterface;
+use App\Services\Interfaces\BrandInterface;
+use App\Services\Interfaces\ProductInterface;
+use App\Services\Interfaces\VoucherInterface;
+use App\Services\Interfaces\TransactionInterface;
 
 class DashboardService
 {
@@ -22,7 +17,8 @@ class DashboardService
         private BrandInterface $brandRepository,
         private ProductInterface $productRepository,
         private CartInterface $cartRepository,
-        private VoucherInterface $voucherRepository
+        private VoucherInterface $voucherRepository,
+        private TransactionInterface $transactionRepository
     ) {}
 
     public function getDashboardData()
@@ -35,13 +31,11 @@ class DashboardService
         $vouchers = $this->voucherRepository->getTotalVouchers();
 
         if (Auth::user()->hasRole('customer')) {
-            $pendingTransactions = Transaction::where('user_id', Auth::user()->id)
-                ->where('transaction_status', 'pending')->count();
-            $paidTransactions = Transaction::where('user_id', Auth::user()->id)
-                ->where('transaction_status', 'paid')->count();
+            $pendingTransactions = $this->transactionRepository->getTotalTransactionsByUser('pending');
+            $paidTransactions = $this->transactionRepository->getTotalTransactionsByUser('paid');
         } else {
-            $pendingTransactions = Transaction::where('transaction_status', 'pending')->count();
-            $paidTransactions = Transaction::where('transaction_status', 'paid')->count();
+            $pendingTransactions = $this->transactionRepository->getTotalTransactionsByStatus('pending');
+            $paidTransactions = $this->transactionRepository->getTotalTransactionsByStatus('paid');
         }
 
         return compact(
