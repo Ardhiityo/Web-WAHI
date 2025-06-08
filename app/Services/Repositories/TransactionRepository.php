@@ -226,7 +226,8 @@ class TransactionRepository implements TransactionInterface
     public function getTransactionsByStatus($keyword)
     {
         if (Auth::user()->hasRole('customer')) {
-            return Transaction::where('transaction_status', $keyword)->where('user_id', $user->id)
+            return Transaction::where('transaction_status', $keyword)
+                ->where('user_id', Auth::user()->id)
                 ->latest()->paginate(perPage: 5);
         } else {
             return Transaction::where('transaction_status', $keyword)->latest()->paginate(perPage: 5);
