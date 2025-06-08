@@ -30,11 +30,6 @@ class VoucherController extends Controller
         return redirect()->route('vouchers.index')->withSuccess('Berhasil ditambahkan');
     }
 
-    public function show(Voucher $voucher)
-    {
-        //
-    }
-
     public function edit(Voucher $voucher)
     {
         return view('pages.voucher.edit', compact('voucher'));

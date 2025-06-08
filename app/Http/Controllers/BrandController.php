@@ -11,7 +11,6 @@ use App\Services\Interfaces\BrandInterface;
 class BrandController extends Controller
 {
     public function __construct(private BrandInterface $brandRepository) {}
-
     public function index()
     {
         $brands = $this->brandRepository->getAllBrands();
