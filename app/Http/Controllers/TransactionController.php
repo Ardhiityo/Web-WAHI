@@ -102,7 +102,7 @@ class TransactionController extends Controller
         try {
             $data = $request->validated();
 
-            $this->productTransactionRepository->updateProductTransaction($transaction->id, $data);
+            $this->transactionRepository->updateTransactionStatus($transaction->id, $data);
 
             return redirect()->route('transactions.show', ['transaction' => $transaction->id])
                 ->withSuccess('Berhasil diubah');

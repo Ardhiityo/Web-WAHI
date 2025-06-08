@@ -10,7 +10,6 @@ class ProductTransaction extends Pivot
         'product_id',
         'transaction_id',
         'quantity',
-        'sub_total',
         'price'
     ];
 

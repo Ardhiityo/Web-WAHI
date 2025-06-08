@@ -12,4 +12,7 @@ interface TransactionInterface
     public function getTransactionByDateRange(string $startDate, string $endDate);
     public function getTotalTransactionsByUser($status): int;
     public function getTotalTransactionsByStatus($status): int;
+    public function updateTransactionStatus(int $id, array $data);
+    public function updateTransaction(array $data);
+    public function getTransactionById(int $id);
 }

@@ -8,6 +8,7 @@ use App\Models\Voucher;
 use App\Models\Transaction;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\TransactionInterface;
@@ -113,5 +114,79 @@ class TransactionRepository implements TransactionInterface
     public function getTotalTransactionsByStatus($status): int
     {
         return Transaction::where('transaction_status', $status)->count();
+    }
+
+    public function updateTransactionStatus(int $id, array $data)
+    {
+        try {
+            DB::beginTransaction();
+
+            $productTransactions = ProductTransaction::with('product:id,stock')
+                ->select('product_id', 'transaction_id', 'quantity')
+                ->where('transaction_id', $id)
+                ->get();
+
+            foreach ($productTransactions as $productTransaction) {
+                if ($productTransaction->quantity <= $productTransaction->product->stock && $productTransaction->product->stock > 0) {
+                    $productTransaction->product()->update([
+                        'stock' => $productTransaction->product->stock - $productTransaction->quantity
+                    ]);
+                } else {
+                    throw new Exception('Produk yang dibeli melebihi stok.');
+                }
+            }
+
+            $productTransaction->transaction()->update($data);
+
+            DB::commit();
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            throw $exception;
+        }
+    }
+
+    public function getTransactionById(int $id)
+    {
+        return Transaction::with('products:id,stock,price')->select('id', 'discount_percentage')->find($id);
+    }
+
+    public function updateTransaction(array $data)
+    {
+        try {
+            DB::beginTransaction();
+
+            ProductTransaction::where('transaction_id', $data['transaction_id'])
+                ->where('product_id', $data['product_id'])
+                ->update($data);
+
+            $transaction = $this->getTransactionById($data['transaction_id']);
+
+            $subtotalAmount = 0;
+            $discount = 0;
+
+            foreach ($transaction->products as $key => $product) {
+                $subtotalAmount += $product->price * $product->pivot->quantity;
+            }
+
+            $totalAmount = $subtotalAmount;
+
+            if ($transaction->discount_percentage) {
+                $discount = $subtotalAmount * ($transaction->discount_percentage / 100);
+                $totalAmount -= $discount;
+            }
+
+            $transaction->update([
+                'discount' => $discount,
+                'subtotal_amount' => $subtotalAmount,
+                'total_amount' => $totalAmount
+            ]);
+
+            DB::commit();
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            throw $exception;
+        }
     }
 }
