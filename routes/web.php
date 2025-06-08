@@ -28,7 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('transactions', TransactionController::class);
     Route::resource('product-transactions', ProductTransactionController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('profits', ProfitController::class);
+
+    Route::get('/profits', [ProfitController::class, 'index'])->name('profits.index');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/export', [ReportController::class, 'exportByDate'])->name('reports.export.date');

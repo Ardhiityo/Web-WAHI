@@ -85,4 +85,21 @@ class TransactionRepository implements TransactionInterface
     {
         return Transaction::select('id')->where('transaction_code', $code)->firstOrFail();
     }
+
+    public function getTransactionDates()
+    {
+        return Transaction::select('created_at')
+            ->where('transaction_status', 'paid')
+            ->orderByDesc('id')
+            ->get()
+            ->unique('created_at');
+    }
+
+    public function getTransactionByDateRange(string $startDate, string $endDate)
+    {
+        return Transaction::where('transaction_status', 'paid')
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)
+            ->sum('total_amount');
+    }
 }

@@ -8,4 +8,6 @@ interface TransactionInterface
 {
     public function createTransaction(array $data): Transaction;
     public function getTransactionByCode(string $code);
+    public function getTransactionDates();
+    public function getTransactionByDateRange(string $startDate, string $endDate);
 }
