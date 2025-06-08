@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Services\Interfaces\RoleInterface;
+use App\Http\Requests\Role\StoreRoleRequest;
+use App\Http\Requests\Role\UpdateRoleRequest;
 
 class RoleController extends Controller
 {
+    public function __construct(private RoleInterface $roleRepository) {}
+
     public function index()
     {
-        $users = User::with([
-            'roles' =>
-            fn(Builder $query) => $query->select('id', 'name')
-        ])->paginate(perPage: 5);
+        $users = $this->roleRepository->getAllRoles();
 
         return view('pages.role.index', compact('users'));
     }
@@ -24,50 +26,29 @@ class RoleController extends Controller
         return view('pages.role.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required',
-        ]);
+        $data = $request->validated();
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ])->assignRole($request->role);
+        User::create($data)->assignRole($data['role']);
 
         return redirect()->route('roles.index')->withSuccess('Berhasil ditambahkan');
     }
 
     public function edit(User $role)
     {
+        if (!Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         return view('pages.role.edit', compact('role'));
     }
 
-    public function show(User $role)
+    public function update(UpdateRoleRequest $request, User $role)
     {
-        return view('pages.role.show', compact('role'));
-    }
+        $data = $request->validated();
 
-    public function update(Request $request, User $role)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $role->id,
-            'password' => 'nullable|min:8',
-        ]);
-
-        $role->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => is_null($request->password) ? $role->password : Hash::make($request->password),
-        ]);
-
-        $role->removeRole($role->roles->first()->name);
-        $role->assignRole($request->role);
+        $this->roleRepository->updateRole($role, $data);
 
         return redirect()->route('roles.index')->withSuccess('Berhasil diubah');
     }

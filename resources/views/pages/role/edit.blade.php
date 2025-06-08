@@ -27,18 +27,21 @@
                             <label for="exampleSelectBorder">Peran</label>
                             <select name="role" required class="custom-select form-control-border"
                                 id="exampleSelectBorder">
-                                <option value="admin"
-                                    {{ old('role', $role->roles->first()->name === 'admin') ? 'selected' : '' }}>Admin
+                                <option value="owner"
+                                    {{ old('role', $role->roles->first()->name === 'admin') ? 'selected' : '' }}>Owner
                                 </option>
                                 <option value="cashier"
                                     {{ old('role', $role->roles->first()->name === 'cashier') ? 'selected' : '' }}>Cashier
                                 </option>
+                                <option value="customer"
+                                    {{ old('role', $role->roles->first()->name === 'customer') ? 'selected' : '' }}>Customer
+                                </option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputBorderWidth4">Password</label>
+                            <label for="password">Password</label>
                             <input type="password" name="password" class="form-control form-control-border border-width-2"
-                                id="exampleInputBorderWidth4">
+                                id="password">
                         </div>
                     </div>
                     <div class="card-footer">

@@ -19,9 +19,9 @@
                             <label for="exampleSelectBorder">Peran</label>
                             <select name="role" required class="custom-select form-control-border"
                                 id="exampleSelectBorder">
-                                <option value="" selected>Choose role...</option>
-                                <option value="cashier">Kasir</option>
-                                <option value="customer">Pelanggan</option>
+                                <option value="" selected>Pilih peran...</option>
+                                <option value="cashier">Cashier</option>
+                                <option value="customer">Customer</option>
                             </select>
                         </div>
                         <div class="form-group">
