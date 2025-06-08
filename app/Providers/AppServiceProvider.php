@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\Interfaces\CartInterface;
+use App\Services\Interfaces\RoleInterface;
 use App\Services\Interfaces\BrandInterface;
 use App\Services\Interfaces\ProductInterface;
 use App\Services\Interfaces\VoucherInterface;
 use App\Services\Repositories\CartRepository;
+use App\Services\Repositories\RoleRepository;
 use App\Services\Repositories\BrandRepository;
 use App\Services\Repositories\ProductRepository;
 use App\Services\Repositories\VoucherRepository;
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(TransactionInterface::class, TransactionRepository::class);
         $this->app->singleton(VoucherInterface::class, VoucherRepository::class);
         $this->app->bind(ProductTransactionInterface::class, ProductTransactionRepository::class);
+        $this->app->bind(RoleInterface::class, RoleRepository::class);
     }
 
     /**

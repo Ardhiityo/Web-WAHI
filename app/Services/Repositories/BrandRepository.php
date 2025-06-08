@@ -16,4 +16,9 @@ class BrandRepository implements BrandInterface
     {
         return Brand::create($data);
     }
+
+    public function getTotalBrands()
+    {
+        return Brand::count();
+    }
 }

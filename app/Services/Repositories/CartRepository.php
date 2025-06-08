@@ -29,4 +29,9 @@ class CartRepository implements CartInterface
             return Cart::create($data);
         }
     }
+
+    public function getTotalCarts()
+    {
+        return Cart::where('user_id', Auth::user()->id)->count();
+    }
 }

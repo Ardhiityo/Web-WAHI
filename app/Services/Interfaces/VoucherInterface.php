@@ -6,4 +6,5 @@ interface VoucherInterface
 {
     public function getAllVouchers();
     public function createVoucher(array $data);
+    public function getTotalVouchers();
 }

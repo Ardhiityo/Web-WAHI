@@ -6,4 +6,5 @@ interface BrandInterface
 {
     public function getAllBrands();
     public function createBrand(array $data);
+    public function getTotalBrands();
 }

@@ -70,4 +70,9 @@ class ProductRepository implements ProductInterface
 
         return $product->delete();
     }
+
+    public function getTotalProducts()
+    {
+        return Product::count();
+    }
 }

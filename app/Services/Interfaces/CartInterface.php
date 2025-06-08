@@ -6,4 +6,5 @@ interface CartInterface
 {
     public function getAllCarts();
     public function createCart(array $data);
+    public function getTotalCarts();
 }

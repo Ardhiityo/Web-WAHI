@@ -16,4 +16,9 @@ class VoucherRepository implements VoucherInterface
     {
         return Voucher::create($data);
     }
+
+    public function getTotalVouchers()
+    {
+        return Voucher::count();
+    }
 }
