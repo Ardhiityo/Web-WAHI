@@ -76,7 +76,8 @@ class TransactionController extends Controller
             $data = $request->validated();
 
             if ($transactionCode = Session::get('transaction_code')) {
-                $transaction = Transaction::where('transaction_code', $transactionCode)->first();
+                $transaction = $this->transactionRepository->getTransactionByCode($transactionCode);
+
                 return redirect()->route('transactions.show', ['transaction' => $transaction->id]);
             }
             $transaction = $this->transactionRepository->createTransaction($data);

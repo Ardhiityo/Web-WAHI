@@ -9,9 +9,7 @@ use App\Services\Interfaces\CartInterface;
 
 class CartController extends Controller
 {
-    public function __construct(
-        private CartInterface $cartRepository
-    ) {}
+    public function __construct(private CartInterface $cartRepository) {}
 
     public function index()
     {

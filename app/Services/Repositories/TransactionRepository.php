@@ -80,4 +80,9 @@ class TransactionRepository implements TransactionInterface
             throw new Exception($exception->getMessage());
         }
     }
+
+    public function getTransactionByCode(string $code)
+    {
+        return Transaction::select('id')->where('transaction_code', $code)->firstOrFail();
+    }
 }
