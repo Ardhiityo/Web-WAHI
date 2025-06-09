@@ -208,6 +208,15 @@
                         @endhasrole
                     @endif
                 </form>
+                @if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending')
+                    @hasrole('customer')
+                        <div class="row">
+                            <div class="mt-3 col-12 d-flex justify-content-end">
+                                <button class="btn btn-warning" id="pay-button">Bayar</button>
+                            </div>
+                        </div>
+                    @endhasrole
+                @endif
             </div>
             <hr>
         </div>
@@ -324,3 +333,49 @@
         </div>
     </div>
 @endsection
+
+@if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending')
+    @push('scripts')
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+        </script>
+        <script type="text/javascript">
+            const payButton = document.getElementById('pay-button');
+
+            function handlePayment(token) {
+                snap.pay(token, {
+                    onSuccess: function(result) {
+                        window.location.href =
+                            '{!! route('transactions.show', ['transaction' => $transaction->id]) !!}'
+                    },
+                    onPending: function(result) {
+                        alert('pending')
+                    },
+                    onError: function(result) {
+                        alert('error')
+                    }
+                });
+            }
+
+            payButton.addEventListener('click', async () => {
+                try {
+                    const url = "{{ route('checkout.snaptoken') }}";
+                    const getSnapToken = await fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            transaction_code: "{{ $transaction->transaction_code }}"
+                        })
+                    });
+                    const responseSnapToken = await getSnapToken.json();
+                    handlePayment(responseSnapToken.token);
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+        </script>
+    @endpush
+@endif

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Midtrans\Snap;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
+use Illuminate\Support\Facades\Log;
 use App\Services\Interfaces\CartInterface;
 use App\Services\Interfaces\TransactionInterface;
 
@@ -32,10 +34,18 @@ class CheckoutController extends Controller
             ]
         ];
 
-        $snapToken = Snap::getSnapToken($params);
+        try {
+            $snapToken = Snap::getSnapToken($params);
 
-        return response()->json([
-            'token' => $snapToken
-        ]);
+            return response()->json([
+                'token' => $snapToken
+            ]);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+
+            return response()->json([
+                'token' => $exception->getMessage()
+            ]);
+        }
     }
 }
