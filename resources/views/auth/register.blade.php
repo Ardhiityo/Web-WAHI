@@ -17,7 +17,7 @@
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>
-                                    The password field confirmation does not match.
+                                    {{ $error }}
                                 </li>
                             @endforeach
                         </ul>
