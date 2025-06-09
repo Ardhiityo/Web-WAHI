@@ -34,42 +34,44 @@
                     <p>Data belum tersedia...</p>
                 @else
                     <div class="col-12 d-flex justify-content-around">
-                        <table class="table text-center table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10px">No</th>
-                                    <th>Voucher</th>
-                                    <th>Persentase Diskon (%)</th>
-                                    @role('owner')
-                                        <th>Aksi</th>
-                                    @endrole
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($vouchers as $voucher)
+                        <div class="container overflow-auto">
+                            <table class="table text-center table-bordered">
+                                <thead>
                                     <tr>
-                                        <td class="align-middle">{{ $loop->iteration }}</td>
-                                        <td class="align-middle">{{ $voucher->code }}</td>
-                                        <td class="align-middle">{{ $voucher->discount }}</td>
+                                        <th style="width: 10px">No</th>
+                                        <th>Voucher</th>
+                                        <th class="text-nowrap">Persentase Diskon (%)</th>
                                         @role('owner')
-                                            <td class="align-middle">
-                                                <a href="{{ route('vouchers.edit', $voucher->id) }}" class="btn btn-warning"> <i
-                                                        class="fas fa-edit"></i></a>
-                                                <span class="mx-1"></span>
-                                                <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"
-                                                    style="display: inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Are you sure?')"> <i
-                                                            class="fas fa-trash-alt"></i></button>
-                                                </form>
-                                            </td>
+                                            <th>Aksi</th>
                                         @endrole
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($vouchers as $voucher)
+                                        <tr>
+                                            <td class="align-middle">{{ $loop->iteration }}</td>
+                                            <td class="align-middle">{{ $voucher->code }}</td>
+                                            <td class="align-middle">{{ $voucher->discount }}</td>
+                                            @role('owner')
+                                                <td class="align-middle text-nowrap">
+                                                    <a href="{{ route('vouchers.edit', $voucher->id) }}"
+                                                        class="btn btn-warning"> <i class="fas fa-edit"></i></a>
+                                                    <span class="mx-1"></span>
+                                                    <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"
+                                                        style="display: inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger"
+                                                            onclick="return confirm('Are you sure?')"> <i
+                                                                class="fas fa-trash-alt"></i></button>
+                                                    </form>
+                                                </td>
+                                            @endrole
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="mt-5 row">
                             <div class="col-12">
                                 {{ $vouchers->links('pagination::bootstrap-5') }}

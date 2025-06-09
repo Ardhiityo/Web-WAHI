@@ -29,42 +29,45 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-around">
-                    <table class="table text-center table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="width: 10px">No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Peran</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
+                    <div class="container overflow-auto">
+                        <table class="table text-center table-bordered">
+                            <thead>
                                 <tr>
-                                    <td class="align-middle">{{ $loop->iteration }}</td>
-                                    <td class="align-middle">{{ $user->name }}</td>
-                                    <td class="align-middle">{{ $user->email }}</td>
-                                    <td class="align-middle">{{ ucfirst($user->roles->pluck('name')->implode(', ')) }}</td>
-                                    <td class="align-middle">
-                                        <a href="{{ route('roles.edit', $user->id) }}" class="btn btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <span class="mx-1"></span>
-                                        <form action="{{ route('roles.destroy', $user->id) }}" method="POST"
-                                            style="display: inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure?')">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th style="width: 10px">No</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Peran</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td class="align-middle">{{ $loop->iteration }}</td>
+                                        <td class="align-middle">{{ $user->name }}</td>
+                                        <td class="align-middle">{{ $user->email }}</td>
+                                        <td class="align-middle">{{ ucfirst($user->roles->pluck('name')->implode(', ')) }}
+                                        </td>
+                                        <td class="align-middle text-nowrap">
+                                            <a href="{{ route('roles.edit', $user->id) }}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <span class="mx-1"></span>
+                                            <form action="{{ route('roles.destroy', $user->id) }}" method="POST"
+                                                style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"
+                                                    onclick="return confirm('Are you sure?')">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="mt-5 row">
                         <div class="col-12">
                             {{ $users->links('pagination::bootstrap-5') }}

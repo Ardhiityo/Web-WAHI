@@ -79,12 +79,13 @@
         <div class="card-body">
             <form action="{{ route('transactions.index') }}" method="get">
                 <div class="mb-4 row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                             <div class="form-group">
                                 <label for="voucher">Total Pendapatan</label>
                                 <div class="input-group">
-                                    <p class="display-4">Rp. {{ number_format($profit, thousands_separator: '.') }}</p>
+                                    <p class="display-4">Rp.
+                                        {{ number_format($profit, thousands_separator: '.') }}</p>
                                 </div>
                             </div>
                         </div>
