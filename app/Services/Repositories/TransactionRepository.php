@@ -21,7 +21,6 @@ class TransactionRepository implements TransactionInterface
             DB::beginTransaction();
 
             $subtotal = 0;
-            $totalAmount = $subtotal;
             $discount = null;
             $totalDiscount = 0;
             $discountPercentage = null;
@@ -34,6 +33,8 @@ class TransactionRepository implements TransactionInterface
             foreach ($carts as $key => $cart) {
                 $subtotal +=  (int)$cart->product->price * (int)$cart->quantity;
             }
+
+            $totalAmount = $subtotal;
 
             if (!is_null($data['voucher'])) {
                 $voucher = Voucher::where('code', $data['voucher'])->first();
