@@ -174,13 +174,12 @@
                                                         name="transaction_type" required>
                                                         <option value="cash"
                                                             {{ $transaction->transaction_type == 'cash' ? 'selected' : '' }}>
-                                                            Cash</option>
-                                                        <option value="credit_card"
-                                                            {{ $transaction->transaction_type == 'credit_card' ? 'selected' : '' }}>
-                                                            Credit Card</option>
-                                                        <option value="transfer"
-                                                            {{ $transaction->transaction_type == 'transfer' ? 'selected' : '' }}>
-                                                            Transfer</option>
+                                                            Cash
+                                                        </option>
+                                                        <option value="cashless"
+                                                            {{ $transaction->transaction_type == 'cashless' ? 'selected' : '' }}>
+                                                            Cashless
+                                                        </option>
                                                     </select>
                                                 @else
                                                     <input type="text" class="form-control" readonly
