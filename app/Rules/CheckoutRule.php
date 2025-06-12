@@ -4,7 +4,6 @@ namespace App\Rules;
 
 use Closure;
 use App\Models\Cart;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 

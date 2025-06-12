@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('transaction_code')->unique();
             $table->unsignedBigInteger('total_discount')->default(0);
-            $table->unsignedBigInteger('discount_percentage')->default(0);
             $table->unsignedBigInteger('subtotal_amount')->default(0);
             $table->unsignedBigInteger('total_amount')->default(0);
             $table->enum('transaction_status', ['pending', 'paid']);

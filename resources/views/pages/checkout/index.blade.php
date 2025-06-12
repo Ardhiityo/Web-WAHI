@@ -26,20 +26,6 @@
                     <div class="col-md-6">
                         <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                             <div class="form-group">
-                                <label for="voucher">Punya Voucher?</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Masukan Kode Voucher"
-                                        name="voucher" data-mask>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                            <div class="form-group">
                                 <label for="transaction_type">Tipe Pembayaran</label>
                                 <select class="form-control select2" style="width: 100%;" name="transaction_type" required
                                     id="transaction_type">
@@ -49,8 +35,6 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 d-flex justify-content-end">
                         <button class="btn btn-success">Buat Pesanan</button>
                     </div>
                 </div>

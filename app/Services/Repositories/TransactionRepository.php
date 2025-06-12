@@ -4,7 +4,7 @@ namespace App\Services\Repositories;
 
 use Exception;
 use App\Models\Cart;
-use App\Models\Voucher;
+use App\Models\Discount;
 use App\Models\Transaction;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +37,7 @@ class TransactionRepository implements TransactionInterface
             $totalAmount = $subtotal;
 
             if (!is_null($data['voucher'])) {
-                $voucher = Voucher::where('code', $data['voucher'])->first();
+                $voucher = Discount::where('code', $data['voucher'])->first();
                 $data['voucher'] = $voucher->id;
                 $discount = (int)$voucher->discount / 100;
                 $discountPercentage = $voucher->discount;
@@ -47,12 +47,10 @@ class TransactionRepository implements TransactionInterface
 
             $transaction = Transaction::create(
                 [
-                    'discount' => $totalDiscount,
-                    'discount_percentage' => $discountPercentage,
+                    'total_discount' => $totalDiscount,
                     'subtotal_amount' => $subtotal,
                     'transaction_code' => $data['transaction_code'],
                     'transaction_type' => $data['transaction_type'],
-                    'voucher_id' => $data['voucher'],
                     'total_amount' => $totalAmount,
                     'transaction_status' => 'pending',
                     'user_id' => Auth::user()->id,

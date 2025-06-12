@@ -7,15 +7,6 @@
                 <div class="card-header">
                     <h3 class="card-title">Edit Product</h3>
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <form action="{{ route('products.update', ['product' => $product->id]) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -51,12 +42,14 @@
                         <div class="form-group">
                             <label for="purchase_price">Harga beli</label>
                             <input type="text" name="purchase_price" required
-                                class="form-control form-control-border border-width-2" id="purchase_price">
+                                class="form-control form-control-border border-width-2"
+                                value="{{ old('purchase_price', $product->purchase_price) }}" id="purchase_price">
                         </div>
                         <div class="form-group">
                             <label for="price">Harga jual</label>
                             <input type="text" name="price" required
-                                class="form-control form-control-border border-width-2" id="price">
+                                class="form-control form-control-border border-width-2"
+                                value="{{ old('price', $product->price) }}" id="price">
                         </div>
                     </div>
                     <div class="card-footer">

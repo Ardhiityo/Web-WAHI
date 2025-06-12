@@ -24,7 +24,6 @@ class StoreTransactionRequest extends FormRequest
     {
         return [
             'transaction_code' => ['required', new CheckoutRule, 'unique:transactions,transaction_code'],
-            'voucher' => ['nullable', 'exists:vouchers,code'],
             'transaction_type' => ['required', 'in:cashless,cash'],
         ];
     }
