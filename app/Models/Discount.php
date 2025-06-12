@@ -12,6 +12,10 @@ class Discount extends Model
         'discount',
     ];
 
+    protected $casts = [
+        'untill_date' => 'date'
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class);

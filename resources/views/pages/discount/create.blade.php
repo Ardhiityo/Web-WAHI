@@ -16,7 +16,7 @@
                                 class="form-control form-control-border border-width-2" id="discount">
                         </div>
                         <div class="form-group">
-                            <label for="untill_date">Hingga tanggal</label>
+                            <label for="untill_date">Berakhir</label>
                             <input type="date" name="untill_date" required
                                 class="form-control form-control-border border-width-2" id="untill_date">
                         </div>

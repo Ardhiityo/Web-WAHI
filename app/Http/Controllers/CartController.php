@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Interfaces\CartInterface;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
-use App\Services\Interfaces\CartInterface;
 
 class CartController extends Controller
 {
@@ -14,7 +15,7 @@ class CartController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
+            return abort(403, message: 'Unauthorized action.');
         }
 
         $carts = $this->cartRepository->getAllCarts();

@@ -41,7 +41,7 @@
                                         <th style="width: 10px">No</th>
                                         <th class="text-nowrap">Produk</th>
                                         <th class="text-nowrap">Persentase Diskon (%)</th>
-                                        <th class="text-nowrap">Hingga tanggal</th>
+                                        <th class="text-nowrap">Berakhir</th>
                                         @role('owner')
                                             <th>Aksi</th>
                                         @endrole
@@ -53,7 +53,7 @@
                                             <td class="align-middle">{{ $loop->iteration }}</td>
                                             <td class="align-middle">{{ $voucher->product->name }}</td>
                                             <td class="align-middle">{{ $voucher->discount }}</td>
-                                            <td class="align-middle">{{ $voucher->untill_date }}</td>
+                                            <td class="align-middle">{{ $voucher->untill_date->format('d-m-Y') }}</td>
                                             @role('owner')
                                                 <td class="align-middle text-nowrap">
                                                     <a href="{{ route('discounts.edit', $voucher->id) }}"
