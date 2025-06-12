@@ -18,7 +18,7 @@ class Product extends Model
     public function transactions()
     {
         return $this->belongsToMany(Transaction::class, 'product_transactions', 'product_id', 'transaction_id')
-            ->withPivot('quantity', 'total_amount', 'purchase_price')->withTimestamps();
+            ->withPivot('quantity', 'total_price', 'purchase_price', 'discount', 'price')->withTimestamps();
     }
 
     public function carts()

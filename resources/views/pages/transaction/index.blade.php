@@ -126,56 +126,6 @@
                             <div class="col-md-6">
                                 <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="voucher">Pemesan</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ $transaction->user->name }}" name="voucher">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="voucher">Persentase Diskon</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-percentage"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" readonly name="voucher"
-                                                value="{{ $transaction->discount_percentage ?? '0' }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="voucher">Diskon</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp</span>
-                                            </div>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ number_format($transaction->discount, thousands_separator: '.') ?? '0' }}"
-                                                name="voucher">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
                                         <label for="voucher">Sub total</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -187,18 +137,34 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="voucher">Grand total</label>
+                                        <label for="voucher">Pemesan</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" readonly
+                                                value="{{ $transaction->user->name }}" name="voucher">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
+                                    <div class="form-group">
+                                        <label for="total_discount">Total Diskon</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
                                             </div>
-                                            <input type="text" class="form-control" name="voucher"
-                                                value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}"
-                                                readonly>
+                                            <input type="text" class="form-control" readonly name="total_discount"
+                                                value="{{ number_format($transaction->total_discount, thousands_separator: '.') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -216,6 +182,22 @@
                                                 <input type="text" class="form-control" name="transaction_status"
                                                     readonly value="{{ ucfirst($transaction->transaction_status) }}">
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
+                                    <div class="form-group">
+                                        <label for="voucher">Grand total</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" class="form-control" name="voucher"
+                                                value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>

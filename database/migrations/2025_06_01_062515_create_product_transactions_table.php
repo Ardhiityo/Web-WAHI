@@ -20,8 +20,10 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->primary(['product_id', 'transaction_id']);
             $table->unsignedBigInteger('purchase_price');
-            $table->unsignedBigInteger('price');
-            $table->unsignedBigInteger('discount')
+            $table->unsignedBigInteger('unit_price');
+            $table->unsignedBigInteger('subtotal_price');
+            $table->unsignedBigInteger('total_price');
+            $table->unsignedBigInteger('total_discount')
                 ->default(0);
             $table->unsignedBigInteger('quantity');
             $table->timestamps();

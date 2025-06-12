@@ -52,6 +52,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                <div class="form-group">
+                                    <label for="sub_total">Sub Total</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="subtotal_amount" readonly
+                                            value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                                 <div class="form-group">
@@ -66,32 +83,16 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                                 <div class="form-group">
-                                    <label for="discount_percentage">Persentase Diskon</label>
+                                    <label for="discount_percentage">Total Diskon</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-percentage"></i></span>
+                                            <span class="input-group-text">Rp</span>
                                         </div>
                                         <input type="text" class="form-control" readonly
-                                            value="{{ $transaction->discount_percentage ?? '0' }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                                <div class="form-group">
-                                    <label for="discount">Diskon</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" class="form-control" name="discount" readonly
-                                            value="{{ number_format($transaction->discount, thousands_separator: '.') }}">
+                                            value="{{ number_format($transaction->total_discount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
@@ -101,13 +102,34 @@
                         <div class="col-md-6">
                             <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                                 <div class="form-group">
-                                    <label for="sub_total">Sub total</label>
+                                    <label for="transaction_type">Jenis Pembayaran</label>
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                        <div class="input-group-prepend w-100">
+                                            <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                                            @if ($transaction->transaction_status === 'pending')
+                                                @if (Auth::user()->hasRole('owner|cashier'))
+                                                    <select class="form-control select2" style="width: 100%;"
+                                                        name="transaction_type" required>
+                                                        <option value="cash"
+                                                            {{ $transaction->transaction_type == 'cash' ? 'selected' : '' }}>
+                                                            Cash
+                                                        </option>
+                                                        <option value="cashless"
+                                                            {{ $transaction->transaction_type == 'cashless' ? 'selected' : '' }}>
+                                                            Cashless
+                                                        </option>
+                                                    </select>
+                                                @else
+                                                    <input type="text" class="form-control" readonly
+                                                        value="{{ ucfirst($transaction->transaction_type) }}">
+                                                @endif
+                                            @else
+                                                <input type="hidden" class="form-control" name="transaction_type"
+                                                    readonly value="{{ $transaction->transaction_type }}">
+                                                <input type="text" class="form-control" readonly
+                                                    value="{{ ucfirst($transaction->transaction_type) }}">
+                                            @endif
                                         </div>
-                                        <input type="text" class="form-control" name="subtotal_amount" readonly
-                                            value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +137,7 @@
                         <div class="col-md-6">
                             <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                                 <div class="form-group">
-                                    <label for="total_amount">Grand total</label>
+                                    <label for="total_amount">Grand Total</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp</span>
@@ -161,41 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                                <div class="form-group">
-                                    <label for="transaction_type">Jenis Pembayaran</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend w-100">
-                                            <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
-                                            @if ($transaction->transaction_status === 'pending')
-                                                @if (Auth::user()->hasRole('owner|cashier'))
-                                                    <select class="form-control select2" style="width: 100%;"
-                                                        name="transaction_type" required>
-                                                        <option value="cash"
-                                                            {{ $transaction->transaction_type == 'cash' ? 'selected' : '' }}>
-                                                            Cash
-                                                        </option>
-                                                        <option value="cashless"
-                                                            {{ $transaction->transaction_type == 'cashless' ? 'selected' : '' }}>
-                                                            Cashless
-                                                        </option>
-                                                    </select>
-                                                @else
-                                                    <input type="text" class="form-control" readonly
-                                                        value="{{ ucfirst($transaction->transaction_type) }}">
-                                                @endif
-                                            @else
-                                                <input type="hidden" class="form-control" name="transaction_type"
-                                                    readonly value="{{ $transaction->transaction_type }}">
-                                                <input type="text" class="form-control" readonly
-                                                    value="{{ ucfirst($transaction->transaction_type) }}">
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     @if ($transaction->transaction_status === 'pending')
                         @hasrole('owner|cashier')
@@ -280,13 +268,13 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="price">Harga</label>
+                                        <label for="price">Harga Satuan</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</i></span>
                                             </div>
                                             <input type="text" name="price" class="form-control" readonly
-                                                value="{{ number_format($product->pivot->price, thousands_separator: '.') }}">
+                                                value="{{ number_format($product->pivot->unit_price, thousands_separator: '.') }} x {{ $product->pivot->quantity }}">
                                         </div>
                                     </div>
                                 </div>
@@ -311,6 +299,58 @@
                                                 <input type="text" class="form-control" name="quantity"
                                                     value="{{ $product->pivot->quantity }}" readonly>
                                             @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
+                                    <div class="form-group">
+                                        <label for="price">Sub Total</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</i></span>
+                                            </div>
+                                            <input type="text" name="price" class="form-control" readonly
+                                                value="{{ number_format($product->pivot->subtotal_price, thousands_separator: '.') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
+                                    <div class="form-group">
+                                        <label for="price">Total Diskon</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" name="price" class="form-control" readonly
+                                                value="{{ number_format($product->pivot->total_discount, thousands_separator: '.') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <div id="logins-part" class="content" role="tabpanel"
+                                    aria-labelledby="logins-part-trigger">
+                                    <div class="form-group">
+                                        <label for="price">Grand Total</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" name="price" class="form-control" readonly
+                                                value="{{ number_format($product->pivot->total_price, thousands_separator: '.') }}">
                                         </div>
                                     </div>
                                 </div>

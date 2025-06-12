@@ -4,7 +4,6 @@ namespace App\Services\Repositories;
 
 use Exception;
 use App\Models\Cart;
-use App\Models\Discount;
 use App\Models\Transaction;
 use App\Models\ProductTransaction;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\TransactionInterface;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class TransactionRepository implements TransactionInterface
 {
@@ -20,56 +20,85 @@ class TransactionRepository implements TransactionInterface
         try {
             DB::beginTransaction();
 
-            $subtotal = 0;
-            $discount = null;
-            $totalDiscount = 0;
-            $discountPercentage = null;
+            $subTotal = 0;
+            $totalAmount = 0;
+            $discount = 0;
+            $discountProduct = 0;
+            $userId = Auth::user()->id;
 
-            $carts = Cart::with('product:id,stock,price')
+            $carts = Cart::with([
+                'product' => fn(Builder $query) => $query->with('discount:id,discount,untill_date,product_id')
+                    ->select('id', 'price', 'purchase_price', 'stock')
+            ])
                 ->select('id', 'product_id', 'quantity')
-                ->where('user_id', Auth::user()->id)
+                ->where('user_id', $userId)
                 ->get();
 
             foreach ($carts as $key => $cart) {
-                $subtotal +=  (int)$cart->product->price * (int)$cart->quantity;
+                $productPrice =  $cart->product->price;
+
+                if ($cart->product->discount->discount ?? false) {
+                    $discountIsValid = $cart->product->discount->untill_date > now();
+
+                    if ($discountIsValid) {
+                        $discountPercentage = $cart->product->discount->discount / 100;
+                        $discount = $productPrice * $discountPercentage;
+                        $productPrice -= $discount;
+                        $discountProduct += $discount * $cart->quantity;
+                    }
+                }
+
+                $subTotal += $cart->product->price * $cart->quantity;
+                $totalAmount += $productPrice * $cart->quantity;
             }
 
-            $totalAmount = $subtotal;
-
-            if (!is_null($data['voucher'])) {
-                $voucher = Discount::where('code', $data['voucher'])->first();
-                $data['voucher'] = $voucher->id;
-                $discount = (int)$voucher->discount / 100;
-                $discountPercentage = $voucher->discount;
-                $totalDiscount = $subtotal * $discount;
-                $totalAmount = $subtotal - $totalDiscount;
-            }
+            $totalDiscount = $discountProduct;
 
             $transaction = Transaction::create(
                 [
                     'total_discount' => $totalDiscount,
-                    'subtotal_amount' => $subtotal,
+                    'subtotal_amount' => $subTotal,
+                    'total_amount' => $totalAmount,
                     'transaction_code' => $data['transaction_code'],
                     'transaction_type' => $data['transaction_type'],
-                    'total_amount' => $totalAmount,
                     'transaction_status' => 'pending',
-                    'user_id' => Auth::user()->id,
+                    'user_id' => $userId,
                 ]
             );
 
             Session::put('transaction_code', $transaction->transaction_code);
 
             foreach ($carts as $key => $cart) {
-                ProductTransaction::create([
+
+                $discountProductTransaction = 0;
+                $productTransactionPrice = $cart->product->price;
+
+                if ($cart->product->discount->discount ?? false) {
+                    $productTransactionDiscountPercentage = $cart->product->discount->discount / 100;
+                    $discountProductTransaction = $productTransactionPrice * $productTransactionDiscountPercentage;
+                }
+
+                Log::info(json_encode($discountProductTransaction, JSON_PRETTY_PRINT), ['discountProductTransaction']);
+
+                Log::info(json_encode($productTransactionPrice, JSON_PRETTY_PRINT), ['productTransactionPrice']);
+
+                $productTransaction = ProductTransaction::create([
                     'product_id' => $cart->product_id,
                     'transaction_id' => $transaction->id,
-                    'price' => $cart->product->price,
-                    'quantity' => $cart->quantity
+                    'purchase_price' => $cart->product->purchase_price,
+                    'unit_price' => $cart->product->price,
+                    'subtotal_price' => $cart->product->price * $cart->quantity,
+                    'total_price' => ($productTransactionPrice * $cart->quantity) - ($discountProductTransaction * $cart->quantity),
+                    'total_discount' => $discountProductTransaction * $cart->quantity,
+                    'quantity' => $cart->quantity,
+                    'discount' => $discountProductTransaction
                 ]);
             };
 
+            Log::info(json_encode($productTransaction, JSON_PRETTY_PRINT), ['productTransaction']);
+
             if ($transaction->transaction_type == 'cash') {
-                Cart::where('user_id', Auth::user()->id)->delete();
+                Cart::where('user_id', $userId)->delete();
             }
 
             DB::commit();

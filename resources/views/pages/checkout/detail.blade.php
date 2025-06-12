@@ -67,73 +67,78 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                        <div class="form-group">
-                            <label for="transaction_code">Kode Transaksi</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{ $transaction->transaction_code }}" data-mask>
+                    <div class="form-group">
+                        <label for="transaction_code">Kode Transaksi</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                             </div>
+                            <input type="text" class="form-control" readonly
+                                value="{{ $transaction->transaction_code }}">
                         </div>
-                        <div class="form-group">
-                            <label for="dicount">Persentase Diskon</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-percentage"></i></span>
-                                </div>
-                                <input type="text" class="rounded form-control" readonly
-                                    value="{{ $transaction->discount_percentage ?? '0' }}" data-mask>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="dicount">Total Diskon</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Rp</span>
-                                </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{ number_format($transaction->discount, thousands_separator: '.') }}" data-mask>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                        <div class="form-group">
-                            <label for="total_amount">Jenis Pembayaran</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
-                                </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{ ucfirst($transaction->transaction_type) }}" data-mask>
+                    <div class="form-group">
+                        <label for="total_amount">Sub Total</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp</span>
                             </div>
+                            <input type="text" class="form-control" readonly
+                                value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
                         </div>
-                        <div class="form-group">
-                            <label for="total_amount">Sub Total</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Rp</span>
-                                </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}"
-                                    data-mask>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="total_amount">Jenis Pembayaran</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                             </div>
+                            <input type="text" class="form-control" readonly
+                                value="{{ ucfirst($transaction->transaction_type) }}">
                         </div>
-                        <div class="form-group">
-                            <label for="total_amount">Grand Total</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Rp</span>
-                                </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}"
-                                    data-mask>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dicount">Total Diskon</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp</span>
                             </div>
+                            <input type="text" class="form-control" readonly
+                                value="{{ number_format($transaction->total_discount, thousands_separator: '.') }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="total_amount">Transaksi Status</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                            </div>
+                            <input type="text" class="form-control" readonly
+                                value="{{ ucfirst($transaction->transaction_status) }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="total_amount">Grand Total</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp</span>
+                            </div>
+                            <input type="text" class="form-control" readonly
+                                value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}">
                         </div>
                     </div>
                 </div>
