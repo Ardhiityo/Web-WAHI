@@ -31,7 +31,7 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function discounts()
+    public function discount()
     {
         return $this->hasOne(Discount::class);
     }

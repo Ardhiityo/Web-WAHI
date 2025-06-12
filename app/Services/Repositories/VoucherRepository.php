@@ -9,7 +9,7 @@ class VoucherRepository implements VoucherInterface
 {
     public function getAllVouchers()
     {
-        return Discount::select('id', 'code', 'discount')->paginate(10);
+        return Discount::with('product:id,name')->select('id', 'untill_date', 'discount', 'product_id')->paginate(10);
     }
 
     public function createVoucher(array $data)

@@ -34,7 +34,7 @@ class DiscountController extends Controller
     {
         $this->voucherRepository->createVoucher($request->validated());
 
-        return redirect()->route('vouchers.index')->withSuccess('Berhasil ditambahkan');
+        return redirect()->route('discounts.index')->withSuccess('Berhasil ditambahkan');
     }
 
     public function edit(Discount $voucher)
@@ -50,7 +50,7 @@ class DiscountController extends Controller
     {
         $voucher->update($request->validated());
 
-        return redirect()->route('vouchers.index')->withSuccess('Berhasil diubah');
+        return redirect()->route('discounts.index')->withSuccess('Berhasil diubah');
     }
 
     public function destroy(Discount $voucher)

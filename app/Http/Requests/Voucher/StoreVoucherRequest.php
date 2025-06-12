@@ -15,7 +15,7 @@ class StoreVoucherRequest extends FormRequest
     {
         return [
             'discount' => ['required', 'numeric', 'min:1', 'max:100'],
-            'product_id' => ['required', 'exists:products,id'],
+            'product_id' => ['required', 'exists:products,id', 'unique:discounts,product_id'],
             'untill_date' => ['required', 'after:yesterday']
         ];
     }
