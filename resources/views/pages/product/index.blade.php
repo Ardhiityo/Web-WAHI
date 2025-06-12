@@ -148,7 +148,9 @@
                                         @endif
                                         <th>Stok</th>
                                         <th>Brand</th>
-                                        <th>Keranjang</th>
+                                        @hasrole('cashier|customer')
+                                            <th>Keranjang</th>
+                                        @endhasrole
                                         @role('owner')
                                             <th>Aksi</th>
                                         @endrole
@@ -163,27 +165,38 @@
                                                     height="100" alt="{{ $product->name }}" class="rounded">
                                             </td>
                                             <td class="align-middle">{{ $product->name }}</td>
-                                            <td class="align-middle text-nowrap">Rp.
-                                                {{ number_format($product->price, thousands_separator: '.') }}</td>
+                                            @if (Auth::user()->hasRole('owner'))
+                                                <td class="align-middle text-nowrap">Rp.
+                                                    {{ number_format($product->purchase_price, thousands_separator: '.') }}
+                                                </td>
+                                                <td class="align-middle text-nowrap">Rp.
+                                                    {{ number_format($product->price, thousands_separator: '.') }}
+                                                </td>
+                                            @else
+                                                <td class="align-middle text-nowrap">Rp.
+                                                    {{ number_format($product->price, thousands_separator: '.') }}</td>
+                                            @endif
                                             <td class="align-middle">{{ $product->stock }}</td>
                                             <td class="align-middle">{{ $product->brand->name }}</td>
-                                            <td class="align-middle">
-                                                <form action="{{ route('carts.store') }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                                    <input type="hidden" name="quantity" value="1">
-                                                    @if ($product->stock < 1)
-                                                        <button disabled class="btn btn-success">
-                                                            <i class="fas fa-cart-plus"></i>
-                                                        </button>
-                                                    @else
-                                                        <button class="btn btn-warning">
-                                                            <i class="fas fa-cart-plus"></i>
-                                                        </button>
-                                                    @endif
-                                                </form>
-                                            </td>
+                                            @hasrole('customer|cashier')
+                                                <td class="align-middle">
+                                                    <form action="{{ route('carts.store') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                                        <input type="hidden" name="quantity" value="1">
+                                                        @if ($product->stock < 1)
+                                                            <button disabled class="btn btn-success">
+                                                                <i class="fas fa-cart-plus"></i>
+                                                            </button>
+                                                        @else
+                                                            <button class="btn btn-warning">
+                                                                <i class="fas fa-cart-plus"></i>
+                                                            </button>
+                                                        @endif
+                                                    </form>
+                                                </td>
+                                            @endhasrole
                                             @role('owner')
                                                 <td class="align-middle text-nowrap">
                                                     <a href="{{ route('products.edit', $product->id) }}"

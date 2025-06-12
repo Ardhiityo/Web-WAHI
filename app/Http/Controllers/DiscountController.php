@@ -7,6 +7,7 @@ use App\Services\Interfaces\VoucherInterface;
 use App\Http\Requests\Voucher\StoreVoucherRequest;
 use App\Http\Requests\Voucher\UpdateVoucherRequest;
 use App\Models\Discount;
+use App\Models\Product;
 
 class DiscountController extends Controller
 {
@@ -25,7 +26,8 @@ class DiscountController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.discount.create');
+        $products = Product::all();
+        return view('pages.discount.create', compact('products'));
     }
 
     public function store(StoreVoucherRequest $request)

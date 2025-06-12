@@ -11,7 +11,7 @@ class ProductRepository implements ProductInterface
     public function getAllProducts()
     {
         return Product::with('brand:id,name')
-            ->select('id', 'image', 'name', 'price', 'stock', 'brand_id')
+            ->select('id', 'image', 'name', 'purchase_price', 'price', 'stock', 'brand_id')
             ->paginate(10);
     }
 

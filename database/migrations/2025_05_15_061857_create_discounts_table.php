@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->foreignId('product_id')
+                ->unique()
                 ->constrained('products')
                 ->cascadeOnDelete();
             $table->date('until_date');

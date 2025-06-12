@@ -5,14 +5,14 @@
         <div class="container-fluid">
             <div class="mb-2 row">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Daftar Voucher</h1>
+                    <h1 class="m-0">Daftar Diskon</h1>
                 </div>
             </div>
         </div>
     </div>
     <div class="card card-default">
         <div class="card-header">
-            <h3 class="card-title">Semua voucher</h3>
+            <h3 class="card-title">Semua diskon</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
