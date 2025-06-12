@@ -78,10 +78,6 @@ class TransactionRepository implements TransactionInterface
                     $discountProductTransaction = $productTransactionPrice * $productTransactionDiscountPercentage;
                 }
 
-                Log::info(json_encode($discountProductTransaction, JSON_PRETTY_PRINT), ['discountProductTransaction']);
-
-                Log::info(json_encode($productTransactionPrice, JSON_PRETTY_PRINT), ['productTransactionPrice']);
-
                 $productTransaction = ProductTransaction::create([
                     'product_id' => $cart->product_id,
                     'transaction_id' => $transaction->id,
@@ -90,12 +86,9 @@ class TransactionRepository implements TransactionInterface
                     'subtotal_price' => $cart->product->price * $cart->quantity,
                     'total_price' => ($productTransactionPrice * $cart->quantity) - ($discountProductTransaction * $cart->quantity),
                     'total_discount' => $discountProductTransaction * $cart->quantity,
-                    'quantity' => $cart->quantity,
-                    'discount' => $discountProductTransaction
+                    'quantity' => $cart->quantity
                 ]);
             };
-
-            Log::info(json_encode($productTransaction, JSON_PRETTY_PRINT), ['productTransaction']);
 
             if ($transaction->transaction_type == 'cash') {
                 Cart::where('user_id', $userId)->delete();
@@ -189,31 +182,30 @@ class TransactionRepository implements TransactionInterface
         try {
             DB::beginTransaction();
 
-            ProductTransaction::where('transaction_id', $data['transaction_id'])
+            $productTransaction = ProductTransaction::where('transaction_id', $data['transaction_id'])
                 ->where('product_id', $data['product_id'])
-                ->update($data);
+                ->first();
 
-            $transaction = $this->getTransactionById($data['transaction_id']);
+            $quantity = $data['quantity'];
 
-            $subtotalAmount = 0;
-            $discount = 0;
+            $discountProductTransaction = 0;
+            $productTransactionPrice = $productTransaction->product->price;
 
-            foreach ($transaction->products as $key => $product) {
-                $subtotalAmount += $product->price * $product->pivot->quantity;
+            if ($productTransaction->product->discount->discount ?? false) {
+                $productTransactionDiscountPercentage = $productTransaction->product->discount->discount / 100;
+                $discountProductTransaction = $productTransactionPrice * $productTransactionDiscountPercentage;
             }
 
-            $totalAmount = $subtotalAmount;
-
-            if ($transaction->discount_percentage) {
-                $discount = $subtotalAmount * ($transaction->discount_percentage / 100);
-                $totalAmount -= $discount;
-            }
-
-            $transaction->update([
-                'discount' => $discount,
-                'subtotal_amount' => $subtotalAmount,
-                'total_amount' => $totalAmount
-            ]);
+            ProductTransaction::where('product_id', $data['product_id'])
+                ->where('transaction_id', $data['transaction_id'])
+                ->update([
+                    'product_id' => $data['product_id'],
+                    'transaction_id' => $data['transaction_id'],
+                    'subtotal_price' => $productTransaction->product->price * $quantity,
+                    'total_price' => ($productTransactionPrice * $quantity) - ($discountProductTransaction * $quantity),
+                    'total_discount' => $discountProductTransaction * $quantity,
+                    'quantity' => $quantity,
+                ]);
 
             DB::commit();
         } catch (Exception $exception) {

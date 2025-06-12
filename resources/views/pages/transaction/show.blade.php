@@ -253,12 +253,12 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="name">Produk</label>
+                                        <label>Produk</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                             </div>
-                                            <input type="text" name="name" class="form-control" readonly
+                                            <input type="text" class="form-control" readonly
                                                 value="{{ $product->name }}">
                                         </div>
                                     </div>
@@ -268,12 +268,12 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="price">Harga Satuan</label>
+                                        <label>Harga Satuan</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</i></span>
                                             </div>
-                                            <input type="text" name="price" class="form-control" readonly
+                                            <input type="text" class="form-control" readonly
                                                 value="{{ number_format($product->pivot->unit_price, thousands_separator: '.') }} x {{ $product->pivot->quantity }}">
                                         </div>
                                     </div>
@@ -285,7 +285,7 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="quantity">Quantity</label>
+                                        <label for="{{ $loop->iteration }}">Quantity</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i
@@ -293,11 +293,12 @@
                                             </div>
                                             @if (Auth::user()->hasRole('owner|cashier'))
                                                 <input type="text" class="form-control" name="quantity"
-                                                    value="{{ $product->pivot->quantity }}"
+                                                    value="{{ $product->pivot->quantity }}" id="{{ $loop->iteration }}"
                                                     {{ $transaction->transaction_status === 'paid' ? 'readonly' : '' }}>
                                             @else
                                                 <input type="text" class="form-control" name="quantity"
-                                                    value="{{ $product->pivot->quantity }}" readonly>
+                                                    value="{{ $product->pivot->quantity }}" readonly
+                                                    id="{{ $loop->iteration }}">
                                             @endif
                                         </div>
                                     </div>
@@ -307,12 +308,12 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="price">Sub Total</label>
+                                        <label>Sub Total</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</i></span>
                                             </div>
-                                            <input type="text" name="price" class="form-control" readonly
+                                            <input type="text" class="form-control" readonly
                                                 value="{{ number_format($product->pivot->subtotal_price, thousands_separator: '.') }}">
                                         </div>
                                     </div>
@@ -325,12 +326,12 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="price">Total Diskon</label>
+                                        <label>Total Diskon</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
                                             </div>
-                                            <input type="text" name="price" class="form-control" readonly
+                                            <input type="text" class="form-control" readonly
                                                 value="{{ number_format($product->pivot->total_discount, thousands_separator: '.') }}">
                                         </div>
                                     </div>
@@ -344,12 +345,12 @@
                                 <div id="logins-part" class="content" role="tabpanel"
                                     aria-labelledby="logins-part-trigger">
                                     <div class="form-group">
-                                        <label for="price">Grand Total</label>
+                                        <label>Grand Total</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
                                             </div>
-                                            <input type="text" name="price" class="form-control" readonly
+                                            <input type="text" class="form-control" readonly
                                                 value="{{ number_format($product->pivot->total_price, thousands_separator: '.') }}">
                                         </div>
                                     </div>
