@@ -140,7 +140,12 @@
                                         <th style="width: 10px">No</th>
                                         <th>Foto</th>
                                         <th>Produk</th>
-                                        <th>Harga</th>
+                                        @if (Auth::user()->hasRole('owner'))
+                                            <th>Haga beli</th>
+                                            <th>Haga jual</th>
+                                        @else
+                                            <th>Harga</th>
+                                        @endif
                                         <th>Stok</th>
                                         <th>Brand</th>
                                         <th>Keranjang</th>

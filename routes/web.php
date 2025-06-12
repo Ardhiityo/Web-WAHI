@@ -7,8 +7,8 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProductTransactionController;
 use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\ReportController;
@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkouts', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkouts/cashless', [CheckoutController::class, 'snapToken'])->name('checkout.snaptoken');
 
-    Route::resource('vouchers', VoucherController::class);
+    Route::resource('discounts', DiscountController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('product-transactions', ProductTransactionController::class);
     Route::resource('roles', RoleController::class);

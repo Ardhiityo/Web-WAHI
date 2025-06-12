@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('vouchers.update', ['voucher' => $voucher->id]) }}" method="POST">
+                <form action="{{ route('discounts.update', ['voucher' => $voucher->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="card-body">

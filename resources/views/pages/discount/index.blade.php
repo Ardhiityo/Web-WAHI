@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="mb-4 col-12">
                         <div class="d-flex justify-content-end align-items-center">
-                            <a href="{{ route('vouchers.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            <a href="{{ route('discounts.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
                 </div>
@@ -54,10 +54,10 @@
                                             <td class="align-middle">{{ $voucher->discount }}</td>
                                             @role('owner')
                                                 <td class="align-middle text-nowrap">
-                                                    <a href="{{ route('vouchers.edit', $voucher->id) }}"
+                                                    <a href="{{ route('discounts.edit', $voucher->id) }}"
                                                         class="btn btn-warning"> <i class="fas fa-edit"></i></a>
                                                     <span class="mx-1"></span>
-                                                    <form action="{{ route('vouchers.destroy', $voucher->id) }}" method="POST"
+                                                    <form action="{{ route('discounts.destroy', $voucher->id) }}" method="POST"
                                                         style="display: inline">
                                                         @csrf
                                                         @method('DELETE')

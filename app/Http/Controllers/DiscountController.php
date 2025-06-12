@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Voucher;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Interfaces\VoucherInterface;
 use App\Http\Requests\Voucher\StoreVoucherRequest;
 use App\Http\Requests\Voucher\UpdateVoucherRequest;
+use App\Models\Discount;
 
-class VoucherController extends Controller
+class DiscountController extends Controller
 {
     public function __construct(private VoucherInterface $voucherRepository) {}
 
@@ -16,7 +16,7 @@ class VoucherController extends Controller
     {
         $vouchers = $this->voucherRepository->getAllVouchers();
 
-        return view('pages.voucher.index', compact('vouchers'));
+        return view('pages.discount.index', compact('vouchers'));
     }
 
     public function create()
@@ -25,7 +25,7 @@ class VoucherController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.voucher.create');
+        return view('pages.discount.create');
     }
 
     public function store(StoreVoucherRequest $request)
@@ -35,26 +35,26 @@ class VoucherController extends Controller
         return redirect()->route('vouchers.index')->withSuccess('Berhasil ditambahkan');
     }
 
-    public function edit(Voucher $voucher)
+    public function edit(Discount $voucher)
     {
         if (!Auth::user()->hasRole('owner')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.voucher.edit', compact('voucher'));
+        return view('pages.discount.edit', compact('voucher'));
     }
 
-    public function update(UpdateVoucherRequest $request, Voucher $voucher)
+    public function update(UpdateVoucherRequest $request, Discount $voucher)
     {
         $voucher->update($request->validated());
 
         return redirect()->route('vouchers.index')->withSuccess('Berhasil diubah');
     }
 
-    public function destroy(Voucher $voucher)
+    public function destroy(Discount $voucher)
     {
         $voucher->delete();
 
-        return redirect()->route('vouchers.index')->withSuccess('Berhasil dihapus');
+        return redirect()->route('discount.index')->withSuccess('Berhasil dihapus');
     }
 }

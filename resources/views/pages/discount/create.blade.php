@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Tambah Voucher</h3>
                 </div>
-                <form action="{{ route('vouchers.store') }}" method="POST">
+                <form action="{{ route('discounts.store') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">

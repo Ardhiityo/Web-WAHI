@@ -16,6 +16,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:3', Rule::unique('products', 'name')->ignore($this->product->id)],
+            'purchase_price' => ['required', 'numeric'],
             'price' => ['required', 'numeric'],
             'stock' => ['required', 'integer', 'min:0'],
             'brand_id' => ['required', 'exists:brands,id'],

@@ -51,11 +51,11 @@
                 </li>
 
                 <li class="my-2 nav-item">
-                    <a href="{{ route('vouchers.index') }}"
-                        class="nav-link {{ request()->is('vouchers*') ? 'active' : '' }}">
+                    <a href="{{ route('discounts.index') }}"
+                        class="nav-link {{ request()->is('discounts*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-percent"></i>
                         <p>
-                            Voucher
+                            Potongan
                         </p>
                     </a>
                 </li>

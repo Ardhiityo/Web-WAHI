@@ -21,7 +21,12 @@
                                 class="form-control form-control-border border-width-2" id="name">
                         </div>
                         <div class="form-group">
-                            <label for="price">Harga</label>
+                            <label for="purchase_price">Harga beli</label>
+                            <input type="text" name="purchase_price" required
+                                class="form-control form-control-border border-width-2" id="purchase_price">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Harga jual</label>
                             <input type="text" name="price" required
                                 class="form-control form-control-border border-width-2" id="price">
                         </div>
