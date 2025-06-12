@@ -72,31 +72,33 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>{{ $carts }}</h3>
-                    <p>Keranjang</p>
+        @hasrole('cashier|customer')
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ $carts }}</h3>
+                        <p>Keranjang</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-cart-arrow-down"></i>
+                    </div>
+                    <a href="{{ route('carts.index') }}" class="small-box-footer">
+                        Selengkapnya <i class="fas fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="fas fa-cart-arrow-down"></i>
-                </div>
-                <a href="{{ route('carts.index') }}" class="small-box-footer">
-                    Selengkapnya <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
-        </div>
+        @endhasrole
         @hasrole('owner|cashier')
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>{{ $vouchers }}</h3>
-                        <p>Voucher</p>
+                        <p>Diskon</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-percentage"></i>
                     </div>
-                    <a href="{{ route('vouchers.index') }}" class="small-box-footer">Selengkapnya <i
+                    <a href="{{ route('discounts.index') }}" class="small-box-footer">Selengkapnya <i
                             class="fas fa-arrow-circle-right"></i>
                     </a>
                 </div>

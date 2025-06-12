@@ -5,37 +5,32 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Edit voucher</h3>
+                    <h3 class="card-title">Edit diskon</h3>
                 </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <form action="{{ route('discounts.update', ['voucher' => $voucher->id]) }}" method="POST">
+                <form action="{{ route('discounts.update', ['discount' => $discount->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
                             <label for="discount">Diskon (%)</label>
                             <input type="number" name="discount" required
-                                class="form-control form-control-border border-width-2" id="discount">
+                                class="form-control form-control-border border-width-2" id="discount"
+                                value="{{ $discount->discount }}">
                         </div>
                         <div class="form-group">
                             <label for="untill_date">Hingga tanggal</label>
                             <input type="date" name="untill_date" required
-                                class="form-control form-control-border border-width-2" id="untill_date">
+                                class="form-control form-control-border border-width-2" value="{{ $discount->untill_date }}"
+                                id="untill_date">
                         </div>
                         <div class="form-group">
                             <label>Produk</label>
                             <select class="form-control select2" style="width: 100%;" name="product_id" required>
                                 <option selected="selected" value="">Pilih...</option>
                                 @foreach ($products as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    <option value="{{ $product->id }}"
+                                        {{ $discount->product_id === $product->id ? 'selected' : '' }}>{{ $product->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -44,9 +39,6 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>

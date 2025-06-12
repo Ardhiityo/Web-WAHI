@@ -37,13 +37,14 @@ class DiscountController extends Controller
         return redirect()->route('discounts.index')->withSuccess('Berhasil ditambahkan');
     }
 
-    public function edit(Discount $voucher)
+    public function edit(Discount $discount)
     {
         if (!Auth::user()->hasRole('owner')) {
             return abort(403, 'Unauthorized action.');
         }
 
-        return view('pages.discount.edit', compact('voucher'));
+        $products = Product::all();
+        return view('pages.discount.edit', compact('discount', 'products'));
     }
 
     public function update(UpdateVoucherRequest $request, Discount $voucher)
