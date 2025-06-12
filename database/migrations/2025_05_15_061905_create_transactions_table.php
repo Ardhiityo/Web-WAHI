@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_code')->unique();
-            $table->unsignedBigInteger('discount');
-            $table->unsignedBigInteger('discount_percentage')->nullable();
-            $table->unsignedBigInteger('subtotal_amount');
-            $table->unsignedBigInteger('total_amount');
+            $table->unsignedBigInteger('total_discount')->default(0);
+            $table->unsignedBigInteger('discount_percentage')->default(0);
+            $table->unsignedBigInteger('subtotal_amount')->default(0);
+            $table->unsignedBigInteger('total_amount')->default(0);
             $table->enum('transaction_status', ['pending', 'paid']);
             $table->enum('transaction_type', ['cashless', 'cash']);
-            $table->foreignId('voucher_id')->nullable()
-                ->constrained('vouchers')->cascadeOnDelete();
             $table->foreignId('user_id')
                 ->constrained('users')->cascadeOnDelete();
             $table->timestamps();

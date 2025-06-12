@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Voucher extends Model
+class Discount extends Model
 {
     protected $fillable = [
         'code',
+        'product_id',
+        'untill_date',
         'discount',
     ];
 
-    public function transactions()
+    public function products()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Product::class);
     }
 }

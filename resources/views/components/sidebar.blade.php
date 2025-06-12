@@ -82,7 +82,7 @@
                     </li>
                 @endrole
 
-                @hasrole('owner|cashier')
+                @hasrole('owner')
                     <li class="my-2 nav-item">
                         <a href="{{ route('reports.index') }}"
                             class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">

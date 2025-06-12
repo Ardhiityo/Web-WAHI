@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -10,13 +9,13 @@ class Transaction extends Model
     protected $fillable = [
         'discount_percentage',
         'transaction_code',
-        'voucher_id',
+        'total_discount',
         'transaction_type',
         'total_amount',
         'transaction_status',
         'user_id',
         'subtotal_amount',
-        'discount',
+        'total_discount',
     ];
 
     protected $casts = [
@@ -31,11 +30,6 @@ class Transaction extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_transactions', 'transaction_id', 'product_id')
-            ->withPivot('quantity', 'price')->withTimestamps();
-    }
-
-    public function voucher()
-    {
-        return $this->belongsTo(Voucher::class);
+            ->withPivot('quantity', 'price', 'purchase_price')->withTimestamps();
     }
 }

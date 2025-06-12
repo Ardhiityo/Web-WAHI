@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Number;
 
 class Product extends Model
 {
     protected $fillable = [
         'name',
+        'purchase_price',
         'price',
         'stock',
         'brand_id',
@@ -18,7 +18,7 @@ class Product extends Model
     public function transactions()
     {
         return $this->belongsToMany(Transaction::class, 'product_transactions', 'product_id', 'transaction_id')
-            ->withPivot('qty', 'total_amount')->withTimestamps();
+            ->withPivot('quantity', 'total_amount', 'purchase_price')->withTimestamps();
     }
 
     public function carts()
@@ -29,5 +29,10 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class);
     }
 }
