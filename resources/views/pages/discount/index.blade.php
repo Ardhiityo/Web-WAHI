@@ -39,8 +39,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
-                                        <th>Voucher</th>
                                         <th class="text-nowrap">Persentase Diskon (%)</th>
+                                        <th class="text-nowrap">Hingga tanggal</th>
                                         @role('owner')
                                             <th>Aksi</th>
                                         @endrole
@@ -50,8 +50,8 @@
                                     @foreach ($vouchers as $voucher)
                                         <tr>
                                             <td class="align-middle">{{ $loop->iteration }}</td>
-                                            <td class="align-middle">{{ $voucher->code }}</td>
                                             <td class="align-middle">{{ $voucher->discount }}</td>
+                                            <td class="align-middle">{{ $voucher->untill_date }}</td>
                                             @role('owner')
                                                 <td class="align-middle text-nowrap">
                                                     <a href="{{ route('discounts.edit', $voucher->id) }}"

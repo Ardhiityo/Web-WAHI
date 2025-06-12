@@ -21,16 +21,28 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="code">Kode</label>
-                            <input type="text" name="code" required
-                                class="form-control form-control-border border-width-2" id="code"
-                                value="{{ old('code', $voucher->code) }}">
+                            <label for="discount">Diskon (%)</label>
+                            <input type="number" name="discount" required
+                                class="form-control form-control-border border-width-2" id="discount">
                         </div>
                         <div class="form-group">
-                            <label for="discount">Diskon</label>
-                            <input type="number" name="discount" required
-                                class="form-control form-control-border border-width-2" id="discount"
-                                value="{{ old('discount', $voucher->discount) }}">
+                            <label for="untill_date">Hingga tanggal</label>
+                            <input type="date" name="untill_date" required
+                                class="form-control form-control-border border-width-2" id="untill_date">
+                        </div>
+                        <div class="form-group">
+                            <label>Produk</label>
+                            <select class="form-control select2" style="width: 100%;" name="product_id" required>
+                                <option selected="selected" value="">Pilih...</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mt-5 row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">

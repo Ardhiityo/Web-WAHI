@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->foreignId('product_id')
                 ->unique()
                 ->constrained('products')
                 ->cascadeOnDelete();
-            $table->date('until_date');
+            $table->date('untill_date');
             $table->integer('discount');
             $table->timestamps();
         });

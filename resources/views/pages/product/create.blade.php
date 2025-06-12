@@ -7,9 +7,9 @@
                 <div class="card-header">
                     <h3 class="card-title">Tambah Produk</h3>
                 </div>
-                <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="card-body">
+                <div class="card-body">
+                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label for="image">Foto</label>
                             <input type="file" name="image" required
@@ -44,11 +44,13 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                        <div class="mt-5 row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

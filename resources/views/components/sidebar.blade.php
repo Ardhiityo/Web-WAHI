@@ -41,14 +41,16 @@
                     </a>
                 </li>
 
-                <li class="my-2 nav-item">
-                    <a href="{{ route('carts.index') }}" class="nav-link {{ request()->is('carts*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cart-arrow-down"></i>
-                        <p>
-                            Keranjang
-                        </p>
-                    </a>
-                </li>
+                @hasrole('cashier|customer')
+                    <li class="my-2 nav-item">
+                        <a href="{{ route('carts.index') }}" class="nav-link {{ request()->is('carts*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cart-arrow-down"></i>
+                            <p>
+                                Keranjang
+                            </p>
+                        </a>
+                    </li>
+                @endhasrole
 
                 <li class="my-2 nav-item">
                     <a href="{{ route('discounts.index') }}"

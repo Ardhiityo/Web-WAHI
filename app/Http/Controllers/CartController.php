@@ -13,6 +13,10 @@ class CartController extends Controller
 
     public function index()
     {
+        if (Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         $carts = $this->cartRepository->getAllCarts();
 
         return view('pages.cart.index', compact('carts'));
@@ -29,6 +33,10 @@ class CartController extends Controller
 
     public function edit(Cart $cart)
     {
+        if (Auth::user()->hasRole('owner')) {
+            return abort(403, 'Unauthorized action.');
+        }
+
         return view('pages.cart.edit', compact('cart'));
     }
 
