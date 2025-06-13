@@ -56,7 +56,7 @@ class TransactionController extends Controller
                 if ($transaction) {
                     return redirect()->route('transactions.show', ['transaction' => $transaction->id]);
                 }
-                return redirect()->route('transactions.index');
+                Session::forget('transaction_code');
             }
             $transaction = $this->transactionRepository->createTransaction($data);
 

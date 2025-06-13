@@ -57,9 +57,10 @@
                                                     width="100" height="100" alt="{{ $discount->product->name }}"
                                                     class="rounded">
                                             </td>
-                                            <td class="align-middle">{{ $discount->product->name }}</td>
+                                            <td class="align-middle text-nowrap">{{ $discount->product->name }}</td>
                                             <td class="align-middle">{{ $discount->discount }}</td>
-                                            <td class="align-middle">{{ $discount->untill_date->format('d-m-Y') }}</td>
+                                            <td class="align-middle text-nowrap">
+                                                {{ $discount->untill_date->format('d-m-Y') }}</td>
                                             @role('owner')
                                                 <td class="align-middle text-nowrap">
                                                     <a href="{{ route('discounts.edit', $discount->id) }}"
