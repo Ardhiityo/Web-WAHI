@@ -60,13 +60,13 @@
                 {{ ucfirst($transaction->user->name) }}</td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                 colspan="2">
-                Rp. {{ $transaction->subtotal_selling_amount }}</td>
+                Rp. {{ number_format($transaction->subtotal_selling_amount, thousands_separator: '.') }}</td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                 colspan="2">
-                Rp. {{ $transaction->total_discount }}</td>
+                Rp. {{ number_format($transaction->total_discount, thousands_separator: '.') }}</td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                 colspan="2">
-                Rp. {{ $transaction->grandtotal_selling_amount }}</td>
+                Rp. {{ number_format($transaction->grandtotal_selling_amount, thousands_separator: '.') }}</td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                 colspan="2">
                 {{ ucfirst($transaction->transaction_type) }}</td>
@@ -83,8 +83,8 @@
     <thead>
         <tr>
             <th colspan="2"></th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold" colspan="12">
-                Rincian Produk
+            <th colspan="12" style="font-weight: bold">
+                Rincian Produk :
             </th>
             <th colspan="2"></th>
         </tr>
@@ -94,7 +94,7 @@
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Nama Produk</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Brand</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Quantity</th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Harga</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Harga Satuan</th>
             <th colspan="2"></th>
         </tr>
     </thead>
@@ -115,7 +115,7 @@
                     {{ $product->pivot->quantity }}
                 </td>
                 <td style="border: 1px solid black; text-align: center" colspan="2">
-                    Rp.{{ number_format($product->pivot->unit_selling_price, thousands_separator: '.') }}
+                    Rp. {{ number_format($product->pivot->unit_selling_price, thousands_separator: '.') }}
                 </td>
                 <td colspan="2"></td>
             </tr>
