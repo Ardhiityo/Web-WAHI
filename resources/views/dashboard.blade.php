@@ -92,7 +92,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ $vouchers }}</h3>
+                        <h3>{{ $discounts }}</h3>
                         <p>Diskon</p>
                     </div>
                     <div class="icon">
