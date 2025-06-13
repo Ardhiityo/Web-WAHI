@@ -82,33 +82,31 @@
 <table>
     <thead>
         <tr>
-            <th colspan="2"></th>
-            <th colspan="12" style="font-weight: bold">
+            <th colspan="16" style="font-weight: bold">
                 Rincian Produk :
             </th>
-            <th colspan="2"></th>
         </tr>
         <tr>
-            <th colspan="2"></th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">No</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;">No</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Nama Produk</th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="3">Brand</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Brand</th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Quantity</th>
-            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Harga Satuan</th>
-            <th colspan="2"></th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Harga</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Sub-total</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Diskon</th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold;" colspan="2">Grand-total</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($transaction->products as $index => $product)
             <tr>
-                <td colspan="2"></td>
-                <td style="border: 1px solid black; text-align: center;" colspan="2">
+                <td style="border: 1px solid black; text-align: center;">
                     {{ $loop->iteration }}
                 </td>
                 <td style="border: 1px solid black; text-align: center;" colspan="3">
                     {{ $product->name }}
                 </td>
-                <td style="border: 1px solid black; text-align: center;" colspan="3">
+                <td style="border: 1px solid black; text-align: center;" colspan="2">
                     {{ $product->brand->name }}
                 </td>
                 <td style="border: 1px solid black; text-align: center;" colspan="2">
@@ -117,7 +115,15 @@
                 <td style="border: 1px solid black; text-align: center" colspan="2">
                     Rp. {{ number_format($product->pivot->unit_selling_price, thousands_separator: '.') }}
                 </td>
-                <td colspan="2"></td>
+                <td style="border: 1px solid black; text-align: center" colspan="2">
+                    Rp. {{ number_format($product->pivot->subtotal_selling_amount, thousands_separator: '.') }}
+                </td>
+                <td style="border: 1px solid black; text-align: center" colspan="2">
+                    Rp. {{ number_format($product->pivot->total_discount, thousands_separator: '.') }}
+                </td>
+                <td style="border: 1px solid black; text-align: center" colspan="2">
+                    Rp. {{ number_format($product->pivot->grandtotal_selling_price, thousands_separator: '.') }}
+                </td>
             </tr>
         @endforeach
     </tbody>

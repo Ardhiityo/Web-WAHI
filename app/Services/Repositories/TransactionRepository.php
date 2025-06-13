@@ -147,12 +147,12 @@ class TransactionRepository implements TransactionInterface
         return Transaction::where('transaction_status', 'paid')
             ->whereDate('created_at', '>=', $startDate)
             ->whereDate('created_at', '<=', $endDate)
-            ->sum('total_amount');
+            ->sum('profit_amount');
     }
 
     public function getTotalTransactionProfit()
     {
-        return Transaction::where('transaction_status', 'paid')->sum('total_amount');
+        return Transaction::where('transaction_status', 'paid')->sum('profit_amount');
     }
 
     public function getTotalTransactionsByUser($status): int
