@@ -50,11 +50,14 @@ class TransactionController extends Controller
         try {
             $data = $request->validated();
 
-            // if ($transactionCode = Session::get('transaction_code')) {
-            //     $transaction = $this->transactionRepository->getTransactionByCode($transactionCode);
+            if ($transactionCode = Session::get('transaction_code')) {
+                $transaction = $this->transactionRepository->getTransactionByCode($transactionCode);
 
-            //     return redirect()->route('transactions.show', ['transaction' => $transaction->id]);
-            // }
+                if ($transaction) {
+                    return redirect()->route('transactions.show', ['transaction' => $transaction->id]);
+                }
+                return redirect()->route('transactions.index');
+            }
             $transaction = $this->transactionRepository->createTransaction($data);
 
             return view('pages.checkout.detail', compact('transaction'));

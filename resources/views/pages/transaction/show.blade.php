@@ -212,6 +212,7 @@
                         @endhasrole
                     @endif
                 </form>
+
                 @if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending')
                     @hasrole('customer')
                         <div class="row">

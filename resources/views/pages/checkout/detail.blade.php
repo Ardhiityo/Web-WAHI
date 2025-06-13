@@ -86,7 +86,7 @@
                                 <span class="input-group-text">Rp</span>
                             </div>
                             <input type="text" class="form-control" readonly
-                                value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
+                                value="{{ number_format($transaction->subtotal_selling_amount, thousands_separator: '.') }}">
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                                 <span class="input-group-text">Rp</span>
                             </div>
                             <input type="text" class="form-control" readonly
-                                value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}">
+                                value="{{ number_format($transaction->grandtotal_selling_amount, thousands_separator: '.') }}">
                         </div>
                     </div>
                 </div>
