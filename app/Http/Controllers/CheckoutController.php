@@ -30,7 +30,7 @@ class CheckoutController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $transaction->transaction_code,
-                'gross_amount' => $transaction->total_amount
+                'gross_amount' => $transaction->grandtotal_selling_amount
             ]
         ];
 

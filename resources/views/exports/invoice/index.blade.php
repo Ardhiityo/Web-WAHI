@@ -122,7 +122,7 @@
                     Rp. {{ number_format($product->pivot->total_discount, thousands_separator: '.') }}
                 </td>
                 <td style="border: 1px solid black; text-align: center" colspan="2">
-                    Rp. {{ number_format($product->pivot->grandtotal_selling_price, thousands_separator: '.') }}
+                    Rp. {{ number_format($product->pivot->grandtotal_selling_amount, thousands_separator: '.') }}
                 </td>
             </tr>
         @endforeach
