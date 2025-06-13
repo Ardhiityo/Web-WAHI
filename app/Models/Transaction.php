@@ -8,13 +8,14 @@ class Transaction extends Model
 {
     protected $fillable = [
         'transaction_code',
+        'grandtotal_purchase_amount',
         'total_discount',
-        'transaction_type',
-        'total_amount',
+        'subtotal_selling_amount',
+        'grandtotal_selling_amount',
+        'profit_amount',
         'transaction_status',
-        'user_id',
-        'subtotal_amount',
-        'total_discount',
+        'transaction_type',
+        'user_id'
     ];
 
     protected $casts = [
@@ -29,6 +30,6 @@ class Transaction extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_transactions', 'transaction_id', 'product_id')
-            ->withPivot('quantity', 'total_price', 'purchase_price', 'total_discount', 'subtotal_price', 'unit_price')->withTimestamps();
+            ->withPivot('quantity', 'profit_amount', 'grandtotal_selling_amount', 'total_discount', 'subtotal_selling_amount', 'unit_selling_price', 'grandtotal_purchase_amount', 'unit_purchase_price')->withTimestamps();
     }
 }

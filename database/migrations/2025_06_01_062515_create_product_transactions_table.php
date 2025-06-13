@@ -19,12 +19,13 @@ return new class extends Migration
                 ->constrained('transactions')
                 ->cascadeOnDelete();
             $table->primary(['product_id', 'transaction_id']);
-            $table->unsignedBigInteger('purchase_price');
-            $table->unsignedBigInteger('unit_price');
-            $table->unsignedBigInteger('subtotal_price');
-            $table->unsignedBigInteger('total_price');
-            $table->unsignedBigInteger('total_discount')
-                ->default(0);
+            $table->unsignedBigInteger('unit_purchase_price');
+            $table->unsignedBigInteger('grandtotal_purchase_amount');
+            $table->unsignedBigInteger('unit_selling_price');
+            $table->unsignedBigInteger('subtotal_selling_amount');
+            $table->unsignedBigInteger('total_discount');
+            $table->unsignedBigInteger('grandtotal_selling_amount');
+            $table->bigInteger('profit_amount');
             $table->unsignedBigInteger('quantity');
             $table->timestamps();
         });

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_code')->unique();
-            $table->unsignedBigInteger('total_discount')->default(0);
-            $table->unsignedBigInteger('subtotal_amount')->default(0);
-            $table->unsignedBigInteger('total_amount')->default(0);
+            $table->unsignedBigInteger('grandtotal_purchase_amount');
+            $table->unsignedBigInteger('total_discount');
+            $table->unsignedBigInteger('subtotal_selling_amount');
+            $table->unsignedBigInteger('grandtotal_selling_amount');
+            $table->bigInteger('profit_amount');
             $table->enum('transaction_status', ['pending', 'paid']);
             $table->enum('transaction_type', ['cashless', 'cash']);
             $table->foreignId('user_id')

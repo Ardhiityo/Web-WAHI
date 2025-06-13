@@ -20,11 +20,13 @@ class TransactionRepository implements TransactionInterface
         try {
             DB::beginTransaction();
 
-            $subTotal = 0;
-            $totalAmount = 0;
+            // Create Transaction
+            $subTotalSellingAmount = 0;
+            $grandTotalSellingAmount = 0;
             $discount = 0;
-            $discountProduct = 0;
+            $totalDiscount = 0;
             $userId = Auth::user()->id;
+            $grandTotalPurchaseAmount = 0;
 
             $carts = Cart::with([
                 'product' => fn(Builder $query) => $query->with('discount:id,discount,untill_date,product_id')
@@ -38,28 +40,32 @@ class TransactionRepository implements TransactionInterface
                 $productPrice =  $cart->product->price;
 
                 if ($cart->product->discount->discount ?? false) {
-                    $discountIsValid = $cart->product->discount->untill_date > now();
+                    $discountIsValid = $cart->product->discount->untill_date >= now();
 
                     if ($discountIsValid) {
                         $discountPercentage = $cart->product->discount->discount / 100;
                         $discount = $productPrice * $discountPercentage;
                         $productPrice -= $discount;
-                        $discountProduct += $discount * $cart->quantity;
+                        $totalDiscount += $discount * $cart->quantity;
                     }
                 }
 
-                $subTotal += $cart->product->price * $cart->quantity;
-                $totalAmount += $productPrice * $cart->quantity;
+                $grandTotalPurchaseAmount += $cart->product->purchase_price * $cart->quantity;
+
+                $subTotalSellingAmount += $cart->product->price * $cart->quantity;
+                $grandTotalSellingAmount += $productPrice * $cart->quantity;
             }
 
-            $totalDiscount = $discountProduct;
+            $profitAmount = $grandTotalSellingAmount - $grandTotalPurchaseAmount;
 
             $transaction = Transaction::create(
                 [
-                    'total_discount' => $totalDiscount,
-                    'subtotal_amount' => $subTotal,
-                    'total_amount' => $totalAmount,
                     'transaction_code' => $data['transaction_code'],
+                    'grandtotal_purchase_amount' => $grandTotalPurchaseAmount,
+                    'total_discount' => $totalDiscount,
+                    'subtotal_selling_amount' => $subTotalSellingAmount,
+                    'grandtotal_selling_amount' => $grandTotalSellingAmount,
+                    'profit_amount' => $profitAmount,
                     'transaction_type' => $data['transaction_type'],
                     'transaction_status' => 'pending',
                     'user_id' => $userId,
@@ -67,25 +73,42 @@ class TransactionRepository implements TransactionInterface
             );
 
             Session::put('transaction_code', $transaction->transaction_code);
+            // End Create Transaction
 
+            // Create Product Transaction
             foreach ($carts as $key => $cart) {
 
-                $discountProductTransaction = 0;
-                $productTransactionPrice = $cart->product->price;
+                $unitPurchasePriceProductTransaction = $cart->product->purchase_price;
+                $grandTotalPurchaseAmountProductTransaction = $cart->product->purchase_price * $cart->quantity;
+                $unitSellingPriceProductTransaction = $cart->product->price;
+                $totalDiscountProductTransaction = 0;
+                $productPriceProductTransaction = $cart->product->price;
+                $subTotalSellingAmountProductTransaction = $productPriceProductTransaction * $cart->quantity;
 
                 if ($cart->product->discount->discount ?? false) {
-                    $productTransactionDiscountPercentage = $cart->product->discount->discount / 100;
-                    $discountProductTransaction = $productTransactionPrice * $productTransactionDiscountPercentage;
+                    $discountIsValidProductTransaction = $cart->product->discount->untill_date >= now();
+
+                    if ($discountIsValidProductTransaction) {
+                        $discountPercentage = $cart->product->discount->discount / 100;
+                        $discount = $unitSellingPriceProductTransaction * $discountPercentage;
+                        $productPriceProductTransaction -= $discount;
+                        $totalDiscountProductTransaction += $discount * $cart->quantity;
+                    }
                 }
 
-                $productTransaction = ProductTransaction::create([
+                $grandTotalSellingAmountProductTransaction = $subTotalSellingAmountProductTransaction - $totalDiscountProductTransaction;
+                $profitAmountProductTransaction = $grandTotalSellingAmountProductTransaction - $grandTotalPurchaseAmountProductTransaction;
+
+                ProductTransaction::create([
                     'product_id' => $cart->product_id,
                     'transaction_id' => $transaction->id,
-                    'purchase_price' => $cart->product->purchase_price,
-                    'unit_price' => $cart->product->price,
-                    'subtotal_price' => $cart->product->price * $cart->quantity,
-                    'total_price' => ($productTransactionPrice * $cart->quantity) - ($discountProductTransaction * $cart->quantity),
-                    'total_discount' => $discountProductTransaction * $cart->quantity,
+                    'unit_purchase_price' => $unitPurchasePriceProductTransaction,
+                    'grandtotal_purchase_amount' => $grandTotalPurchaseAmountProductTransaction,
+                    'unit_selling_price' => $unitSellingPriceProductTransaction,
+                    'subtotal_selling_amount' => $subTotalSellingAmountProductTransaction,
+                    'total_discount' => $totalDiscountProductTransaction,
+                    'grandtotal_selling_amount' => $grandTotalSellingAmountProductTransaction,
+                    'profit_amount' => $profitAmountProductTransaction,
                     'quantity' => $cart->quantity
                 ]);
             };
@@ -93,6 +116,7 @@ class TransactionRepository implements TransactionInterface
             if ($transaction->transaction_type == 'cash') {
                 Cart::where('user_id', $userId)->delete();
             }
+            // End Create Product Transaction
 
             DB::commit();
 

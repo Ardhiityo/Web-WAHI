@@ -8,14 +8,15 @@ class ProductTransaction extends Pivot
 {
     protected $fillable = [
         'product_id',
-        'purchase_price',
-        'unit_price',
-        'subtotal_price',
-        'total_discount',
-        'total_price',
         'transaction_id',
-        'quantity',
-        'price',
+        'unit_purchase_price',
+        'grandtotal_purchase_amount',
+        'unit_selling_price',
+        'subtotal_selling_amount',
+        'total_discount',
+        'grandtotal_selling_amount',
+        'profit_amount',
+        'quantity'
     ];
 
     protected $table = 'product_transactions';
