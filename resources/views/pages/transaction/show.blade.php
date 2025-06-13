@@ -99,7 +99,7 @@
                                     <div class="input-group-prepend w-100">
                                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                                         @if ($transaction->transaction_status === 'pending')
-                                            @if (Auth::user()->hasRole('owner|cashier'))
+                                            @if (Auth::user()->hasRole('cashier'))
                                                 <select class="form-control select2" style="width: 100%;"
                                                     name="transaction_type" required>
                                                     <option value="cash"
@@ -146,7 +146,7 @@
                                     <div class="input-group-prepend w-100">
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         @if ($transaction->transaction_status === 'pending')
-                                            @if (Auth::user()->hasRole('owner|cashier'))
+                                            @if (Auth::user()->hasRole('cashier'))
                                                 <select class="form-control select2" style="width: 100%;"
                                                     name="transaction_status" required>
                                                     <option value="pending"
@@ -203,7 +203,7 @@
                         </div>
                     @endrole
                     @if ($transaction->transaction_status === 'pending')
-                        @hasrole('owner|cashier')
+                        @hasrole('cashier')
                             <div class="row">
                                 <div class="mt-3 col-12 d-flex justify-content-end">
                                     <button class="btn btn-warning">Update</button>
@@ -242,7 +242,7 @@
                     <div class="col-12 d-flex align-items-center">
                         <h5>#{{ $loop->iteration }}</h5>
                         @if ($transaction->transaction_status === 'pending')
-                            @hasrole('owner|cashier')
+                            @hasrole('cashier')
                                 <span class="mx-2"></span>
                                 <form
                                     action="{{ route('product-transactions.destroy', ['product_transaction' => $transaction->id]) }}"
@@ -301,7 +301,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-shopping-cart"></i></i></span>
                                         </div>
-                                        @if (Auth::user()->hasRole('owner|cashier'))
+                                        @if (Auth::user()->hasRole('cashier'))
                                             <input type="text" class="form-control" name="quantity"
                                                 value="{{ $product->pivot->quantity }}" id="{{ $loop->iteration }}"
                                                 {{ $transaction->transaction_status === 'paid' ? 'readonly' : '' }}>
@@ -399,7 +399,7 @@
                             </div>
                         @endrole
                         @if ($transaction->transaction_status === 'pending')
-                            @hasrole('owner|cashier')
+                            @hasrole('cashier')
                                 <div class="row">
                                     <div class="mt-3 col-12 d-flex justify-content-end">
                                         <button class="btn btn-warning">Update</button>

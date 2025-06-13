@@ -95,7 +95,7 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if ($transaction->transaction_status === 'pending')
-                                    @hasrole('owner|cashier')
+                                    @hasrole('cashier')
                                         <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
                                             method="post">
                                             @method('DELETE')

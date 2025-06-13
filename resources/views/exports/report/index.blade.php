@@ -13,7 +13,7 @@
         <tr></tr>
         <tr>
             <th colspan="16" style="text-align: center; font-weight: bold;">
-                PERIODE PENJUALAN {{ \Carbon\Carbon::parse($start_date)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                PERIODE TRANSAKSI {{ \Carbon\Carbon::parse($start_date)->locale('id')->isoFormat('DD MMMM YYYY') }}
                 s/d
                 {{ \Carbon\Carbon::parse($end_date)->locale('id')->isoFormat('DD MMMM YYYY') }}
             </th>

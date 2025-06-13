@@ -23,16 +23,16 @@ class ProductController extends Controller
             $category = $request->query('category');
             $keyword = $request->query('keyword');
             if ($category === 'product') {
-                $products = $this->productRepository->getProductByName($keyword);
+                $products = $this->productRepository->getProductsByName($keyword);
             } elseif ($category === 'brand') {
-                $products = $this->productRepository->getALlProductByBrand($keyword);
+                $products = $this->productRepository->getProductsByBrand($keyword);
             }
         } else if ($request->query('start_price') && $request->query('end_price')) {
             $startPrice = $request->query('start_price');
             $endPrice = $request->query('end_price');
-            $products = $this->productRepository->getAllProductsByPrice($startPrice, $endPrice);
+            $products = $this->productRepository->getProductsByPrice($startPrice, $endPrice);
         } else {
-            $products = $this->productRepository->getAllProducts();
+            $products = $this->productRepository->getProducts();
         }
 
         return view('pages.product.index', compact('products'));

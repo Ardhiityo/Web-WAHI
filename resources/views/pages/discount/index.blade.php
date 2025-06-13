@@ -30,7 +30,7 @@
                 </div>
             @endrole
             <div class="row">
-                @if ($vouchers->isEmpty())
+                @if ($discounts->isEmpty())
                     <p>Data belum tersedia...</p>
                 @else
                     <div class="col-12 d-flex justify-content-around">
@@ -39,6 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
+                                        <th>Foto</th>
                                         <th class="text-nowrap">Produk</th>
                                         <th class="text-nowrap">Persentase Diskon (%)</th>
                                         <th class="text-nowrap">Berakhir</th>
@@ -48,19 +49,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vouchers as $voucher)
+                                    @foreach ($discounts as $discount)
                                         <tr>
                                             <td class="align-middle">{{ $loop->iteration }}</td>
-                                            <td class="align-middle">{{ $voucher->product->name }}</td>
-                                            <td class="align-middle">{{ $voucher->discount }}</td>
-                                            <td class="align-middle">{{ $voucher->untill_date->format('d-m-Y') }}</td>
+                                            <td class="align-middle">
+                                                <img src="{{ asset(Storage::url($discount->product->image)) }}"
+                                                    width="100" height="100" alt="{{ $discount->product->name }}"
+                                                    class="rounded">
+                                            </td>
+                                            <td class="align-middle">{{ $discount->product->name }}</td>
+                                            <td class="align-middle">{{ $discount->discount }}</td>
+                                            <td class="align-middle">{{ $discount->untill_date->format('d-m-Y') }}</td>
                                             @role('owner')
                                                 <td class="align-middle text-nowrap">
-                                                    <a href="{{ route('discounts.edit', $voucher->id) }}"
+                                                    <a href="{{ route('discounts.edit', $discount->id) }}"
                                                         class="btn btn-warning"> <i class="fas fa-edit"></i></a>
                                                     <span class="mx-1"></span>
-                                                    <form action="{{ route('discounts.destroy', $voucher->id) }}" method="POST"
-                                                        style="display: inline">
+                                                    <form action="{{ route('discounts.destroy', $discount->id) }}"
+                                                        method="POST" style="display: inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger"
@@ -76,7 +82,7 @@
                         </div>
                         <div class="mt-5 row">
                             <div class="col-12">
-                                {{ $vouchers->links('pagination::bootstrap-5') }}
+                                {{ $discounts->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>

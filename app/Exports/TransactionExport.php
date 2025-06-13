@@ -4,7 +4,6 @@ namespace App\Exports;
 
 use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class TransactionExport implements FromView
@@ -38,7 +37,7 @@ class TransactionExport implements FromView
                 $profitUnrealization += $transaction->profit_amount;
             }
         }
-        Log::info(json_encode($transactions, JSON_PRETTY_PRINT));
+
         return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransactionSuccess', 'totalTransactionPending', 'profitRealization', 'profitUnrealization'));
     }
 }

@@ -8,35 +8,40 @@ use App\Services\Interfaces\ProductInterface;
 
 class ProductRepository implements ProductInterface
 {
-    public function getAllProducts()
+    public function getProducts()
     {
         return Product::with('brand:id,name')
             ->select('id', 'image', 'name', 'purchase_price', 'price', 'stock', 'brand_id')
             ->paginate(10);
     }
 
-    public function getAllProductsByPrice($startPrice, $endPrice)
+    public function getProductsName()
+    {
+        return Product::select('id', 'name')->get();
+    }
+
+    public function getProductsByPrice($startPrice, $endPrice)
     {
         return Product::with('brand:id,name')
-            ->select('id', 'image', 'name', 'price', 'stock', 'brand_id')
+            ->select('id', 'image', 'name', 'price', 'purchase_price', 'stock', 'brand_id')
             ->whereBetween('price', [$startPrice, $endPrice])
             ->paginate(10);
     }
 
-    public function getALlProductByBrand($brand)
+    public function getProductsByBrand($brand)
     {
         return Product::with('brand:id,name')
-            ->select('id', 'image', 'name', 'price', 'stock', 'brand_id')
+            ->select('id', 'image', 'name', 'price', 'purchase_price', 'stock', 'brand_id')
             ->whereHas('brand', function ($query) use ($brand) {
                 $query->whereLike('name', '%' . $brand . '%');
             })
             ->paginate(10);
     }
 
-    public function getProductByName($name)
+    public function getProductsByName($name)
     {
         return Product::with('brand:id,name')
-            ->select('id', 'image', 'name', 'price', 'stock', 'brand_id')
+            ->select('id', 'image', 'name', 'price', 'purchase_price', 'stock', 'brand_id')
             ->whereLike('name', '%' . $name . '%')
             ->paginate(10);
     }

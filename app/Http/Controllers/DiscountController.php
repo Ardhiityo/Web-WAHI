@@ -3,21 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Services\Interfaces\VoucherInterface;
 use App\Http\Requests\Voucher\StoreVoucherRequest;
 use App\Http\Requests\Voucher\UpdateVoucherRequest;
 use App\Models\Discount;
 use App\Models\Product;
+use App\Services\Interfaces\DiscountInterface;
+use App\Services\Interfaces\ProductInterface;
 
 class DiscountController extends Controller
 {
-    public function __construct(private VoucherInterface $voucherRepository) {}
+    public function __construct(
+        private DiscountInterface $discountRepository,
+        private ProductInterface $productRepository
+    ) {}
 
     public function index()
     {
-        $vouchers = $this->voucherRepository->getAllVouchers();
+        $discounts = $this->discountRepository->getDiscounts();
 
-        return view('pages.discount.index', compact('vouchers'));
+        return view('pages.discount.index', compact('discounts'));
     }
 
     public function create()
@@ -26,13 +30,14 @@ class DiscountController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        $products = Product::all();
+        $products = $this->productRepository->getProductsName();
+
         return view('pages.discount.create', compact('products'));
     }
 
     public function store(StoreVoucherRequest $request)
     {
-        $this->voucherRepository->createVoucher($request->validated());
+        $this->discountRepository->createDiscount($request->validated());
 
         return redirect()->route('discounts.index')->withSuccess('Berhasil ditambahkan');
     }
