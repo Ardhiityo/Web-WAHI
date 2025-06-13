@@ -110,115 +110,111 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="voucher">Kode Transaksi</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ $transaction->transaction_code ?? '-' }}">
+                                <div class="form-group">
+                                    <label for="voucher">Kode Transaksi</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         </div>
+                                        <input type="text" class="form-control" readonly
+                                            value="{{ $transaction->transaction_code ?? '-' }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="voucher">Sub total</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp</span>
-                                            </div>
-                                            <input type="text" class="form-control" name="voucher" readonly
-                                                value="{{ number_format($transaction->subtotal_amount, thousands_separator: '.') }}">
+                                <div class="form-group">
+                                    <label for="voucher">Sub total</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
                                         </div>
+                                        <input type="text" class="form-control" name="voucher" readonly
+                                            value="{{ number_format($transaction->subtotal_selling_amount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="voucher">Pemesan</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" readonly
-                                                value="{{ $transaction->user->name }}" name="voucher">
+                                <div class="form-group">
+                                    <label for="voucher">Pemesan</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
+                                        <input type="text" class="form-control" readonly
+                                            value="{{ $transaction->user->name }}" name="voucher">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="total_discount">Total Diskon</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp</span>
-                                            </div>
-                                            <input type="text" class="form-control" readonly name="total_discount"
-                                                value="{{ number_format($transaction->total_discount, thousands_separator: '.') }}">
+                                <div class="form-group">
+                                    <label for="total_discount">Total Diskon</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
                                         </div>
+                                        <input type="text" class="form-control" readonly name="total_discount"
+                                            value="{{ number_format($transaction->total_discount, thousands_separator: '.') }}">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="transaction_status">Status Transaksi</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend w-100">
-                                                <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                                <input type="text" class="form-control" name="transaction_status"
-                                                    readonly value="{{ ucfirst($transaction->transaction_status) }}">
-                                            </div>
+                                <div class="form-group">
+                                    <label for="transaction_status">Status Transaksi</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend w-100">
+                                            <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                            <input type="text" class="form-control" name="transaction_status" readonly
+                                                value="{{ ucfirst($transaction->transaction_status) }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
+                                <div class="form-group">
+                                    <label for="voucher">Grand total</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="voucher"
+                                            value="{{ number_format($transaction->grandtotal_selling_amount, thousands_separator: '.') }}"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="transaction_type">Jenis Pembayaran</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                            value="{{ ucfirst($transaction->transaction_type) }}" name="transaction_type"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            @role('owner')
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="voucher">Grand total</label>
+                                        <label
+                                            for="voucher">{{ $transaction->transaction_status === 'paid' ? 'Pendapatan' : 'Potensi Pendapatan' }}</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
                                             </div>
                                             <input type="text" class="form-control" name="voucher"
-                                                value="{{ number_format($transaction->total_amount, thousands_separator: '.') }}"
+                                                value="{{ number_format($transaction->grandtotal_selling_amount, thousands_separator: '.') }}"
                                                 readonly>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div id="logins-part" class="content" role="tabpanel"
-                                    aria-labelledby="logins-part-trigger">
-                                    <div class="form-group">
-                                        <label for="transaction_type">Jenis Pembayaran</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-money-bill-wave"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control"
-                                                value="{{ ucfirst($transaction->transaction_type) }}"
-                                                name="transaction_type" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endrole
                         </div>
                     </div>
                     <hr>

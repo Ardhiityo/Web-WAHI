@@ -186,22 +186,22 @@
                             </div>
                         @endrole
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="total_amount">Grand Total Modal</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp</span>
+                    @role('owner')
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="total_amount">Grand Total Modal</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="total_amount" readonly
+                                            value="{{ number_format($transaction->grandtotal_purchase_amount, thousands_separator: '.') }}">
                                     </div>
-                                    <input type="text" class="form-control" name="total_amount" readonly
-                                        value="{{ number_format($transaction->grandtotal_purchase_amount, thousands_separator: '.') }}">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                        </div>
-                    </div>
+                    @endrole
                     @if ($transaction->transaction_status === 'pending')
                         @hasrole('owner|cashier')
                             <div class="row">
