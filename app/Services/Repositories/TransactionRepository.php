@@ -206,30 +206,90 @@ class TransactionRepository implements TransactionInterface
         try {
             DB::beginTransaction();
 
+            // Update Product Transaction
             $productTransaction = ProductTransaction::where('transaction_id', $data['transaction_id'])
                 ->where('product_id', $data['product_id'])
                 ->first();
 
             $quantity = $data['quantity'];
 
-            $discountProductTransaction = 0;
+            $totalDiscountProductTransaction = 0;
             $productTransactionPrice = $productTransaction->product->price;
+            $grandTotalPurchaseAmountProductTransaction = $productTransaction->product->purchase_price * $quantity;
+            $subTotalSellingAmountProductTransaction = $productTransaction->product->price * $quantity;
 
             if ($productTransaction->product->discount->discount ?? false) {
                 $productTransactionDiscountPercentage = $productTransaction->product->discount->discount / 100;
-                $discountProductTransaction = $productTransactionPrice * $productTransactionDiscountPercentage;
+                $totalDiscountProductTransaction = ($productTransactionPrice * $productTransactionDiscountPercentage) * $quantity;
             }
+
+            $grandTotalSellingAmountProductTransaction = $subTotalSellingAmountProductTransaction - $totalDiscountProductTransaction;
+            $profitAmount = $grandTotalSellingAmountProductTransaction - $grandTotalPurchaseAmountProductTransaction;
 
             ProductTransaction::where('product_id', $data['product_id'])
                 ->where('transaction_id', $data['transaction_id'])
                 ->update([
                     'product_id' => $data['product_id'],
                     'transaction_id' => $data['transaction_id'],
-                    'subtotal_price' => $productTransaction->product->price * $quantity,
-                    'total_price' => ($productTransactionPrice * $quantity) - ($discountProductTransaction * $quantity),
-                    'total_discount' => $discountProductTransaction * $quantity,
-                    'quantity' => $quantity,
+                    'grandtotal_purchase_amount' => $grandTotalPurchaseAmountProductTransaction,
+                    'subtotal_selling_amount' => $subTotalSellingAmountProductTransaction,
+                    'total_discount' => $totalDiscountProductTransaction,
+                    'grandtotal_selling_amount' => $grandTotalSellingAmountProductTransaction,
+                    'profit_amount' => $profitAmount,
+                    'quantity' => $quantity
                 ]);
+            // End Update Product Transaction
+
+            // Update Transaction
+            $transaction = Transaction::with([
+                'products' => fn(Builder $query) => $query->with('discount:id,discount,untill_date,product_id')
+                    ->select('id', 'price', 'purchase_price')
+            ])
+                ->select(
+                    'id',
+                    'grandtotal_purchase_amount',
+                    'total_discount',
+                    'subtotal_selling_amount',
+                    'grandtotal_selling_amount',
+                    'profit_amount'
+                )->find($data['transaction_id']);
+
+            $grandTotalPurchaseAmount = 0;
+            $totalDiscount = 0;
+            $subTotalSellingAmount = 0;
+            $grandTotalSellingAmount = 0;
+
+            foreach ($transaction->products as $productTransaction) {
+                $productPrice =  $productTransaction->price;
+
+                if ($productTransaction->discount->discount ?? false) {
+                    $discountIsValid = $productTransaction->discount->untill_date >= now();
+
+                    if ($discountIsValid) {
+                        $discountPercentage = $productTransaction->discount->discount / 100;
+                        $discount = $productPrice * $discountPercentage;
+                        $productPrice -= $discount;
+                        $totalDiscount += $discount * $productTransaction->pivot->quantity;
+                    }
+                }
+
+                $grandTotalPurchaseAmount += $productTransaction->purchase_price * $productTransaction->pivot->quantity;
+                $subTotalSellingAmount += $productTransaction->price * $productTransaction->pivot->quantity;
+                $grandTotalSellingAmount += $productPrice * $productTransaction->pivot->quantity;
+            }
+
+            $profitAmount = $grandTotalSellingAmount - $grandTotalPurchaseAmount;
+
+            $transaction->update(
+                [
+                    'grandtotal_purchase_amount' => $grandTotalPurchaseAmount,
+                    'total_discount' => $totalDiscount,
+                    'subtotal_selling_amount' => $subTotalSellingAmount,
+                    'grandtotal_selling_amount' => $grandTotalSellingAmount,
+                    'profit_amount' => $profitAmount,
+                ]
+            );
+            // End Update Transaction;
 
             DB::commit();
         } catch (Exception $exception) {
