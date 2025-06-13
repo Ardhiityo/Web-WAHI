@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class TransactionExport implements FromView
@@ -27,14 +28,17 @@ class TransactionExport implements FromView
             ->where('transaction_status', 'pending')
             ->count();
 
-        $profit = 0;
+        $profitRealization = 0;
+        $profitUnrealization = 0;
 
         foreach ($transactions as $transaction) {
             if ($transaction->transaction_status === 'paid') {
-                $profit += $transaction->total_amount;
+                $profitRealization += $transaction->profit_amount;
+            } else if ($transaction->transaction_status === 'pending') {
+                $profitUnrealization += $transaction->profit_amount;
             }
         }
-
-        return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransactionSuccess', 'totalTransactionPending', 'profit'));
+        Log::info(json_encode($transactions, JSON_PRETTY_PRINT));
+        return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransactionSuccess', 'totalTransactionPending', 'profitRealization', 'profitUnrealization'));
     }
 }
