@@ -129,7 +129,7 @@
                 </div>
             @endrole
             <div class="row">
-                <div class="col-12 d-flex">
+                <div class="col-12">
                     @if ($products->isEmpty())
                         <p>Data belum tersedia...</p>
                     @else
@@ -159,7 +159,10 @@
                                 <tbody>
                                     @foreach ($products as $product)
                                         <tr>
-                                            <td class="align-middle">{{ $loop->iteration }}</td>
+                                            <td class="align-middle">
+                                                {{-- mulai 1, 11, 21, … --}}
+                                                {{ $products->firstItem() + $loop->index }}
+                                            </td>
                                             <td class="align-middle">
                                                 <img src="{{ asset(Storage::url($product->image)) }}" width="100"
                                                     height="100" alt="{{ $product->name }}" class="rounded">

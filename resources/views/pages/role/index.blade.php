@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 d-flex justify-content-around">
+                <div class="col-12">
                     <div class="container overflow-auto">
                         <table class="table text-center table-bordered">
                             <thead>
@@ -43,7 +43,10 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td class="align-middle">{{ $loop->iteration }}</td>
+                                        <td class="align-middle">
+                                            {{-- mulai 1, 11, 21, … --}}
+                                            {{ $products->firstItem() + $loop->index }}
+                                        </td>
                                         <td class="align-middle">{{ $user->name }}</td>
                                         <td class="align-middle">{{ $user->email }}</td>
                                         <td class="align-middle">{{ ucfirst($user->roles->pluck('name')->implode(', ')) }}

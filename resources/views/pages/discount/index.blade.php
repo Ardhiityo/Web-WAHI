@@ -33,7 +33,7 @@
                 @if ($discounts->isEmpty())
                     <p>Data belum tersedia...</p>
                 @else
-                    <div class="col-12 d-flex justify-content-around">
+                    <div class="col-12">
                         <div class="container overflow-auto">
                             <table class="table text-center table-bordered">
                                 <thead>
@@ -51,7 +51,10 @@
                                 <tbody>
                                     @foreach ($discounts as $discount)
                                         <tr>
-                                            <td class="align-middle">{{ $loop->iteration }}</td>
+                                            <td class="align-middle">
+                                                {{-- mulai 1, 11, 21, … --}}
+                                                {{ $products->firstItem() + $loop->index }}
+                                            </td>
                                             <td class="align-middle">
                                                 <img src="{{ asset(Storage::url($discount->product->image)) }}"
                                                     width="100" height="100" alt="{{ $discount->product->name }}"

@@ -32,7 +32,7 @@
                 <p>Data belum tersedia...</p>
             @else
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-around">
+                    <div class="col-12">
                         <div class="container overflow-auto">
                             <table class="table text-center table-bordered">
                                 <thead>
@@ -45,7 +45,10 @@
                                 <tbody>
                                     @foreach ($brands as $brand)
                                         <tr>
-                                            <td class="align-middle">{{ $loop->iteration }}</td>
+                                            <td class="align-middle">
+                                                {{-- mulai 1, 11, 21, … --}}
+                                                {{ $products->firstItem() + $loop->index }}
+                                            </td>
                                             <td class="align-middle">{{ $brand->name }}</td>
                                             <td class="align-middle text-nowrap">
                                                 <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning">

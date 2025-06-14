@@ -38,6 +38,9 @@ class BrandSeeder extends Seeder
             [
                 'name' => 'Ayoma',
             ],
+            [
+                'name' => 'Champ',
+            ],
         ]);
     }
 }
