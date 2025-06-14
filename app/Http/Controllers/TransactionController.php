@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Services\MidtransService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\TransactionInterface;
+use App\Services\Interfaces\ProductTransactionInterface;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
-use App\Services\Interfaces\ProductTransactionInterface;
 
 class TransactionController extends Controller
 {
     public function __construct(
         private TransactionInterface $transactionRepository,
-        private ProductTransactionInterface $productTransactionRepository
+        private ProductTransactionInterface $productTransactionRepository,
+        private MidtransService $midtransService
     ) {}
 
     public function index(Request $request)
@@ -70,9 +73,21 @@ class TransactionController extends Controller
     {
         Session::forget('transaction_code');
 
-        if (Auth::user()->hasRole('customer')) {
-            if ($transaction->user_id === Auth::user()->id) {
-                return view('pages.transaction.show', compact('transaction'));
+        Log::info('Masuk');
+
+        $isPaid = false;
+
+        if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending') {
+            $checkStatus = $this->midtransService->checkStatus($transaction->transaction_code);
+            if ($checkStatus) {
+                $this->midtransService->isPaid($checkStatus) ? $isPaid = true : $isPaid = false;
+                $transaction->refresh();
+            }
+        }
+
+        if ($transaction->user_id === Auth::user()->id) {
+            if (Auth::user()->hasRole('customer')) {
+                return view('pages.transaction.show', compact('transaction', 'isPaid'));
             } else {
                 return abort(403, 'Unauthorized action.');
             }

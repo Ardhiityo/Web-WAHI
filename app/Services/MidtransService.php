@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use Midtrans\Config;
+use Midtrans\Transaction;
 use Midtrans\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,7 @@ class MidtransService
 {
     public function __construct(
         private TransactionInterface $transactionRepository,
-        private CartInterface $cartRepository
+        private CartInterface $cartRepository,
     ) {
         Config::$serverKey = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
@@ -59,5 +60,37 @@ class MidtransService
             Log::info($exception->getMessage());
             throw new Exception($exception->getMessage());
         }
+    }
+
+    public function checkStatus(string $orderId)
+    {
+        try {
+            // <- SDK akan GET /v2/{orderId}/status;
+            $transaction = Transaction::status($orderId);
+            return $transaction;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function isPaid($response)
+    {
+        $isPaid = in_array($response->transaction_status, ['capture', 'settlement', 'success']);
+
+        if ($isPaid) {
+            try {
+                DB::beginTransaction();
+
+                $order_id = $response->order_id;
+                $this->transactionRepository->getTransactionByCode($order_id)->update(['transaction_status' => 'paid']);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                Log::info($th->getMessage());
+            }
+        }
+
+        return $isPaid;
     }
 }

@@ -213,7 +213,7 @@
                     @endif
                 </form>
 
-                @if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending')
+                @if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending' && !$isPaid)
                     @hasrole('customer')
                         <div class="row">
                             <div class="mt-3 col-12 d-flex justify-content-end">
