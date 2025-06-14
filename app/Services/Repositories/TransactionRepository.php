@@ -113,9 +113,7 @@ class TransactionRepository implements TransactionInterface
                 ]);
             };
 
-            if ($transaction->transaction_type == 'cash') {
-                Cart::where('user_id', $userId)->delete();
-            }
+            Cart::where('user_id', $userId)->delete();
             // End Create Product Transaction
 
             DB::commit();

@@ -51,8 +51,6 @@ class MidtransService
                     'transaction_status' => 'paid'
                 ]);
 
-                $this->cartRepository->deleteCartsByUserId($transaction->user_id);
-
                 DB::commit();
 
                 return response()->json([

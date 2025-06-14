@@ -43,10 +43,12 @@
                 <div class="my-3 col-12">
                     @if ($transaction->transaction_type == 'cash')
                         <a href="{{ route('transactions.show', ['transaction' => $transaction->id]) }}"
-                            class="btn btn-primary">Lihat Transaksi</a>
+                            class="btn btn-primary">Detail Transaksi</a>
                         <a href="https://wa.me/6287871111101?text=Hallo%20kak,%20saya%20mau%20datang%20ke%20toko,%20kode%20pesanan%20saya%20{{ $transaction->transaction_code }}"
                             class="btn btn-success">Konfirmasi</a>
                     @else
+                        <a href="{{ route('transactions.show', ['transaction' => $transaction->id]) }}"
+                            class="btn btn-primary">Detail Transaksi</a>
                         <button class="btn btn-success" id="pay-button">Bayar</button>
                     @endif
                 </div>
