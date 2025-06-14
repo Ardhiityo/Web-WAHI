@@ -94,31 +94,40 @@
         <tr>
             <th colspan="4"></th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold; vertical-align: middle;"
-                colspan="3">Transaksi Terbayar
+                colspan="2">Transaksi Terbayar
             </th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold; vertical-align: middle;"
-                colspan="3">Transaksi Pending
+                colspan="2">Transaksi Pending
             </th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold; vertical-align: middle;"
-                colspan="3">Pendapatan Terbayar
+                colspan="2">Transaksi Cancel
             </th>
             <th style="border: 1px solid black; text-align: center; font-weight: bold; vertical-align: middle;"
-                colspan="3">Pendapatan Pending
+                colspan="2">Pendapatan Terbayar
+            </th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold; vertical-align: middle;"
+                colspan="2">Pendapatan Pending
+            </th>
+            <th style="border: 1px solid black; text-align: center; font-weight: bold; vertical-align: middle;"
+                colspan="2">Pendapatan Cancel
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td colspan="4"></td>
-            <td style="border: 1px solid black; text-align: center;" colspan="3">
+            <td style="border: 1px solid black; text-align: center;" colspan="2">
                 {{ $totalTransactionSuccess }}</td>
-            <td style="border: 1px solid black; text-align: center;" colspan="3">
+            <td style="border: 1px solid black; text-align: center;" colspan="2">
                 {{ $totalTransactionPending }}</td>
-            <td style="border: 1px solid black; text-align: center;" colspan="3">
+            <td style="border: 1px solid black; text-align: center;" colspan="2">
+                {{ $totalTransactionCancel }}</td>
+            <td style="border: 1px solid black; text-align: center;" colspan="2">
                 Rp. {{ number_format($profitRealization, thousands_separator: '.') }}</td>
-            <td style="border: 1px solid black; text-align: center;" colspan="3">
+            <td style="border: 1px solid black; text-align: center;" colspan="2">
                 Rp. {{ number_format($profitUnrealization, thousands_separator: '.') }}</td>
+            <td style="border: 1px solid black; text-align: center;" colspan="2">
+                Rp. {{ number_format($profitUnrealizationCancel, thousands_separator: '.') }}</td>
         </tr>
-        <tr></tr>
     </tbody>
 </table>

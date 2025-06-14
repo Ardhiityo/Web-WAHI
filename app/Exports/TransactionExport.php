@@ -27,17 +27,37 @@ class TransactionExport implements FromView
             ->where('transaction_status', 'pending')
             ->count();
 
+        $totalTransactionCancel = $transactions->toQuery()
+            ->where('transaction_status', 'cancel')
+            ->count();
+
         $profitRealization = 0;
         $profitUnrealization = 0;
+        $profitUnrealizationCancel = 0;
 
         foreach ($transactions as $transaction) {
             if ($transaction->transaction_status === 'paid') {
                 $profitRealization += $transaction->profit_amount;
             } else if ($transaction->transaction_status === 'pending') {
                 $profitUnrealization += $transaction->profit_amount;
+            } else if ($transaction->transaction_status === 'cancel') {
+                $profitUnrealizationCancel += $transaction->profit_amount;
             }
         }
 
-        return view('exports.report.index', compact('transactions', 'start_date', 'end_date', 'totalTransactionSuccess', 'totalTransactionPending', 'profitRealization', 'profitUnrealization'));
+        return view(
+            'exports.report.index',
+            compact(
+                'transactions',
+                'start_date',
+                'end_date',
+                'totalTransactionSuccess',
+                'totalTransactionPending',
+                'totalTransactionCancel',
+                'profitRealization',
+                'profitUnrealization',
+                'profitUnrealizationCancel'
+            )
+        );
     }
 }
