@@ -45,7 +45,7 @@
                                     <tr>
                                         <td class="align-middle">
                                             {{-- mulai 1, 11, 21, … --}}
-                                            {{ $products->firstItem() + $loop->index }}
+                                            {{ $users->firstItem() + $loop->index }}
                                         </td>
                                         <td class="align-middle">{{ $user->name }}</td>
                                         <td class="align-middle">{{ $user->email }}</td>

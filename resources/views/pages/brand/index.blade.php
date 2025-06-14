@@ -47,7 +47,7 @@
                                         <tr>
                                             <td class="align-middle">
                                                 {{-- mulai 1, 11, 21, … --}}
-                                                {{ $products->firstItem() + $loop->index }}
+                                                {{ $brands->firstItem() + $loop->index }}
                                             </td>
                                             <td class="align-middle">{{ $brand->name }}</td>
                                             <td class="align-middle text-nowrap">

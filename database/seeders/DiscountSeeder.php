@@ -22,17 +22,17 @@ class DiscountSeeder extends Seeder
             [
                 'product_id' => $productId1,
                 'untill_date' => now()->addDays(5),
-                'discount' => 10
+                'discount' => 8
             ],
             [
                 'product_id' => $productId2,
                 'untill_date' => now()->addDays(5),
-                'discount' => 10
+                'discount' => 5
             ],
             [
                 'product_id' => $productId3,
                 'untill_date' => now()->addDays(5),
-                'discount' => 10
+                'discount' => 3
             ],
         ]);
     }

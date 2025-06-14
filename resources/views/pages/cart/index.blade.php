@@ -66,7 +66,7 @@
                                         <tr>
                                             <td class="align-middle">
                                                 {{-- mulai 1, 11, 21, … --}}
-                                                {{ $products->firstItem() + $loop->index }}
+                                                {{ $carts->firstItem() + $loop->index }}
                                             </td>
                                             <td class="align-middle">
                                                 <img src="{{ asset(Storage::url($cart->product->image)) }}" width="100"
