@@ -73,8 +73,6 @@ class TransactionController extends Controller
     {
         Session::forget('transaction_code');
 
-        Log::info('Masuk');
-
         $isPaid = false;
 
         if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending') {
@@ -85,11 +83,9 @@ class TransactionController extends Controller
             }
         }
 
-        if ($transaction->user_id === Auth::user()->id) {
-            if (Auth::user()->hasRole('customer')) {
+        if (Auth::user()->hasRole('customer')) {
+            if ($transaction->user_id === Auth::user()->id) {
                 return view('pages.transaction.show', compact('transaction', 'isPaid'));
-            } else {
-                return abort(403, 'Unauthorized action.');
             }
         }
 
@@ -116,5 +112,15 @@ class TransactionController extends Controller
         $transaction->delete();
 
         return redirect()->route('transactions.index')->withSuccess('Berhasil dihapus');
+    }
+
+    public function cancel(Transaction $transaction)
+    {
+        $transaction->update([
+            'transaction_status' => 'cancel'
+        ]);
+
+        return redirect()->route('transactions.show', ['transaction' => $transaction->id])
+            ->withSuccess('Berhasil diubah');
     }
 }

@@ -155,6 +155,9 @@
                                                     <option value="paid"
                                                         {{ $transaction->transaction_status == 'paid' ? 'selected' : '' }}>
                                                         Paid</option>
+                                                    <option value="cancel"
+                                                        {{ $transaction->transaction_status == 'cancel' ? 'selected' : '' }}>
+                                                        Cancel</option>
                                                 </select>
                                             @else
                                                 <input type="text" class="form-control" readonly
@@ -213,15 +216,26 @@
                     @endif
                 </form>
 
-                @if ($transaction->transaction_type === 'cashless' && $transaction->transaction_status === 'pending' && !$isPaid)
-                    @hasrole('customer')
+                @hasrole('customer')
+                    @if ($transaction->transaction_status === 'pending')
                         <div class="row">
                             <div class="mt-3 col-12 d-flex justify-content-end">
+                                @if ($transaction->transaction_type === 'cashless' && !$isPaid)
+                                    <form action="{{ route('transactions.cancel', ['transaction' => $transaction->id]) }}"
+                                        method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button class="btn btn-danger"
+                                            onclick="return confirm('Are you sure?')">Cancel</button>
+                                    </form>
+                                @endif
+                                <span class="mx-2"></span>
                                 <button class="btn btn-warning" id="pay-button">Bayar</button>
                             </div>
                         </div>
-                    @endhasrole
-                @endif
+                    @endif
+                @endhasrole
+
             </div>
             <hr>
         </div>
@@ -304,7 +318,7 @@
                                         @if (Auth::user()->hasRole('cashier'))
                                             <input type="text" class="form-control" name="quantity"
                                                 value="{{ $product->pivot->quantity }}" id="{{ $loop->iteration }}"
-                                                {{ $transaction->transaction_status === 'paid' ? 'readonly' : '' }}>
+                                                {{ $transaction->transaction_status === 'paid' || $transaction->transaction_status === 'cancel' ? 'readonly' : '' }}>
                                         @else
                                             <input type="text" class="form-control" name="quantity"
                                                 value="{{ $product->pivot->quantity }}" readonly

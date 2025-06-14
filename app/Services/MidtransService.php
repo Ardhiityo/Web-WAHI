@@ -54,6 +54,10 @@ class MidtransService
                 $this->cartRepository->deleteCartsByUserId($transaction->user_id);
 
                 DB::commit();
+
+                return response()->json([
+                    'message' => 'success',
+                ], 200);
             }
         } catch (Exception $exception) {
             DB::rollBack();

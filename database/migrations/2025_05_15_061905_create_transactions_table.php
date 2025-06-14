@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('subtotal_selling_amount');
             $table->unsignedBigInteger('grandtotal_selling_amount');
             $table->bigInteger('profit_amount');
-            $table->enum('transaction_status', ['pending', 'paid']);
+            $table->enum('transaction_status', ['pending', 'paid', 'cancel', 'expired']);
             $table->enum('transaction_type', ['cashless', 'cash']);
             $table->foreignId('user_id')
                 ->constrained('users')->cascadeOnDelete();

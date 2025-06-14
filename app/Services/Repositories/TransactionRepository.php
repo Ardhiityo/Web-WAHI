@@ -176,17 +176,19 @@ class TransactionRepository implements TransactionInterface
                 ->where('transaction_id', $id)
                 ->get();
 
-            foreach ($productTransactions as $productTransaction) {
-                if ($productTransaction->quantity <= $productTransaction->product->stock && $productTransaction->product->stock > 0) {
-                    $productTransaction->product()->update([
-                        'stock' => $productTransaction->product->stock - $productTransaction->quantity
-                    ]);
-                } else {
-                    throw new Exception('Produk yang dibeli melebihi stok.');
+            if ($data['transaction_status'] === 'paid') {
+                foreach ($productTransactions as $productTransaction) {
+                    if ($productTransaction->quantity <= $productTransaction->product->stock && $productTransaction->product->stock > 0) {
+                        $productTransaction->product()->update([
+                            'stock' => $productTransaction->product->stock - $productTransaction->quantity
+                        ]);
+                    } else {
+                        throw new Exception('Produk yang dibeli melebihi stok.');
+                    }
                 }
             }
 
-            $productTransaction->transaction()->update($data);
+            Transaction::find($id)->update($data);
 
             DB::commit();
         } catch (Exception $exception) {

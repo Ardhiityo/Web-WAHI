@@ -16,17 +16,7 @@ class UpdateTransactionRequest extends FormRequest
     {
         return [
             'transaction_type' => ['required', 'in:cashless,cash'],
-            'transaction_status' => ['required', 'in:paid', new UpdateStatusTransactionRule(request('transaction'))]
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'transaction_type.required' => 'Jenis transaksi wajib diisi.',
-            'transaction_type.in' => 'Jenis transaksi harus berupa cash atau cashless.',
-            'transaction_status.required' => 'Status transaksi wajib diisi.',
-            'transaction_status.in' => 'Status transaksi harus berupa paid.',
+            'transaction_status' => ['required', 'in:paid,pending,cancel', new UpdateStatusTransactionRule(request('transaction'))]
         ];
     }
 }

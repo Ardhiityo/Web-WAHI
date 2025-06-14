@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('discounts', DiscountController::class);
     Route::resource('transactions', TransactionController::class);
+
+    Route::patch('/transactions/{transaction}/cancel', [TransactionController::class, 'cancel'])->name('transactions.cancel');
+
     Route::resource('product-transactions', ProductTransactionController::class);
     Route::resource('roles', RoleController::class);
 

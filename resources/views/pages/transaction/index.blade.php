@@ -94,7 +94,7 @@
                                     role="button" class="mx-3 btn btn-warning">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                @if ($transaction->transaction_status === 'pending')
+                                @if ($transaction->transaction_status === 'pending' || $transaction->transaction_status === 'cancel')
                                     @hasrole('cashier')
                                         <form action="{{ route('transactions.destroy', ['transaction' => $transaction->id]) }}"
                                             method="post">
