@@ -116,9 +116,8 @@ class TransactionController extends Controller
 
     public function cancel(Transaction $transaction)
     {
-        $transaction->update([
-            'transaction_status' => 'cancel'
-        ]);
+        $this->transactionRepository
+            ->updateTransactionStatus($transaction->id, ['transaction_status' => 'cancel']);
 
         return redirect()->route('transactions.show', ['transaction' => $transaction->id])
             ->withSuccess('Berhasil diubah');
