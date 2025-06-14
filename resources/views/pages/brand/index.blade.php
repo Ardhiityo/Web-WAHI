@@ -39,7 +39,9 @@
                                     <tr>
                                         <th style="width: 10px">No</th>
                                         <th>Brand</th>
-                                        <th>Aksi</th>
+                                        @role('owner')
+                                            <th>Aksi</th>
+                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,21 +52,23 @@
                                                 {{ $brands->firstItem() + $loop->index }}
                                             </td>
                                             <td class="align-middle">{{ $brand->name }}</td>
-                                            <td class="align-middle text-nowrap">
-                                                <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <span class="mx-1"></span>
-                                                <form action="{{ route('brands.destroy', $brand->id) }}" method="POST"
-                                                    style="display: inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Are you sure?')">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            @role('owner')
+                                                <td class="align-middle text-nowrap">
+                                                    <a href="{{ route('brands.edit', $brand->id) }}" class="btn btn-warning">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <span class="mx-1"></span>
+                                                    <form action="{{ route('brands.destroy', $brand->id) }}" method="POST"
+                                                        style="display: inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger"
+                                                            onclick="return confirm('Are you sure?')">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            @endrole
                                         </tr>
                                     @endforeach
                                 </tbody>
