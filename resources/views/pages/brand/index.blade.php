@@ -12,14 +12,16 @@
     </div>
 
     <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">Semua brand</h3>
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
+        @role('owner')
+            <div class="card-header">
+                <h3 class="card-title">Semua brand</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
             </div>
-        </div>
+        @endrole
         <div class="card-body">
             <div class="mb-4 row">
                 <div class="col-12">
