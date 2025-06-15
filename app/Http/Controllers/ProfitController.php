@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Services\Interfaces\TransactionInterface;
 
 class ProfitController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(private TransactionInterface $transactionRepository) {}
 
     public function index(Request $request)
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('profit.index');
 
         $dates = $this->transactionRepository->getTransactionDates();
 

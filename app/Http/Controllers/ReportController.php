@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Exports\InvoiceExport;
 use App\Exports\TransactionExport;
@@ -13,13 +14,13 @@ use App\Services\Interfaces\TransactionInterface;
 
 class ReportController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(private TransactionInterface $transactionRepository) {}
 
     public function index(Request $request)
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('report.index');
 
         $dates = $this->transactionRepository->getTransactionDates();
 
@@ -34,9 +35,7 @@ class ReportController extends Controller
 
     public function exportByDate(StoreReportRequest $request)
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('report.export');
 
         $data = $request->validated();
 

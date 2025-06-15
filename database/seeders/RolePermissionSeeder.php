@@ -100,6 +100,17 @@ class RolePermissionSeeder extends Seeder
             'name' => 'product.transaction.destroy'
         ])->assignRole('cashier');
 
+        Permission::create([
+            'name' => 'profit.index'
+        ])->assignRole('owner');
+
+        Permission::create([
+            'name' => 'report.index'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'report.export'
+        ])->assignRole('owner');
+
 
         User::create([
             'name' => 'Johnson',
