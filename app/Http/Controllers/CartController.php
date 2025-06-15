@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Services\Interfaces\CartInterface;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
 
 class CartController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(private CartInterface $cartRepository) {}
 
     public function index()
     {
-        if (Auth::user()->hasRole('owner')) {
-            return abort(403, message: 'Unauthorized action.');
-        }
+        $this->authorize('cart.index');
 
         $carts = $this->cartRepository->getAllCarts();
 
@@ -34,9 +34,7 @@ class CartController extends Controller
 
     public function edit(Cart $cart)
     {
-        if (Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('cart.index');
 
         return view('pages.cart.edit', compact('cart'));
     }
@@ -50,6 +48,8 @@ class CartController extends Controller
 
     public function destroy(Cart $cart)
     {
+        $this->authorize('cart.destroy');
+
         $cart->delete();
 
         return redirect()->route('carts.index')->withSuccess('Berhasil dihapus');

@@ -210,8 +210,10 @@
                             <div class="row">
                                 <div class="mt-3 col-12 d-flex justify-content-end">
                                     <button class="btn btn-warning">Update</button>
-                                    <span class="mx-2"></span>
-                                    <span class="btn btn-success" role="button" id="pay-button">Bayar</span>
+                                    @if ($transaction->transaction_type === 'cashless')
+                                        <span class="mx-2"></span>
+                                        <span class="btn btn-success" role="button" id="pay-button">Bayar</span>
+                                    @endif
                                 </div>
                             </div>
                         @endhasrole
