@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Midtrans\Snap;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
@@ -12,6 +13,8 @@ use App\Services\Interfaces\TransactionInterface;
 
 class CheckoutController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private MidtransService $midtransService,
         private CartInterface $cartRepository,
@@ -20,6 +23,8 @@ class CheckoutController extends Controller
 
     public function index()
     {
+        $this->authorize('checkout.index');
+
         return view('pages.checkout.index');
     }
 

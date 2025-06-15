@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use App\Models\Discount;
+use App\Services\Interfaces\ProductInterface;
+use App\Services\Interfaces\DiscountInterface;
 use App\Http\Requests\Voucher\StoreVoucherRequest;
 use App\Http\Requests\Voucher\UpdateVoucherRequest;
-use App\Models\Discount;
-use App\Models\Product;
-use App\Services\Interfaces\DiscountInterface;
-use App\Services\Interfaces\ProductInterface;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DiscountController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private DiscountInterface $discountRepository,
         private ProductInterface $productRepository
@@ -26,9 +28,7 @@ class DiscountController extends Controller
 
     public function create()
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('discount.create');
 
         $products = $this->productRepository->getProductsName();
 
@@ -44,11 +44,10 @@ class DiscountController extends Controller
 
     public function edit(Discount $discount)
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('discount.edit');
 
-        $products = Product::all();
+        $products = $this->productRepository->getProducts();
+
         return view('pages.discount.edit', compact('discount', 'products'));
     }
 
@@ -61,6 +60,8 @@ class DiscountController extends Controller
 
     public function destroy(Discount $voucher)
     {
+        $this->authorize('discount.destroy');
+
         $voucher->delete();
 
         return redirect()->route('discount.index')->withSuccess('Berhasil dihapus');

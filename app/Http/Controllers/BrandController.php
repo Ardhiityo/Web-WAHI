@@ -16,8 +16,6 @@ class BrandController extends Controller
 
     public function index()
     {
-        $this->authorize('brand.index');
-
         $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.brand.index', compact('brands'));
@@ -25,8 +23,6 @@ class BrandController extends Controller
 
     public function create()
     {
-        $this->authorize('brand.create');
-
         return view('pages.brand.create');
     }
 

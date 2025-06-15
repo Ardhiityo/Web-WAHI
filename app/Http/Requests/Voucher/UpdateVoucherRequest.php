@@ -3,14 +3,17 @@
 namespace App\Http\Requests\Voucher;
 
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateVoucherRequest extends FormRequest
 {
-    protected function prepareForValidation()
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
     {
-        Log::info($this->discount);
+        return Gate::allows('discount.update');
     }
 
     /**

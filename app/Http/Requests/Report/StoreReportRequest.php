@@ -16,6 +16,7 @@ class StoreReportRequest extends FormRequest
         return [
             'start_date' => ['required', 'date', 'before_or_equal:end_date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'report_type' => ['required', 'in:excel,pdf']
         ];
     }
 }

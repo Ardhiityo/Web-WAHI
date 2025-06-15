@@ -18,10 +18,10 @@
                                 value="{{ $discount->discount }}">
                         </div>
                         <div class="form-group">
-                            <label for="untill_date">Berakhir</label>
+                            <label for="untill_date">Berlaku Hingga</label>
                             <input type="date" name="untill_date" required
-                                class="form-control form-control-border border-width-2" value="{{ $discount->untill_date }}"
-                                id="untill_date">
+                                class="form-control form-control-border border-width-2"
+                                value="{{ $discount->untill_date->toDateString() }}" id="untill_date">
                         </div>
                         <div class="form-group">
                             <label>Produk</label>

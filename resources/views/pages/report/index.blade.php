@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
             <form action="{{ route('reports.export.date') }}" method="get">
-                <div class="mb-4 row">
+                <div class="row">
                     <div class="col-6">
                         <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                             <div class="form-group">
@@ -61,8 +61,21 @@
                             </div>
                         </div>
                     </div>
-                    <button class="mt-3 ml-2 btn btn-primary">Download</button>
                 </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="report_type">Format Laporan</label>
+                            <select class="form-control select2" style="width: 100%;" name="report_type" required
+                                id="report_type">
+                                <option selected="selected" value="">Pilih...</option>
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="mt-4 btn btn-primary">Download</button>
             </form>
         </div>
     </div>

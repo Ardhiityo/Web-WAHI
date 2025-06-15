@@ -40,10 +40,14 @@ class ReportController extends Controller
 
         $data = $request->validated();
 
-        return Excel::download(new TransactionExport(
-            $data['start_date'],
-            $data['end_date']
-        ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
+        return $data['report_type'] === 'pdf' ?
+            Excel::download(new TransactionExport(
+                $data['start_date'],
+                $data['end_date']
+            ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF) : Excel::download(new TransactionExport(
+                $data['start_date'],
+                $data['end_date']
+            ), 'invoices.xlsx');
     }
 
     public function exportByTransaction(Transaction $transaction)

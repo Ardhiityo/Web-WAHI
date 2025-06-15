@@ -26,9 +26,6 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'brand.index'
-        ])->assignRole(['owner', 'customer', 'cashier']);
-        Permission::create([
             'name' => 'brand.create'
         ])->assignRole('owner');
         Permission::create([
@@ -59,6 +56,26 @@ class RolePermissionSeeder extends Seeder
         Permission::create([
             'name' => 'cart.destroy'
         ])->assignRole(['cashier', 'customer']);
+
+        Permission::create([
+            'name' => 'checkout.index'
+        ])->assignRole(['cashier', 'customer']);
+
+        Permission::create([
+            'name' => 'discount.create'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'discount.store'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'discount.edit'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'discount.update'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'discount.delete'
+        ])->assignRole('owner');
 
         User::create([
             'name' => 'Johnson',
