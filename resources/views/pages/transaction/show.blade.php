@@ -210,6 +210,8 @@
                             <div class="row">
                                 <div class="mt-3 col-12 d-flex justify-content-end">
                                     <button class="btn btn-warning">Update</button>
+                                    <span class="mx-2"></span>
+                                    <span class="btn btn-success" role="button" id="pay-button">Bayar</span>
                                 </div>
                             </div>
                         @endhasrole
@@ -228,9 +230,9 @@
                                         <button class="btn btn-danger"
                                             onclick="return confirm('Are you sure?')">Cancel</button>
                                     </form>
+                                    <span class="mx-2"></span>
+                                    <button class="btn btn-warning" id="pay-button">Bayar</button>
                                 @endif
-                                <span class="mx-2"></span>
-                                <button class="btn btn-warning" id="pay-button">Bayar</button>
                             </div>
                         </div>
                     @endif

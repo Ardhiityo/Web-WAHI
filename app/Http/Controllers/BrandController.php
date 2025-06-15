@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Brand\StoreBrandRequest;
 use App\Http\Requests\Brand\UpdateBrandRequest;
 use App\Services\Interfaces\BrandInterface;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BrandController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(private BrandInterface $brandRepository) {}
 
     public function index()
     {
+        $this->authorize('brand.index');
+
         $brands = $this->brandRepository->getAllBrands();
 
         return view('pages.brand.index', compact('brands'));
@@ -21,9 +25,7 @@ class BrandController extends Controller
 
     public function create()
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('brand.create');
 
         return view('pages.brand.create');
     }
@@ -37,9 +39,7 @@ class BrandController extends Controller
 
     public function edit(Brand $brand)
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('brand.edit');
 
         return view('pages.brand.edit', compact('brand'));
     }
@@ -53,6 +53,8 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
+        $this->authorize('brand.delete');
+
         $brand->delete();
 
         return redirect()->route('brands.index')->withSuccess('Berhasil dihapus');;

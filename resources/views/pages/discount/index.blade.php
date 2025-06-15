@@ -42,7 +42,7 @@
                                         <th>Foto</th>
                                         <th class="text-nowrap">Produk</th>
                                         <th class="text-nowrap">Persentase Diskon (%)</th>
-                                        <th class="text-nowrap">Berakhir</th>
+                                        <th class="text-nowrap">Berlaku Hingga</th>
                                         @role('owner')
                                             <th>Aksi</th>
                                         @endrole

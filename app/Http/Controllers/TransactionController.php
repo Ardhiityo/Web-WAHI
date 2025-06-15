@@ -6,7 +6,6 @@ use Exception;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\TransactionInterface;
@@ -87,6 +86,8 @@ class TransactionController extends Controller
             if ($transaction->user_id === Auth::user()->id) {
                 return view('pages.transaction.show', compact('transaction', 'isPaid'));
             }
+        } else if (Auth::user()->hasRole('cashier')) {
+            return view('pages.transaction.show', compact('transaction', 'isPaid'));
         }
 
         return view('pages.transaction.show', compact('transaction'));

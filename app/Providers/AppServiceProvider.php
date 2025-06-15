@@ -2,20 +2,21 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Interfaces\CartInterface;
 use App\Services\Interfaces\RoleInterface;
 use App\Services\Interfaces\BrandInterface;
-use App\Services\Interfaces\DiscountInterface;
 use App\Services\Interfaces\ProductInterface;
 use App\Services\Repositories\CartRepository;
 use App\Services\Repositories\RoleRepository;
+use App\Services\Interfaces\DiscountInterface;
 use App\Services\Repositories\BrandRepository;
 use App\Services\Repositories\ProductRepository;
 use App\Services\Interfaces\TransactionInterface;
+use App\Services\Repositories\DiscountRepository;
 use App\Services\Repositories\TransactionRepository;
 use App\Services\Interfaces\ProductTransactionInterface;
-use App\Services\Repositories\DiscountRepository;
 use App\Services\Repositories\ProductTransactionRepository;
 
 class AppServiceProvider extends ServiceProvider
