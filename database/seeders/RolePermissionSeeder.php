@@ -38,7 +38,7 @@ class RolePermissionSeeder extends Seeder
             'name' => 'brand.update'
         ])->assignRole('owner');
         Permission::create([
-            'name' => 'brand.delete'
+            'name' => 'brand.destroy'
         ])->assignRole('owner');
 
         Permission::create([
@@ -74,7 +74,7 @@ class RolePermissionSeeder extends Seeder
             'name' => 'discount.update'
         ])->assignRole('owner');
         Permission::create([
-            'name' => 'discount.delete'
+            'name' => 'discount.destroy'
         ])->assignRole('owner');
 
         Permission::create([
@@ -90,7 +90,7 @@ class RolePermissionSeeder extends Seeder
             'name' => 'product.update'
         ])->assignRole('owner');
         Permission::create([
-            'name' => 'product.delete'
+            'name' => 'product.destroy'
         ])->assignRole('owner');
 
         Permission::create([

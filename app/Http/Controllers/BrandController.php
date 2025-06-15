@@ -49,7 +49,7 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
-        $this->authorize('brand.delete');
+        $this->authorize('brand.destroy');
 
         $brand->delete();
 
