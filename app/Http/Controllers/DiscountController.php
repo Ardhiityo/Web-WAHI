@@ -50,19 +50,19 @@ class DiscountController extends Controller
         return view('pages.discount.edit', compact('discount', 'products'));
     }
 
-    public function update(UpdateVoucherRequest $request, Discount $voucher)
+    public function update(UpdateVoucherRequest $request, Discount $discount)
     {
-        $voucher->update($request->validated());
+        $discount->update($request->validated());
 
         return redirect()->route('discounts.index')->withSuccess('Berhasil diubah');
     }
 
-    public function destroy(Discount $voucher)
+    public function destroy(Discount $discount)
     {
         $this->authorize('discount.destroy');
 
-        $voucher->delete();
+        $discount->delete();
 
-        return redirect()->route('discount.index')->withSuccess('Berhasil dihapus');
+        return redirect()->route('discounts.index')->withSuccess('Berhasil dihapus');
     }
 }
