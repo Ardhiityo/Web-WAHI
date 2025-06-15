@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Discount;
 use App\Services\Interfaces\ProductInterface;
 use App\Services\Interfaces\DiscountInterface;

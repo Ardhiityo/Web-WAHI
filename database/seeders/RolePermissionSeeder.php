@@ -77,6 +77,23 @@ class RolePermissionSeeder extends Seeder
             'name' => 'discount.delete'
         ])->assignRole('owner');
 
+        Permission::create([
+            'name' => 'product.create'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'product.store'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'product.edit'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'product.update'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'product.delete'
+        ])->assignRole('owner');
+
+
         User::create([
             'name' => 'Johnson',
             'email' => 'owner@test',

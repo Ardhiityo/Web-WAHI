@@ -2,12 +2,22 @@
 
 namespace App\Http\Requests\Transaction;
 
-use App\Rules\CheckoutRule;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Transaction;
 use Ulid\Ulid;
+use App\Rules\CheckoutRule;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return Gate::allows('create', Transaction::class);
+    }
+
     public function prepareForValidation()
     {
         $this->merge([

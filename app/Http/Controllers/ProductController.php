@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Services\Interfaces\BrandInterface;
 use App\Services\Interfaces\ProductInterface;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private ProductInterface $productRepository,
         private BrandInterface $brandRepository
@@ -40,9 +42,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('product.create');
 
         $brands = $this->brandRepository->getAllBrands();
 
@@ -60,9 +60,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        if (!Auth::user()->hasRole('owner')) {
-            return abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('product.edit');
 
         $brands = $this->brandRepository->getAllBrands();
 
@@ -80,6 +78,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('product.destroy');
+
         $this->productRepository->deleteProduct($product);
 
         return redirect()->route('products.index')->withSuccess('Berhasil dihapus');

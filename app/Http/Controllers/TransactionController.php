@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Transaction;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,8 @@ use App\Http\Requests\Transaction\UpdateTransactionRequest;
 
 class TransactionController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private TransactionInterface $transactionRepository,
         private ProductTransactionInterface $productTransactionRepository,
@@ -23,17 +26,14 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $user = Auth::user();
-
         if ($request->query('category') && $request->query('keyword')) {
             $category = $request->query('category');
             $keyword = $request->query('keyword');
+
             if ($category == 'transaction_code') {
                 $transactions = $this->transactionRepository->getTransactionsByCode($keyword);
             } else if ($category === 'customer') {
-                if ($user->hasRole('customer')) {
-                    return abort(403, 'Unauthorized action.');
-                }
+                $this->authorize('viewAny', Transaction::class);
                 $transactions = $this->transactionRepository->getTransactionsByName($keyword);
             } else if ($category === 'transaction_type') {
                 $transactions = $this->transactionRepository->getTransactionsByType($keyword);
@@ -70,6 +70,8 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
+        $this->authorize('view', $transaction);
+
         Session::forget('transaction_code');
 
         $isPaid = false;
@@ -82,15 +84,7 @@ class TransactionController extends Controller
             }
         }
 
-        if (Auth::user()->hasRole('customer')) {
-            if ($transaction->user_id === Auth::user()->id) {
-                return view('pages.transaction.show', compact('transaction', 'isPaid'));
-            }
-        } else if (Auth::user()->hasRole('cashier')) {
-            return view('pages.transaction.show', compact('transaction', 'isPaid'));
-        }
-
-        return view('pages.transaction.show', compact('transaction'));
+        return view('pages.transaction.show', compact('transaction', 'isPaid'));
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction)
@@ -110,6 +104,8 @@ class TransactionController extends Controller
 
     public function destroy(Transaction $transaction)
     {
+        $this->authorize('delete', $transaction);
+
         $transaction->delete();
 
         return redirect()->route('transactions.index')->withSuccess('Berhasil dihapus');
@@ -117,6 +113,8 @@ class TransactionController extends Controller
 
     public function cancel(Transaction $transaction)
     {
+        $this->authorize('cancel', $transaction);
+
         $this->transactionRepository
             ->updateTransactionStatus($transaction->id, ['transaction_status' => 'cancel']);
 

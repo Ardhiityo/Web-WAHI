@@ -205,33 +205,32 @@
                             </div>
                         </div>
                     @endrole
-                    @if ($transaction->transaction_status === 'pending')
-                        @hasrole('cashier')
+                    @hasrole('cashier')
+                        @if ($transaction->transaction_status === 'pending')
                             <div class="row">
                                 <div class="mt-3 col-12 d-flex justify-content-end">
                                     <button class="btn btn-warning">Update</button>
-                                    @if ($transaction->transaction_type === 'cashless')
+                                    @if ($transaction->transaction_type === 'cashless' && !$isPaid)
                                         <span class="mx-2"></span>
                                         <span class="btn btn-success" role="button" id="pay-button">Bayar</span>
                                     @endif
                                 </div>
                             </div>
-                        @endhasrole
-                    @endif
+                        @endif
+                    @endhasrole
                 </form>
 
                 @hasrole('customer')
                     @if ($transaction->transaction_status === 'pending')
                         <div class="row">
                             <div class="mt-3 col-12 d-flex justify-content-end">
+                                <form action="{{ route('transactions.cancel', ['transaction' => $transaction->id]) }}"
+                                    method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Cancel</button>
+                                </form>
                                 @if ($transaction->transaction_type === 'cashless' && !$isPaid)
-                                    <form action="{{ route('transactions.cancel', ['transaction' => $transaction->id]) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button class="btn btn-danger"
-                                            onclick="return confirm('Are you sure?')">Cancel</button>
-                                    </form>
                                     <span class="mx-2"></span>
                                     <button class="btn btn-warning" id="pay-button">Bayar</button>
                                 @endif
