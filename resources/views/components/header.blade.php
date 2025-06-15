@@ -10,7 +10,7 @@
     <ul class="navbar-nav d-flex align-items-center">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" role="button">
-                <span class="mr-2">{{ Auth::user()->getRoleNames()->first() }}</span>
+                <span class="mr-2">{{ ucfirst(Auth::user()->getRoleNames()->first()) }}</span>
                 <i class="fas fa-user"></i>
             </a>
             <div class="dropdown-menu">

@@ -8,9 +8,12 @@ use App\Services\Interfaces\TransactionInterface;
 use App\Http\Requests\ProductTransacion\DeleteProductTransactionRequest;
 use App\Http\Requests\ProductTransaction\UpdateProductTransactionRequest;
 use App\Services\Interfaces\ProductTransactionInterface;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProductTransactionController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(
         private TransactionInterface $transactionRepository,
         private ProductTransactionInterface $productTransactionRepository
@@ -33,6 +36,8 @@ class ProductTransactionController extends Controller
 
     public function destroy(Transaction $transaction, DeleteProductTransactionRequest $request)
     {
+        $this->authorize('product.transaction.destroy');
+
         $data = $request->validated();
 
         $productId = $data['product_id'];

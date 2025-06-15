@@ -2,11 +2,20 @@
 
 namespace App\Http\Requests\ProductTransaction;
 
-use App\Rules\UpdateQuantityTransactionRule;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\UpdateQuantityTransactionRule;
 
 class UpdateProductTransactionRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return Gate::allows('product.transaction.update');
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

@@ -34,13 +34,13 @@ class TransactionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole('customer') || $user->hasRole('owner');
+        return $user->hasRole('customer') || $user->hasRole('cashier');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Transaction $transaction): bool
+    public function update(User $user): bool
     {
         return $user->hasRole('cashier');
     }
