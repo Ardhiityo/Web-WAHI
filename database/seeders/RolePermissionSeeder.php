@@ -111,6 +111,25 @@ class RolePermissionSeeder extends Seeder
             'name' => 'report.export'
         ])->assignRole('owner');
 
+        Permission::create([
+            'name' => 'role.index'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'role.create'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'role.edit'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'role.update'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'role.store'
+        ])->assignRole('owner');
+        Permission::create([
+            'name' => 'role.destroy'
+        ])->assignRole('owner');
+
 
         User::create([
             'name' => 'Johnson',
