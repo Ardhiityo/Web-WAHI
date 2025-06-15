@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\CartInterface;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Requests\Cart\UpdateCartRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CartController extends Controller
 {
@@ -17,6 +18,8 @@ class CartController extends Controller
     public function index()
     {
         $this->authorize('cart.index');
+
+        Session::forget('transaction_code');
 
         $carts = $this->cartRepository->getAllCarts();
 

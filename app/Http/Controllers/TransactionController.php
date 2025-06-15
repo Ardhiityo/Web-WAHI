@@ -7,7 +7,6 @@ use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\TransactionInterface;
 use App\Services\Interfaces\ProductTransactionInterface;
@@ -71,8 +70,6 @@ class TransactionController extends Controller
     public function show(Transaction $transaction)
     {
         $this->authorize('view', $transaction);
-
-        Session::forget('transaction_code');
 
         $isPaid = false;
 
