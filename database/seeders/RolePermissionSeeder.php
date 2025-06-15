@@ -132,7 +132,7 @@ class RolePermissionSeeder extends Seeder
 
 
         User::create([
-            'name' => 'Johnson',
+            'name' => 'Wan Esa Faturachman',
             'email' => 'owner@test',
             'password' => 11111111
         ])->assignRole('owner');
