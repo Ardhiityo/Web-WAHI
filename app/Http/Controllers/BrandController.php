@@ -23,6 +23,8 @@ class BrandController extends Controller
 
     public function create()
     {
+        $this->authorize('brand.create');
+
         return view('pages.brand.create');
     }
 

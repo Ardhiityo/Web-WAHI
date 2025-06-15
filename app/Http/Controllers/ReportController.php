@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Exports\InvoiceExport;
 use App\Exports\TransactionExport;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Report\StoreReportRequest;
 use App\Services\Interfaces\TransactionInterface;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ReportController extends Controller
 {

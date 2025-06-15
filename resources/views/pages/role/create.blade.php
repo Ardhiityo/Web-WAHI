@@ -13,21 +13,24 @@
                         <div class="form-group">
                             <label for="exampleInputBorderWidth2">Nama</label>
                             <input type="text" name="name" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth2">
+                                class="form-control form-control-border border-width-2" value="{{ old('name') }}"
+                                id="exampleInputBorderWidth2">
                         </div>
                         <div class="form-group">
                             <label for="exampleSelectBorder">Peran</label>
                             <select name="role" required class="custom-select form-control-border"
                                 id="exampleSelectBorder">
                                 <option value="" selected>Pilih peran...</option>
-                                <option value="cashier">Cashier</option>
-                                <option value="customer">Customer</option>
+                                <option value="cashier" {{ old('role') === 'cashier' ? 'selected' : '' }}>Cashier</option>
+                                <option value="customer" {{ old('role') === 'customer' ? 'selected' : '' }}>Customer
+                                </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputBorderWidth3">Email</label>
                             <input type="email" name="email" required
-                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth3">
+                                class="form-control form-control-border border-width-2" id="exampleInputBorderWidth3"
+                                value="{{ old('email') }}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputBorderWidth4">Password</label>

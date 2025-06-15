@@ -45,7 +45,7 @@
                     <div class="col-6">
                         <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                             <div class="form-group">
-                                <label for="end_date">Sampai tanggal</label>
+                                <label for="end_date">Hingga tanggal</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend w-100">
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
