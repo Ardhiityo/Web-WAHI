@@ -24,12 +24,11 @@
         <tr></tr>
         <tr></tr>
         <tr>
-            <th></th>
             <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
-                colspan="2">
-                Tanggal</th>
+                colspan="3">
+                Waktu</th>
             <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
-                colspan="2">
+                colspan="3">
                 Pemesan</th>
             <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
                 colspan="2">
@@ -46,17 +45,15 @@
                 colspan="2">
                 Status
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td></td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                colspan="2">
-                {{ $transaction->created_at->format('d/m/Y') }}</td>
+                colspan="3">
+                {{ $transaction->created_at->format('d/m/Y H:i') }}</td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                colspan="2">
+                colspan="3">
                 {{ ucfirst($transaction->user->name) }}</td>
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                 colspan="2">
@@ -73,7 +70,6 @@
             <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
                 colspan="2">
                 {{ ucfirst($transaction->transaction_status) }}</td>
-            <td></td>
         </tr>
         <tr></tr>
     </tbody>

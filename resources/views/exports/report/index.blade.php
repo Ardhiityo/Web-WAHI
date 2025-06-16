@@ -28,9 +28,9 @@
                 style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;">
                 Kode Transaksi
             </th>
-            <th
-                style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;">
-                Tanggal</th>
+            <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
+                colspan="2">
+                Waktu</th>
             <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
                 colspan="2">
                 Pemesan</th>
@@ -45,8 +45,8 @@
             <th
                 style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;">
                 Tipe</th>
-            <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
-                colspan="2">
+            <th
+                style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;">
                 Status
             </th>
             <th style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle; font-weight: bold;"
@@ -58,33 +58,40 @@
     <tbody>
         @foreach ($transactions as $key => $transaction)
             <tr>
-                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;">
-                    {{ $loop->iteration }}</td>
-                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;">
-                    {{ $transaction->transaction_code }}</td>
-                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;">
-                    {{ $transaction->created_at->format('d/m/Y') }}</td>
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">
+                    rowspan="3">
+                    {{ $loop->iteration }}</td>
+                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
+                    rowspan="3">
+                    {{ $transaction->transaction_code }}</td>
+                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
+                    rowspan="3" colspan="2">
+                    {{ $transaction->created_at->format('d/m/Y H:i') }}</td>
+                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
+                    rowspan="3" colspan="2">
                     {{ ucfirst($transaction->user->name) }}</td>
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">
+                    rowspan="3" colspan="2">
                     Rp. {{ number_format($transaction->subtotal_selling_amount, thousands_separator: '.') }}</td>
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">
+                    rowspan="3" colspan="2">
                     Rp. {{ number_format($transaction->total_discount, thousands_separator: '.') }}</td>
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">
+                    rowspan="3" colspan="2">
                     Rp. {{ number_format($transaction->grandtotal_selling_amount, thousands_separator: '.') }}</td>
-                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;">
+                <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
+                    rowspan="3">
                     {{ ucfirst($transaction->transaction_type) }}</td>
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">
+                    rowspan="3">
                     {{ ucfirst($transaction->transaction_status) }}</td>
                 <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle;"
-                    colspan="2">Rp. {{ number_format($transaction->profit_amount, thousands_separator: '.') }}</td>
+                    rowspan="3" colspan="2">Rp.
+                    {{ number_format($transaction->profit_amount, thousands_separator: '.') }}</td>
             </tr>
         @endforeach
+        <tr></tr>
+        <tr></tr>
         <tr></tr>
     </tbody>
 </table>

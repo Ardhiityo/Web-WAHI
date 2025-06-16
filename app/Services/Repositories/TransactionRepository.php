@@ -156,11 +156,6 @@ class TransactionRepository implements TransactionInterface
             ->orderByDesc('id')
             ->get();
 
-        $transactions = Transaction::select('created_at', 'id')
-            ->orderByDesc('id')
-            ->distinct()
-            ->get();
-
         $dates = [];
 
         foreach ($transactions as $transaction) {
