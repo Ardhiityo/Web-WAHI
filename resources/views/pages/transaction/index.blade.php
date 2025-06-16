@@ -24,21 +24,19 @@
             <form action="{{ route('transactions.index') }}" method="get">
                 <div class="mb-4 row">
                     <div class="col-6">
-                        <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-                            <div class="form-group">
-                                <label for="voucher">Kategori</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend w-100">
-                                        <span class="input-group-text"><i class="far fa-file-alt"></i></span>
-                                        <select class="form-control select2" name="category" required id="category">
-                                            <option value="transaction_code">Kode transaksi</option>
-                                            @hasrole('owner|cashier')
-                                                <option value="customer">Pemesan</option>
-                                            @endhasrole
-                                            <option value="transaction_type">Jenis pembayaran</option>
-                                            <option value="transaction_status">Status Transaksi</option>
-                                        </select>
-                                    </div>
+                        <div class="form-group">
+                            <label for="voucher">Kategori</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend w-100">
+                                    <span class="input-group-text"><i class="far fa-file-alt"></i></span>
+                                    <select class="form-control select2" name="category" required id="category">
+                                        <option value="transaction_code">Kode transaksi</option>
+                                        @hasrole('owner|cashier')
+                                            <option value="customer">Pemesan</option>
+                                        @endhasrole
+                                        <option value="transaction_type">Jenis pembayaran</option>
+                                        <option value="transaction_status">Status Transaksi</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +81,7 @@
                     <div class="my-4">
                         <div class="mb-3 row">
                             <div class="col-6">
-                                <h5>{{ $transaction->created_at->format('d/m/Y') }}</h5>
+                                <h5>{{ $transaction->created_at->format('d/m/Y H:i') }}</h5>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
                                 <a href="{{ route('reports.export.transaction', ['transaction' => $transaction->id]) }}"

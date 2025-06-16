@@ -23,12 +23,6 @@ class ReportController extends Controller
 
         $dates = $this->transactionRepository->getTransactionDates();
 
-        if ($request->query('start_date') && $request->query('end_date')) {
-            $start_date = $request->query('start_date');
-            $end_date = $request->query('end_date');
-            $profit = $this->transactionRepository->getTransactionProfitByDateRange($start_date, $end_date);
-        }
-
         return view('pages.report.index', compact('dates'));
     }
 
@@ -42,7 +36,8 @@ class ReportController extends Controller
             Excel::download(new TransactionExport(
                 $data['start_date'],
                 $data['end_date']
-            ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF) : Excel::download(new TransactionExport(
+            ), 'invoices.pdf', \Maatwebsite\Excel\Excel::MPDF) :
+            Excel::download(new TransactionExport(
                 $data['start_date'],
                 $data['end_date']
             ), 'invoices.xlsx');

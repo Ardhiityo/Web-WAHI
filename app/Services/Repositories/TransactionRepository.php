@@ -133,11 +133,43 @@ class TransactionRepository implements TransactionInterface
 
     public function getTransactionDates()
     {
-        return Transaction::select('created_at')
+        $transactions = Transaction::select('created_at', 'id')
+            ->orderByDesc('id')
+            ->distinct()
+            ->get();
+
+        $dates = [];
+
+        foreach ($transactions as $transaction) {
+            if (!in_array($transaction->created_at->format('Y-m-d'), $dates)) {
+                $dates[] = $transaction->created_at->format('Y-m-d');
+            }
+        }
+
+        return $dates;
+    }
+
+    public function getTransactionPaidDates()
+    {
+        $transactions = Transaction::select('created_at', 'id')
             ->where('transaction_status', 'paid')
             ->orderByDesc('id')
-            ->get()
-            ->unique('created_at');
+            ->get();
+
+        $transactions = Transaction::select('created_at', 'id')
+            ->orderByDesc('id')
+            ->distinct()
+            ->get();
+
+        $dates = [];
+
+        foreach ($transactions as $transaction) {
+            if (!in_array($transaction->created_at->format('Y-m-d'), $dates)) {
+                $dates[] = $transaction->created_at->format('Y-m-d');
+            }
+        }
+
+        return $dates;
     }
 
     public function getTransactionProfitByDateRange(string $startDate, string $endDate)

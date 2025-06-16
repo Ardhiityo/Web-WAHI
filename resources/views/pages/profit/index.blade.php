@@ -32,8 +32,8 @@
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         <select class="form-control select2" name="start_date" required id="start_date">
                                             @foreach ($dates as $date)
-                                                <option value="{{ $date->created_at }}">
-                                                    {{ $date->created_at->format('d/m/Y') }}
+                                                <option value="{{ $date }}">
+                                                    {{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -51,8 +51,8 @@
                                         <span class="input-group-text"><i class="far fa-file-alt"></i></span>
                                         <select class="form-control select2" name="end_date" required id="end_date">
                                             @foreach ($dates as $date)
-                                                <option value="{{ $date->created_at }}">
-                                                    {{ $date->created_at->format('d/m/Y') }}
+                                                <option value="{{ $date }}">
+                                                    {{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}
                                                 </option>
                                             @endforeach
                                         </select>

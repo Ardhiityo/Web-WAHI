@@ -19,7 +19,7 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'created_at' => 'date'
+        'created_at' => 'datetime'
     ];
 
     public function user()

@@ -6,6 +6,7 @@
             <div class="mb-2 row">
                 <div class="col-sm-6">
                     <h1 class="m-0">Detail Transaksi</h1>
+                    <span>{{ $transaction->transaction_code }}</span>
                 </div>
             </div>
         </div>
@@ -13,7 +14,7 @@
 
     <div class="card card-default">
         <div class="card-header">
-            <h3 class="card-title">{{ $transaction->transaction_code }}</h3>
+            <h3 class="card-title">{{ $transaction->created_at->format('d/m/Y H:i') }}</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -31,7 +32,6 @@
                             role="button" class="mx-2 btn btn-warning">
                             <i class="fas fa-file-download"></i>
                         </a>
-                        <h5>{{ $transaction->created_at->format('d/m/Y') }}</h5>
                     </div>
                 </div>
                 <form action="{{ route('transactions.update', ['transaction' => $transaction->id]) }}" method="post">

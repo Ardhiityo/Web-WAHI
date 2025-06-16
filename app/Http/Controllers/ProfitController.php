@@ -16,7 +16,7 @@ class ProfitController extends Controller
     {
         $this->authorize('profit.index');
 
-        $dates = $this->transactionRepository->getTransactionDates();
+        $dates = $this->transactionRepository->getTransactionPaidDates();
 
         if ($request->query('start_date') && $request->query('end_date')) {
             $start_date = $request->query('start_date');
