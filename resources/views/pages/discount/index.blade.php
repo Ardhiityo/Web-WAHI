@@ -85,7 +85,7 @@
                             </table>
                         </div>
                         <div class="mt-5 row">
-                            <div class="col-12">
+                            <div class="col-12 d-flex justify-content-end">
                                 {{ $discounts->links('pagination::bootstrap-5') }}
                             </div>
                         </div>

@@ -83,7 +83,7 @@
                             <div class="col-6">
                                 <h5>{{ $transaction->created_at->format('d/m/Y H:i') }}</h5>
                             </div>
-                            <div class="col-6 d-flex justify-content-end">
+                            <div class="col-6 d-flex align-items-center justify-content-end">
                                 <a href="{{ route('reports.export.transaction', ['transaction' => $transaction->id]) }}"
                                     role="button" class="btn btn-warning">
                                     <i class="fas fa-file-download"></i>
