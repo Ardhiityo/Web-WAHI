@@ -127,7 +127,13 @@ class TransactionRepository implements TransactionInterface
 
     public function getTransactionByCode(string $code)
     {
-        return Transaction::select('id', 'grandtotal_selling_amount', 'transaction_code', 'user_id')
+        return Transaction::with('products:id,stock')->select(
+            'id',
+            'grandtotal_selling_amount',
+            'transaction_code',
+            'user_id',
+            'transaction_status'
+        )
             ->where('transaction_code', $code)->first();
     }
 

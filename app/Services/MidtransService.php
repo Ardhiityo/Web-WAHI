@@ -35,12 +35,11 @@ class MidtransService
                 DB::beginTransaction();
 
                 $transaction = $this->transactionRepository->getTransactionByCode($order_id);
-                $carts = $this->cartRepository->getCartsByUserId($transaction->user_id);
 
-                foreach ($carts as $cart) {
-                    if ($cart->quantity <= $cart->product->stock && $cart->product->stock > 0) {
-                        $cart->product->update([
-                            'stock' => $cart->product->stock - $cart->quantity
+                foreach ($transaction->products as $product) {
+                    if ($product->pivot->quantity <= $product->stock && $product->stock > 0) {
+                        $product->product->update([
+                            'stock' => $product->stock - $product->pivot->quantity
                         ]);
                     } else {
                         throw new Exception('Produk yang dibeli melebihi stok.');
@@ -71,6 +70,7 @@ class MidtransService
             $transaction = Transaction::status($orderId);
             return $transaction;
         } catch (\Throwable $th) {
+            Log::info(json_encode($th->getMessage(), JSON_PRETTY_PRINT));
             return false;
         }
     }
@@ -84,7 +84,21 @@ class MidtransService
                 DB::beginTransaction();
 
                 $order_id = $response->order_id;
-                $this->transactionRepository->getTransactionByCode($order_id)->update(['transaction_status' => 'paid']);
+                $transaction = $this->transactionRepository->getTransactionByCode($order_id);
+
+                Log::info(json_encode($transaction, JSON_PRETTY_PRINT), ['is_paid']);
+
+                foreach ($transaction->products as $product) {
+                    if ($product->pivot->quantity <= $product->stock && $product->stock > 0) {
+                        $product->update([
+                            'stock' => $product->stock - $product->pivot->quantity
+                        ]);
+                    } else {
+                        throw new Exception('Produk yang dibeli melebihi stok.');
+                    }
+                }
+
+                $transaction->update(['transaction_status' => 'paid']);
 
                 DB::commit();
             } catch (\Throwable $th) {
